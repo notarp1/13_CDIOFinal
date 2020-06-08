@@ -25,9 +25,13 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
     public static void main(String[] args) {
         ProduktBatchDAO test = new ProduktBatchDAO();
+        ProduktBatchDTO bruger = new ProduktBatchDTO();
 
+        bruger.setPbId(12);
+        bruger.setStatus(3);
+        bruger.setReceptId(13);
         try {
-            test.getProduktBatchList();
+            test.updateProduktBatch(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -57,6 +61,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
                 batch.setReceptId(resultSet.getInt("receptId"));
                 connection.close();
 
+                //Test
                 System.out.println("pbID:" + batch.getPbId() + " Status:" + batch.getStatus() + " ReceptId:" + batch.getReceptId());
                 return batch;
 
@@ -101,7 +106,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
             }
             connection.close();
 
-
+            // ------------TEST--------------------
             String out = "pbId | status | receptId";
             for(int i = 0; i<produktListe.size(); i++){
 
@@ -109,7 +114,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
             }
             System.out.println(out);
-
+            // ------------TEST--------------------
 
             return produktListe;
 
@@ -130,16 +135,12 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "INSERT Userlist VALUES ('" + user.getUserId() + "', '" + user.getUserName() + "', '" + user.getIni() + "', '" + user.getCpr() + "', '" + user.getPassword() + "')";
+            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + produktbatch.getPbId() + "', '" + produktbatch.getStatus() + "', '" + produktbatch.getReceptId() + "')";
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);
 
-            for (String role : user.getRoles()) {
-                sqlManipulation = "INSERT UserRoles VALUES( " + user.getUserId() + " , \"" + role + "\")";
-                statement.executeUpdate(sqlManipulation);
-            }
             connection.close();
 
 
@@ -153,6 +154,27 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
     @Override
     public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
+
+        try {
+            Class.forName(this.driver);
+
+
+            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + produktbatch.getPbId() + ", status = '" + produktbatch.getStatus() + "', receptId = '" + produktbatch.getReceptId() + "' WHERE pbId = " + produktbatch.getPbId();
+
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+
+        }
+
 
     }
 }
