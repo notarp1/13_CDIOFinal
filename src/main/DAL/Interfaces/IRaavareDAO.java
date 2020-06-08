@@ -1,5 +1,6 @@
-package DAO;
+package DAL.Interfaces;
 
+import DAL.DALException;
 import DTO.RaavareDTO;
 
 import java.util.List;
