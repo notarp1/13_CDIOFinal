@@ -1,2 +1,6 @@
-/.idea/
+/.idea/*.xml
+/.idea/libraries/
 
+*.class
+/target/
+/out/
