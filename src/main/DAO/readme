@@ -1,2 +1,0 @@
-Data Access Object is one of the design patterns used to implement controller.
-This builds and executes queries on database and maps the result to POCO/POJO using various other patterns including 'Query Object', 'Data Mapper' etc. DAO layer could be further extended using 'Repository' pattern.

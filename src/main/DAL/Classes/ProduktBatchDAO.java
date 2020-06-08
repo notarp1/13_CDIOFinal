@@ -1,5 +1,7 @@
-package DAO;
+package DAL.Classes;
 
+import DAL.DALException;
+import DAL.Interfaces.IProduktBatchDAO;
 import DTO.ProduktBatchDTO;
 
 import java.util.List;
