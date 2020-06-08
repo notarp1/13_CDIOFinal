@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 public class RaavareBatchDTO {
     /** raavare batch id i området 1-99999999. Vælges af brugerne */

@@ -1,6 +1,7 @@
-package dal;
+package DAL.Interfaces;
 
-import dto.BrugerDTO;
+import DAL.DALException;
+import DTO.BrugerDTO;
 
 import java.util.List;
 

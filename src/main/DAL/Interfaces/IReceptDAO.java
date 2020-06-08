@@ -1,6 +1,7 @@
-package dal;
+package DAL.Interfaces;
 
-import dto.ReceptDTO;
+import DAL.DALException;
+import DTO.ReceptDTO;
 
 import java.util.List;
 

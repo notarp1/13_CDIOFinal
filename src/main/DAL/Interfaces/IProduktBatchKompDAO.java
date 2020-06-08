@@ -1,6 +1,7 @@
-package dal;
+package DAL.Interfaces;
 
-import dto.ProduktBatchKompDTO;
+import DAL.DALException;
+import DTO.ProduktBatchKompDTO;
 
 import java.util.List;
 
