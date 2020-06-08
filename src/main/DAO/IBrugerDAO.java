@@ -1,6 +1,6 @@
-package dal;
+package DAO;
 
-import dto.BrugerDTO;
+import DTO.BrugerDTO;
 
 import java.util.List;
 

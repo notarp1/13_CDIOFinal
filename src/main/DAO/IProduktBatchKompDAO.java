@@ -1,6 +1,6 @@
-package dal;
+package DAO;
 
-import dto.ProduktBatchKompDTO;
+import DTO.ProduktBatchKompDTO;
 
 import java.util.List;
 

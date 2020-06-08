@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 public class RaavareDTO {
     /** raavare id i området 1-99999999 vælges af brugerne */

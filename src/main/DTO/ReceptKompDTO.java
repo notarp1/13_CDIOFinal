@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 public class ReceptKompDTO {
     /** recept id i området 1-99999999 */
