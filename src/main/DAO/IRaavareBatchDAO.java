@@ -1,6 +1,6 @@
-package dal;
+package DAO;
 
-import dto.RaavareBatchDTO;
+import DTO.RaavareBatchDTO;
 
 import java.util.List;
 

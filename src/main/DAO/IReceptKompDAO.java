@@ -1,6 +1,6 @@
-package dal;
+package DAO;
 
-import dto.ReceptKompDTO;
+import DTO.ReceptKompDTO;
 
 import java.util.List;
 
