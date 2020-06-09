@@ -34,7 +34,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
         bruger.setStatus(3);
         bruger.setReceptId(13);
         try {
-            test.updateProduktBatch(bruger);
+            test.deleteProduktBatch(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -163,6 +163,32 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
 
             String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getStatus() + "', receptId = '" + pBatch.getReceptId() + "' WHERE pbId = " + pBatch.getPbId();
+
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+
+        }
+
+
+    }
+
+    @Override
+    public void deleteProduktBatch(ProduktBatchDTO pBatch) throws DALException {
+
+        try {
+            Class.forName(this.driver);
+
+
+            String sqlManipulation = "DELETE FROM ProduktBatch WHERE pbId = " + pBatch.getPbId();
 
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);

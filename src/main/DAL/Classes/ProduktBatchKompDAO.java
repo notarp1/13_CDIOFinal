@@ -37,7 +37,7 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
         bruger.setNetto(4.0);
         bruger.setOprId(123);
         try {
-            test.updateProduktBatchKomp(bruger);
+            test.deleteProduktBatchKomp(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -215,6 +215,33 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 
             String sqlManipulation = "UPDATE ProduktBatchKomp SET pbId = " + pkBatch.getPbId() + ", rbId = '" + pkBatch.getRbId() + "', tara = '" + pkBatch.getTara()
                     + "', netto = '" + pkBatch.getNetto() + "', oprId = '" + pkBatch.getOprId() + "' WHERE pbId = '" + pkBatch.getPbId() + "' AND rbId =" + pkBatch.getRbId();
+
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+
+        }
+
+
+    }
+
+    @Override
+    public void deleteProduktBatchKomp(ProduktBatchKompDTO pkBatch) throws DALException {
+
+
+        try {
+            Class.forName(this.driver);
+
+
+            String sqlManipulation = "DELETE FROM ProduktBatchKomp WHERE pbId = '" + pkBatch.getPbId() + "' AND rbId =" + pkBatch.getRbId();
 
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
