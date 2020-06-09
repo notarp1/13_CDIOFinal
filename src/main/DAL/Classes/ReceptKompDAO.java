@@ -2,7 +2,6 @@ package DAL.Classes;
 
 import DAL.DALException;
 import DAL.Interfaces.IReceptKompDAO;
-import DTO.ProduktBatchKompDTO;
 import DTO.ReceptKompDTO;
 
 import java.sql.*;

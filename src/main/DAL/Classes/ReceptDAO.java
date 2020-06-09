@@ -3,7 +3,6 @@ package DAL.Classes;
 import DAL.DALException;
 import DAL.Interfaces.IReceptDAO;
 import DTO.ReceptDTO;
-import DTO.ReceptKompDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
