@@ -54,4 +54,9 @@ public class BrugerDTO {
     public void setRoller(List<String> roller) {
         this.roller = roller;
     }
+
+    @Override
+    public String toString() {
+        return "Bruger: (" + this.oprId + ") [" + this.ini + "] " + this.oprNavn + ", CPR: " + this.cpr + ", Roller: " + this.roller.toString();
+    }
 }
