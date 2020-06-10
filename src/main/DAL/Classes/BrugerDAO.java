@@ -14,6 +14,8 @@ import java.util.List;
  * @Author Theis
  */
 public class BrugerDAO implements IBrugerDAO {
+    public BrugerDAO() {}
+
     @Override
     public BrugerDTO getBruger(int oprId) throws DALException {
         try {
