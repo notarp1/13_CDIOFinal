@@ -20,7 +20,7 @@ public class BrugerController implements IBrugerController {
             throw new ControllerException("oprId er ikke i den tilladte range 1-99999999");
 
         try {
-            return dao.getBruger(oprId);
+            return this.dao.getBruger(oprId);
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException(e.getMessage());
@@ -29,7 +29,12 @@ public class BrugerController implements IBrugerController {
 
     @Override
     public List<BrugerDTO> getBrugerList() throws ControllerException {
-        return null;
+        try {
+            return this.dao.getBrugerList();
+        } catch (DALException e) {
+            e.printStackTrace();
+            throw new ControllerException(e.getMessage());
+        }
     }
 
     @Override
