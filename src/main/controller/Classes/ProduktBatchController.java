@@ -27,10 +27,7 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public ProduktBatchDTO getProduktBatch(int pbId) throws ControllerException {
 
-        if(pbId < 1 || pbId > 99999999){
-          throw new ControllerException("Produktbatch ID ikke i den tilladte range {1..99999999}");
-        }
-
+        rangeConfirmPB(pbId);
         try {
             return pBatch.getProduktBatch(pbId);
         } catch (DALException e) {
@@ -43,7 +40,6 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public List<ProduktBatchDTO> getProduktBatchList() throws ControllerException {
 
-
         try {
             return  pBatch.getProduktBatchList();
         } catch (DALException e) {
@@ -55,7 +51,7 @@ public class ProduktBatchController implements IProduktBatchController {
 
     @Override
     public void createProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
-
+        rangeConfirmStatus(produktbatch);
         rangeConfirmPB(produktbatch.getPbId());
         try {
             pBatch.createProduktBatch(produktbatch);
@@ -66,9 +62,12 @@ public class ProduktBatchController implements IProduktBatchController {
 
     }
 
+
+
     @Override
     public void updateProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
 
+        rangeConfirmStatus(produktbatch);
         rangeConfirmPB(produktbatch.getPbId());
         try {
             this.getProduktBatch(produktbatch.getPbId());
@@ -112,9 +111,7 @@ public class ProduktBatchController implements IProduktBatchController {
 
     @Override
     public List<ProduktBatchKompDTO> getProduktBatchKompList(int pbId) throws ControllerException {
-        if(pbId < 1 || pbId > 99999999){
-            throw new ControllerException("Produktbatch ID ikke i den tilladte range {1..99999999}");
-        }
+        rangeConfirmPB(pbId);
 
         try {
             List<ProduktBatchKompDTO> list = new ArrayList<>();
@@ -199,6 +196,12 @@ public class ProduktBatchController implements IProduktBatchController {
             throw new ControllerException("Produktbatch ID ikke i den tilladte range{1..99999999}");
         }
 
+    }
+
+    private void rangeConfirmStatus(ProduktBatchDTO produktbatch) throws ControllerException {
+        if(produktbatch.getStatus() < 0 || produktbatch.getStatus()>2){
+            throw new ControllerException("Produktbatch STATUS ikke i den tilladte range{0..2}");
+        }
     }
 
 
