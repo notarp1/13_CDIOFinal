@@ -4,17 +4,23 @@ package api;
 import DTO.ProduktBatchDTO;
 import controller.Classes.ProduktBatchController;
 import controller.ControllerException;
+import controller.Interfaces.IProduktBatchController;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+/**
+ * @Author Christian
+ */
+
 
 @Path("pbService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProduktBatchService {
 
-    private ProduktBatchController pController = new ProduktBatchController();
+    private IProduktBatchController pController = new ProduktBatchController();
 
 
     @Path("getPB")

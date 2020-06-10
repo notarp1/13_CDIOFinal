@@ -10,6 +10,12 @@ import controller.Interfaces.IProduktBatchController;
 
 import java.util.List;
 
+/**
+ * @Author Christian
+ */
+
+
+
 public class ProduktBatchController implements IProduktBatchController {
 
     ProduktBatchDAO pBatch = new ProduktBatchDAO();
