@@ -8,6 +8,7 @@ import DTO.ProduktBatchKompDTO;
 import controller.ControllerException;
 import controller.Interfaces.IProduktBatchController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +56,7 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void createProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
 
+        rangeConfirmPB(produktbatch.getPbId());
         try {
             pBatch.createProduktBatch(produktbatch);
         } catch (DALException e) {
@@ -67,7 +69,9 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void updateProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
 
+        rangeConfirmPB(produktbatch.getPbId());
         try {
+            this.getProduktBatch(produktbatch.getPbId());
             pBatch.updateProduktBatch(produktbatch);
         } catch (DALException e) {
             e.printStackTrace();
@@ -79,9 +83,11 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void deleteProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
 
-
         try {
+
+            this.getProduktBatch(produktbatch.getPbId());
             pBatch.deleteProduktBatch(produktbatch);
+
         } catch (DALException e) {
             e.printStackTrace();
             throw  new ControllerException("Advarsel: Produktbatch kunne ikke slettes!");
@@ -92,12 +98,7 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public ProduktBatchKompDTO getProduktBatchKomp(int pbId, int rbId) throws ControllerException {
 
-        if(pbId < 1 || pbId > 99999999){
-            throw new ControllerException("Produktbatch ID ikke i den tilladte range {1..99999999}");
-        }
-        if(rbId < 1 || rbId > 99999999){
-            throw new ControllerException("Råvarebatch ID ikke i den tilladte range {1..99999999}");
-        }
+        rangeConfirmPBRB(pbId, rbId);
 
         try {
             return pkBatch.getProduktBatchKomp(pbId, rbId);
@@ -108,6 +109,7 @@ public class ProduktBatchController implements IProduktBatchController {
 
     }
 
+
     @Override
     public List<ProduktBatchKompDTO> getProduktBatchKompList(int pbId) throws ControllerException {
         if(pbId < 1 || pbId > 99999999){
@@ -115,7 +117,14 @@ public class ProduktBatchController implements IProduktBatchController {
         }
 
         try {
-            return  pkBatch.getProduktBatchKompList(pbId);
+            List<ProduktBatchKompDTO> list = new ArrayList<>();
+            list = pkBatch.getProduktBatchKompList(pbId);
+
+            if(list.isEmpty()){
+                throw new ControllerException("Advarsel: Kunne ikke finde produktbatch-komponent, tjek om det indtastede pbID er korrekt.");
+            } else return list;
+
+
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Advarsel: Kunne ikke finde produktbatch-komponent, tjek om det indtastede pbID er korrekt.");
@@ -136,6 +145,8 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void createProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws ControllerException {
 
+        rangeConfirmPBRB(produktbatchkomponent.getPbId(), produktbatchkomponent.getRbId());
+
         try {
             pkBatch.createProduktBatchKomp(produktbatchkomponent);
         } catch (DALException e) {
@@ -149,7 +160,10 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void updateProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws ControllerException {
 
+       rangeConfirmPBRB(produktbatchkomponent.getPbId(), produktbatchkomponent.getRbId());
+
         try {
+            this.getProduktBatchKomp(produktbatchkomponent.getPbId(), produktbatchkomponent.getRbId());
             pkBatch.updateProduktBatchKomp(produktbatchkomponent);
         } catch (DALException e) {
             e.printStackTrace();
@@ -162,6 +176,8 @@ public class ProduktBatchController implements IProduktBatchController {
 
 
         try {
+
+            this.getProduktBatchKomp(produktbatchkomponent.getPbId(), produktbatchkomponent.getRbId());
             pkBatch.deleteProduktBatchKomp(produktbatchkomponent);
         } catch (DALException e) {
             e.printStackTrace();
@@ -169,4 +185,21 @@ public class ProduktBatchController implements IProduktBatchController {
         }
 
     }
+    private void rangeConfirmPBRB(int pbId, int rbId) throws ControllerException {
+        if (pbId < 1 || pbId > 99999999) {
+            throw new ControllerException("Produktbatch ID ikke i den tilladte range{1..99999999}");
+        }
+        if (rbId < 1 || rbId > 99999999) {
+            throw new ControllerException("Råvarebatch ID ikke i den tilladte range{1..99999999}");
+        }
+    }
+
+    private void rangeConfirmPB(int pbId) throws ControllerException {
+        if (pbId < 1 || pbId > 99999999) {
+            throw new ControllerException("Produktbatch ID ikke i den tilladte range{1..99999999}");
+        }
+
+    }
+
+
 }
