@@ -11,5 +11,6 @@ public interface IReceptKompDAO {
     List<ReceptKompDTO> getReceptKompList() throws DALException;
     void createReceptKomp(ReceptKompDTO receptkomponent) throws DALException;
     void updateReceptKomp(ReceptKompDTO receptkomponent) throws DALException;
+    void deleteReceptKomp(ReceptKompDTO receptkomponent) throws DALException;
 
 }

@@ -1,7 +1,6 @@
 package DAL.Classes;
 
 import DAL.DALException;
-import DAL.DBTablePrinter;
 import DAL.Interfaces.IProduktBatchDAO;
 import DTO.ProduktBatchDTO;
 
@@ -10,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProduktBatchDAO implements IProduktBatchDAO {
+
+    /**
+     * @Author Christian Pone
+     */
 
 
     private String host = "primary.folkmann.it";
@@ -31,7 +34,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
         bruger.setStatus(3);
         bruger.setReceptId(13);
         try {
-            test.updateProduktBatch(bruger);
+            test.deleteProduktBatch(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -130,12 +133,12 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
 
     @Override
-    public void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
+    public void createProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + produktbatch.getPbId() + "', '" + produktbatch.getStatus() + "', '" + produktbatch.getReceptId() + "')";
+            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getReceptId() + "')";
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
@@ -153,13 +156,39 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     }
 
     @Override
-    public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
+    public void updateProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
             Class.forName(this.driver);
 
 
-            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + produktbatch.getPbId() + ", status = '" + produktbatch.getStatus() + "', receptId = '" + produktbatch.getReceptId() + "' WHERE pbId = " + produktbatch.getPbId();
+            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getStatus() + "', receptId = '" + pBatch.getReceptId() + "' WHERE pbId = " + pBatch.getPbId();
+
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+
+        }
+
+
+    }
+
+    @Override
+    public void deleteProduktBatch(ProduktBatchDTO pBatch) throws DALException {
+
+        try {
+            Class.forName(this.driver);
+
+
+            String sqlManipulation = "DELETE FROM ProduktBatch WHERE pbId = " + pBatch.getPbId();
 
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
