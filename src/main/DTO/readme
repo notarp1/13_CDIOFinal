@@ -1,1 +1,0 @@
-Data Transfer Objects. These are generally used to transfer data from controller to client (JS). Term is also used for POCOs/POJOs by few which actually holds the data retrieved from Database

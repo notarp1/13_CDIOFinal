@@ -1,6 +1,7 @@
 package DAL.Classes;
 
 import DAL.DALException;
+import DAL.Interfaces.IBrugerDAO;
 import DAL.Statics;
 import DTO.BrugerDTO;
 import org.junit.FixMethodOrder;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BrugerDAOTest {
-    BrugerDAO dao = new BrugerDAO();
+    IBrugerDAO dao = new BrugerDAO();
     int testID = 100000000; // ID, som ikke bruges normalt 1-99999999
 
     @Test
