@@ -24,8 +24,7 @@ public class BrugerService {
     @Path("{id}")
     public Response getBruger(@PathParam("id") int oprId) {
         try {
-            BrugerDTO bruger = controller.getBruger(oprId);
-            return Response.ok().entity(bruger).build();
+            return Response.ok().entity(controller.getBruger(oprId)).build();
         } catch (ControllerException e) {
             e.printStackTrace();
             return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -35,22 +34,45 @@ public class BrugerService {
     @GET
     @Path("all")
     public Response getBrugerList() {
-        return Response.status(Status.NOT_IMPLEMENTED).build();
+        try {
+            return Response.ok().entity(controller.getBrugerList()).build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @POST
     public Response createBruger(BrugerDTO bruger) {
-        return Response.status(Status.NOT_IMPLEMENTED).build();
+        try {
+            controller.createBruger(bruger);
+            return Response.ok().entity("Bruger oprettet").build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @PUT
     public Response updateBruger(BrugerDTO bruger) {
-        return Response.status(Status.NOT_IMPLEMENTED).build();
+        try {
+            controller.updateBruger(bruger);
+            return Response.ok().entity("Bruger rettet").build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 
     @DELETE
     @Path("{id}")
     public Response deleteBruger(@PathParam("id") int oprId) {
-        return Response.status(Status.NOT_IMPLEMENTED).build();
+        try {
+            controller.deleteBruger(oprId);
+            return Response.ok().entity("Bruger slettet").build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 }
