@@ -39,14 +39,12 @@ public class BrugerService {
     }
 
     @POST
-    public Response createBruger(String body) {
-        JSONObject jsonObject = new JSONObject(body);
+    public Response createBruger(BrugerDTO bruger) {
         return Response.status(Status.NOT_IMPLEMENTED).build();
     }
 
     @PUT
-    public Response updateBruger(String body) {
-        JSONObject jsonObject = new JSONObject(body);
+    public Response updateBruger(BrugerDTO bruger) {
         return Response.status(Status.NOT_IMPLEMENTED).build();
     }
 
