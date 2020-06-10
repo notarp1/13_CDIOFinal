@@ -55,6 +55,7 @@ public class ProduktBatchService {
 
     @Path("createPB")
     @POST
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createProduktBatch(ProduktBatchDTO pBatch) {
 
         try {
