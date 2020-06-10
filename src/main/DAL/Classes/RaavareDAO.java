@@ -8,6 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Christine
+ */
+
 public class RaavareDAO implements IRaavareDAO {
 
     private String host = "primary.folkmann.it";
@@ -20,6 +24,21 @@ public class RaavareDAO implements IRaavareDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://" + this.host + ":" + this.port + this.database + "?characterEncoding=latin1&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
+    public static void main(String[] args) {
+        RaavareDAO test = new RaavareDAO();
+        RaavareDTO bruger = new RaavareDTO();
+
+        bruger.setRaavareId(577);
+        bruger.setRaavareNavn("kat");
+        bruger.setLeverandoer("Lundbeck");
+        try {
+            test.updateRaavare(bruger);
+        } catch (DALException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     @Override
     public RaavareDTO getRaavare(int raavareId) throws DALException {
 
@@ -27,7 +46,7 @@ public class RaavareDAO implements IRaavareDAO {
         {
          Class.forName(this.driver);
          String sqlManipulation;
-         sqlManipulation = "SELECT * FROM Raavarer WHERE raavareId='" + raavareId + "'";
+         sqlManipulation = "SELECT * FROM Raavare WHERE raavareId='" + raavareId + "'";
 
          Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
          Statement statement = connection.createStatement();
@@ -40,6 +59,10 @@ public class RaavareDAO implements IRaavareDAO {
              varer.setRaavareNavn(resultSet.getString("raavareNavn"));
              varer.setLeverandoer(resultSet.getString("leverandoer"));
              connection.close();
+
+             //Test
+             System.out.println("RaavareId:" + varer.getRaavareId() + " RaavareNavn:" + varer.getRaavareNavn() + " Leverandoer:" + varer.getLeverandoer());
+
 
              return varer;
 
@@ -83,6 +106,15 @@ public class RaavareDAO implements IRaavareDAO {
             }
             connection.close();
 
+            //TEST
+            String out = "raavareId | raavarenavn | leverandoer";
+            for(int i = 0; i<raavareListe.size(); i++){
+
+                out += "\n" + raavareListe.get(i).getRaavareId() +"\t\t" + raavareListe.get(i).getRaavareNavn() +"\t\t"+ raavareListe.get(i).getLeverandoer();
+
+            }
+            System.out.println(out);
+
             return raavareListe;
 
             } catch (SQLException | ClassNotFoundException e ) {
@@ -122,7 +154,7 @@ public class RaavareDAO implements IRaavareDAO {
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "UPDATE Raavare SET raavareId = " + raavare.getRaavareId() + ", raavareNavn = " + raavare.getRaavareNavn() + ", leverandør = " + raavare.getLeverandoer() + " WHERE raavareId = " + raavare.getRaavareId();
+            String sqlManipulation = "UPDATE Raavare SET raavareId = " + raavare.getRaavareId() + ", raavareNavn = '" + raavare.getRaavareNavn() + "', leverandoer = '" + raavare.getLeverandoer() + "' WHERE raavareId = " + raavare.getRaavareId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);
