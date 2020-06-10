@@ -157,5 +157,24 @@ public class ReceptKompDAO implements IReceptKompDAO {
         }
     }
 
+    @Override
+    public void deleteReceptKomp(ReceptKompDTO receptKomponent) throws DALException {
+
+        try {
+            Class.forName(this.driver);
+            String sqlManipulation = "DELETE FROM ReceptKomp where receptId =" + receptKomponent.getReceptId();
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+            connection.close();
+
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
     }
+
+
+}
 
