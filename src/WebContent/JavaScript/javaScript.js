@@ -4,6 +4,30 @@ function switchPage(page) {
 
 }
 
+
+
+
+//Tilføj produktbatch
+$("#createPB").submit(function(event) {
+    event.preventDefault();
+    $.ajax({
+        url: "../api/pbService/createPB",
+        data: JSON.stringify($("#createPB").serializeJSON()),
+        contentType: "application/JSON",
+        method: "POST",
+        success: function (data) {
+            alert("Produktbatch succesfuldt tilføjet!");
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+});
+
+
+//!!!!!IKKE I BRUG
+
 function loadUsers() {
     var table = $("#tabel1").find("tbody");
     table.html("");
@@ -31,27 +55,8 @@ function loadUsers() {
     });
 }
 
-//Tilføj bruger
-$("#createUser").submit(function(event) {
-    event.preventDefault();
-    $.ajax({
-        url: "../api/userAdmin/create",
-        data: JSON.stringify($("#createUser").serializeJSON()),
-        contentType: "application/JSON",
-        method: "POST",
-        success: function (data) {
-            alert("Bruger oprettet succesfuldt!");
-            switchPage("brugerAdmin.html");
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-});
 
-
-//Rediger bruger
+//!!!!!IKKE I BRUG
 
 $("#editUser").submit(function(event) {
     event.preventDefault();
@@ -72,13 +77,13 @@ $("#editUser").submit(function(event) {
 });
 
 
-//Slet bruger
+//!!!!!IKKE I BRUG
 $("#deleteUser").submit(function(event) {
     event.preventDefault();
     confirmDeleteUser($("#userID").val());
 });
 
-
+//!!!!!IKKE I BRUG
 function confirmDeleteUser(ID) {
     $.ajax({
         url: "../api/userAdmin/getUser",
@@ -113,11 +118,6 @@ function confirmDeleteUser(ID) {
 
 window.onload = function () {
 
-   /* $(document).ready(function () {
-        $("p").click(function () {
-            $(this).hide();
-        });
-    });*/
 
     $(document).ready(function(){
         $("input").focus(function(){
@@ -129,14 +129,6 @@ window.onload = function () {
     });
 
 
-    $(document).ready(function(){
-        $("#hide").click(function(){
-            $("#tabel1").hide();
-        });
-        $("#show").click(function(){
-            $("#tabel1").show();
-        });
-    });
 
 
 
