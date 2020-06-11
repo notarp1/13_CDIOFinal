@@ -2,6 +2,7 @@ package DAL.Classes;
 
 import DAL.DALException;
 import DAL.Interfaces.IProduktBatchDAO;
+import DAL.Statics;
 import DTO.ProduktBatchDTO;
 
 import java.sql.*;
@@ -14,64 +15,27 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
      * @Author Christian Pone
      */
 
-
-    private String host = "primary.folkmann.it";
-    private String port = "3306";
-    private String username = "CDIO";
-    private String password = "y1NzaOYI08FrdqzX";
-    private String database = "/DTU_CDIOFinal";
-
-    //Do not edit these variables
-    private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://" + this.host + ":" + this.port + this.database + "?characterEncoding=latin1&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-
-
-    public static void main(String[] args) {
-        ProduktBatchDAO test = new ProduktBatchDAO();
-        ProduktBatchDTO bruger = new ProduktBatchDTO();
-
-        bruger.setPbId(122);
-        bruger.setStatus(1);
-        bruger.setReceptId(13);
-        try {
-            test.updateProduktBatch(bruger);
-        } catch (DALException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-
     @Override
     public ProduktBatchDTO getProduktBatch(int pbId) throws DALException {
 
+
         try {
-            Class.forName(this.driver);
 
-            String sqlManipulation;
+            String sqlManipulation = "SELECT * FROM ProduktBatch WHERE pbID='" + pbId + "'";
 
-            sqlManipulation = "SELECT * FROM ProduktBatch WHERE pbID='" + pbId + "'";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+            ResultSet resultSet = Statics.DB.get(sqlManipulation);
 
             if(resultSet.next()){
 
                 ProduktBatchDTO batch = new ProduktBatchDTO();
                 batch.setPbId(resultSet.getInt("pbId"));
-                batch.setStatus(resultSet.getInt("status"));
                 batch.setReceptId(resultSet.getInt("receptId"));
-                batch.setDate(resultSet.getDate("date"));
-                connection.close();
+                batch.setStatus(resultSet.getInt("status"));
+                batch.setDate(resultSet.getDate("dato"));
 
-                //Test
-                System.out.println("pbID:" + batch.getPbId() + " Status:" + batch.getStatus() + " ReceptId:" + batch.getReceptId());
                 return batch;
 
-
             }else {
-                connection.close();
                 throw new DALException("Kunne ikke finde produkt batch");
             }
 
@@ -89,15 +53,10 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
             List<ProduktBatchDTO> produktListe = new ArrayList<>();
 
         try {
-            Class.forName(this.driver);
 
-            String sqlManipulation;
+            String sqlManipulation = "SELECT * FROM ProduktBatch ";
 
-            sqlManipulation = "SELECT * FROM ProduktBatch ";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+            ResultSet resultSet = Statics.DB.get(sqlManipulation);
 
 
             while (resultSet.next()){
@@ -105,21 +64,10 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
                 batch.setPbId(resultSet.getInt("pbId"));
                 batch.setReceptId(resultSet.getInt("receptId"));
                 batch.setStatus(resultSet.getInt("status"));
-                batch.setDate(resultSet.getDate("date"));
+                batch.setDate(resultSet.getDate("dato"));
 
                 produktListe.add(batch);
             }
-            connection.close();
-
-            // ------------TEST--------------------
-            String out = "pbId | status | receptId";
-            for(int i = 0; i<produktListe.size(); i++){
-
-                out += "\n" + produktListe.get(i).getPbId() +"\t\t" + produktListe.get(i).getStatus() +"\t\t"+ produktListe.get(i).getReceptId();
-
-            }
-            System.out.println(out);
-            // ------------TEST--------------------
 
             return produktListe;
 
@@ -138,15 +86,8 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     public void createProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
-            Class.forName(this.driver);
-
             String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getReceptId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getDate() + "')";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
+            Statics.DB.update(sqlManipulation);
 
 
         }  catch (SQLException | ClassNotFoundException e ) {
@@ -161,18 +102,8 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     public void updateProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
-            Class.forName(this.driver);
-
-
             String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getReceptId() + "', receptId = '" + pBatch.getStatus() + "' WHERE pbId = " + pBatch.getPbId();
-
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
-
+            Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();
@@ -187,17 +118,8 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     public void deleteProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
-            Class.forName(this.driver);
-
-
             String sqlManipulation = "DELETE FROM ProduktBatch WHERE pbId = " + pBatch.getPbId();
-
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
+            Statics.DB.update(sqlManipulation);
 
 
         }  catch (SQLException | ClassNotFoundException e ) {

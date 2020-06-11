@@ -13,7 +13,7 @@
         <script type="text/javascript" src="plugins/sweetalert2-9.5.4-dist/dist/sweetalert2.all.min.js"></script>
         <link rel="stylesheet" href="plugins/sweetalert2-9.5.4-dist/dist/sweetalert2.min.css"/>
         <!-- Custom stuff -->
-        <script type="text/javascript" src="js/essential.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
             $(() => {
                 main.switchPage("HTML/login.html", "Login")
@@ -24,7 +24,9 @@
     <body>
         <main></main>
         <footer>
+            <div class="tilbage-button button" onclick="main.tilbage('HTML/menu.html')">Tilbage</div>
             <div class="logout-button button" onclick="main.logout()">Log ud</div>
+
         </footer>
     </body>
 </html>

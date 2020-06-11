@@ -2,6 +2,7 @@ package DAL.Classes;
 
 import DAL.DALException;
 import DAL.Interfaces.IProduktBatchKompDAO;
+import DAL.Statics;
 import DTO.ProduktBatchDTO;
 import DTO.ProduktBatchKompDTO;
 
@@ -15,15 +16,6 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
      * @Author Christian Pone
      */
 
-    private String host = "primary.folkmann.it";
-    private String port = "3306";
-    private String username = "CDIO";
-    private String password = "y1NzaOYI08FrdqzX";
-    private String database = "/DTU_CDIOFinal";
-
-    //Do not edit these variables
-    private String driver = "com.mysql.cj.jdbc.Driver";
-    private String url = "jdbc:mysql://" + this.host + ":" + this.port + this.database + "?characterEncoding=latin1&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
 
     public static void main(String[] args) {
@@ -31,13 +23,13 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
         ProduktBatchKompDAO test = new ProduktBatchKompDAO();
         ProduktBatchKompDTO bruger = new ProduktBatchKompDTO();
 
-        bruger.setPbId(4);
+        bruger.setPbId(455);
         bruger.setRbId(4);
         bruger.setTara(0.2);
         bruger.setNetto(4.0);
         bruger.setOprId(123);
         try {
-            test.deleteProduktBatchKomp(bruger);
+            test.createProduktBatchKomp(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -49,29 +41,18 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
     @Override
     public ProduktBatchKompDTO getProduktBatchKomp(int pbId, int rbId) throws DALException {
         try {
-            Class.forName(this.driver);
 
-            String sqlManipulation;
+            String sqlManipulation = "SELECT * FROM ProduktBatchKomp WHERE pbId='" + pbId +  "' AND rbId ='" + rbId + "'";
 
-            sqlManipulation = "SELECT * FROM ProduktBatchKomp WHERE pbId='" + pbId +  "' AND rbId ='" + rbId + "'";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+            ResultSet resultSet = Statics.DB.get(sqlManipulation);
 
             if(resultSet.next()){
-
                 ProduktBatchKompDTO pkBatch = getProductBatchKomp(resultSet);
-                connection.close();
-
-                //Test
-                System.out.println("pbID:" + pkBatch.getPbId() + " rbId:" + pkBatch.getRbId() + " Tara:" + pkBatch.getTara() + " Netto:" + pkBatch.getNetto() + " Operator:" + pkBatch.getOprId() );
 
                 return pkBatch;
 
 
             }else {
-                connection.close();
                 throw new DALException("Kunne ikke finde produkt batch");
             }
 
@@ -88,33 +69,16 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
         List<ProduktBatchKompDTO> pkBatchList = new ArrayList<>();
 
         try {
-            Class.forName(this.driver);
+            String sqlManipulation = "SELECT * FROM ProduktBatchKomp WHERE pbId='" + pbId +  "'";
 
-            String sqlManipulation;
-
-            sqlManipulation = "SELECT * FROM ProduktBatchKomp WHERE pbId='" + pbId +  "'";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlManipulation);
-
+            ResultSet resultSet = Statics.DB.get(sqlManipulation);
 
             while (resultSet.next()){
                 ProduktBatchKompDTO pkBatch = getProductBatchKomp(resultSet);
 
                 pkBatchList.add(pkBatch);
             }
-            connection.close();
 
-            // ------------TEST--------------------
-            String out = "pbId | rbId | tara | netto | operator";
-            for(int i = 0; i<pkBatchList.size(); i++){
-
-                out += "\n" + pkBatchList.get(i).getPbId() +"\t\t" + pkBatchList.get(i).getRbId() +"\t\t"+ pkBatchList.get(i).getTara() +"\t\t"+ pkBatchList.get(i).getNetto() +"\t\t"+ pkBatchList.get(i).getOprId();
-
-            }
-            System.out.println(out);
-            // ------------TEST--------------------
 
             return pkBatchList;
 
@@ -133,15 +97,9 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
         List<ProduktBatchKompDTO> pkBatchList = new ArrayList<>();
 
         try {
-            Class.forName(this.driver);
 
-            String sqlManipulation;
-
-            sqlManipulation = "SELECT * FROM ProduktBatchKomp";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+            String sqlManipulation = "SELECT * FROM ProduktBatchKomp";
+            ResultSet resultSet = Statics.DB.get(sqlManipulation);
 
 
             while (resultSet.next()){
@@ -149,7 +107,6 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 
                 pkBatchList.add(pkBatch);
             }
-            connection.close();
 
             // ------------TEST--------------------
             String out = "pbId | rbId | tara | netto | operator";
@@ -183,17 +140,10 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 
     @Override
     public void createProduktBatchKomp(ProduktBatchKompDTO pkBatch) throws DALException {
-
         try {
-            Class.forName(this.driver);
 
             String sqlManipulation = "INSERT ProduktBatchKomp VALUES ('" + pkBatch.getPbId() + "', '" + pkBatch.getRbId() + "', '" + pkBatch.getTara() + "', '" + pkBatch.getNetto() + "', '" + pkBatch.getOprId() + "')";
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
+            Statics.DB.update(sqlManipulation);
 
 
         }  catch (SQLException | ClassNotFoundException e ) {
@@ -201,64 +151,36 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
             throw new DALException("Database fejl");
 
         }
-
-
     }
 
     @Override
     public void updateProduktBatchKomp(ProduktBatchKompDTO pkBatch) throws DALException {
 
-
         try {
-            Class.forName(this.driver);
-
 
             String sqlManipulation = "UPDATE ProduktBatchKomp SET pbId = " + pkBatch.getPbId() + ", rbId = '" + pkBatch.getRbId() + "', tara = '" + pkBatch.getTara()
                     + "', netto = '" + pkBatch.getNetto() + "', oprId = '" + pkBatch.getOprId() + "' WHERE pbId = '" + pkBatch.getPbId() + "' AND rbId =" + pkBatch.getRbId();
 
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
-
+            Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();
             throw new DALException("Database fejl");
-
         }
-
-
     }
 
     @Override
     public void deleteProduktBatchKomp(ProduktBatchKompDTO pkBatch) throws DALException {
 
-
         try {
-            Class.forName(this.driver);
-
 
             String sqlManipulation = "DELETE FROM ProduktBatchKomp WHERE pbId = '" + pkBatch.getPbId() + "' AND rbId =" + pkBatch.getRbId();
-
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
-
+            Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();
             throw new DALException("Database fejl");
 
         }
-
-
     }
-
-
 }

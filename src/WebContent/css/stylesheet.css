@@ -43,6 +43,14 @@ main #login{ text-align: center; }
 main #menu{ text-align: center; }
 .login-button{ margin: 0 15%; }
 .menu-button{ display: none; }
+
+th,
+td {
+    width: 120px;
+    overflow: hidden;
+}
+
 #bruger-tabel{ width:100%; }
 footer{ max-width: 600px; margin: 0 auto; display: none; text-align: center; border-top: 1px solid var(--footer-border); padding-top: 0.5em; }
 footer .logout-button{ margin-left: 75%; width: 25%; }
+footer .tilbage-button{float:left; width: 25%;}

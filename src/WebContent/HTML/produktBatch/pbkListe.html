@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Christian" charset="UTF-8">
+
+    <title>ProduktBatchKomponent-Liste</title>
+
+    <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/produktionbatch.js"></script>
+
+
+    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.tilbageShow()</script>
+
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("this").parents("td").remove();
+            });
+            loadPBK();
+        });
+    </script>
+</head>
+<body>
+
+
+<div>
+    <h1>Produktbatches</h1>
+
+    <table id="pbk-tabel">
+        <thead>
+        <tr>
+            <th>Produktbatch ID</th>
+            <th>Råvarebatch ID</th>
+            <th>Tara-vægt</th>
+            <th>netto-vægt</th>
+            <th>Operator ID</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>

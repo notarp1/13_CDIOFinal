@@ -56,5 +56,14 @@ let main = {
         main.user.role = ""
         main.switchPage("HTML/login.html", "Menu")
         $("footer").hide(0)
+    },
+    tilbage: () =>{
+        main.switchPage(main.back)
+    }, back:"",
+    tilbageHide: () =>{
+        $(".tilbage-button").hide(0);
+    },
+    tilbageShow: () =>{
+        $(".tilbage-button").show(0);
     }
 }

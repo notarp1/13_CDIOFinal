@@ -71,6 +71,7 @@ public class ProduktBatchService {
 
     @Path("updatePB")
     @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     public Response updateProduktBatch(ProduktBatchDTO pBatch) {
         try {
             pController.updateProduktBatch(pBatch);
@@ -85,6 +86,7 @@ public class ProduktBatchService {
 
     @Path("deletePB")
     @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
     public Response deleteProduktBatch(ProduktBatchDTO pBatch) {
         try {
             pController.deleteProduktBatch(pBatch);
@@ -140,6 +142,7 @@ public class ProduktBatchService {
 
     @Path("createPBK")
     @POST
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
 
         try {
@@ -155,6 +158,7 @@ public class ProduktBatchService {
 
     @Path("updatePBK")
     @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     public Response updateProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
         try {
             pController.updateProduktBatchKomp(pkBatch);
@@ -169,6 +173,7 @@ public class ProduktBatchService {
 
     @Path("deletePBK")
     @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
     public Response deleteProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
         try {
             pController.deleteProduktBatchKomp(pkBatch);
