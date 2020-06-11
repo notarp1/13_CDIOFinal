@@ -10,6 +10,10 @@ import java.util.List;
 
 import static java.lang.Class.forName;
 
+/**
+ * @author Zahra
+ */
+
 public class RaavareBatchDAO implements IRaavareBatchDAO {
 
     private String host = "primary.folkmann.it";
