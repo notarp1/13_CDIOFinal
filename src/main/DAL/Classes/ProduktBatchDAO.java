@@ -30,11 +30,11 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
         ProduktBatchDAO test = new ProduktBatchDAO();
         ProduktBatchDTO bruger = new ProduktBatchDTO();
 
-        bruger.setPbId(12);
-        bruger.setStatus(3);
+        bruger.setPbId(122);
+        bruger.setStatus(1);
         bruger.setReceptId(13);
         try {
-            test.deleteProduktBatch(bruger);
+            test.updateProduktBatch(bruger);
         } catch (DALException e) {
             e.printStackTrace();
 
@@ -62,6 +62,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
                 batch.setPbId(resultSet.getInt("pbId"));
                 batch.setStatus(resultSet.getInt("status"));
                 batch.setReceptId(resultSet.getInt("receptId"));
+                batch.setDate(resultSet.getDate("date"));
                 connection.close();
 
                 //Test
@@ -102,8 +103,9 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
             while (resultSet.next()){
                 ProduktBatchDTO batch = new ProduktBatchDTO();
                 batch.setPbId(resultSet.getInt("pbId"));
-                batch.setStatus(resultSet.getInt("status"));
                 batch.setReceptId(resultSet.getInt("receptId"));
+                batch.setStatus(resultSet.getInt("status"));
+                batch.setDate(resultSet.getDate("date"));
 
                 produktListe.add(batch);
             }
@@ -138,7 +140,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getReceptId() + "')";
+            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getReceptId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getDate() + "')";
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
@@ -162,7 +164,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
             Class.forName(this.driver);
 
 
-            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getStatus() + "', receptId = '" + pBatch.getReceptId() + "' WHERE pbId = " + pBatch.getPbId();
+            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getReceptId() + "', receptId = '" + pBatch.getStatus() + "' WHERE pbId = " + pBatch.getPbId();
 
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
