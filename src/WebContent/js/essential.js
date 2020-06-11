@@ -28,29 +28,23 @@ let main = {
         }
         $.ajax(
             conf
-        ).done(d => {
-            if(d.status === "success") {
-                _success(d);
-            } else {
-                main.notify(d.message, d.status)
-                if(_fail != null)
-                    _fail(d)
-            }
-        }).fail(d => {
-            if(DEBUG)
-                console.log(d)
+        ).done((d, status, xhr) => {
+            console.log(d)
+            _success(d);
+        }).fail((xhr, status, error) => {
+            console.log(xhr)
 
-            let msg = "Fejl: " + d.status + ", " + d.statusText
-            if(d.status === 404)
+            let msg = "Fejl: " + xhr.status + ", " + xhr.statusText
+            if(xhr.status === 404)
                 msg = "Filen blev ikke fundet på serveren."
-            else if(d.status === 403)
+            else if(xhr.status === 403)
                 msg = "Du har ikke adgang til at kalde det script."
-            else if(d.status === 500)
+            else if(xhr.status === 500)
                 msg = "Der skete en fejl på serveren. (500)"
 
             main.notify(msg)
             if(_fail != null)
-                _fail(d)
+                _fail(xhr)
         })
     },
     login: (role) => {
