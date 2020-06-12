@@ -17,6 +17,8 @@ public class RaavareBatchController implements IRaavareBatchController {
 
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException {
+
+        rangeConfirmRB(rbId);
         try {
             return rBatch.getRaavareBatch(rbId);
         } catch (DALException e) {
@@ -37,7 +39,7 @@ public class RaavareBatchController implements IRaavareBatchController {
 
     @Override
     public void createRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
-        rangeConfirmRB();
+        rangeConfirmRB(raavarebatch);
         try {
             rBatch.createRaavareBatch(raavarebatch);
         } catch (DALException e) {
@@ -46,6 +48,7 @@ public class RaavareBatchController implements IRaavareBatchController {
         }
 
     }
+
 
     @Override
     public void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
@@ -69,6 +72,9 @@ public class RaavareBatchController implements IRaavareBatchController {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke slette Råvarebatch");
         }
+    }
+
+    private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
     }
 
     private void rangeConfirmRB() {
