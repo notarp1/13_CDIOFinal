@@ -11,31 +11,20 @@
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageHide()</script>
     <script type="text/javascript">main.logoutHide()</script>
-    <script>
-        $(document).ready(function(){
-        n =  new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
-        document.getElementById("date").innerHTML = m + "/" + d + "/" + y;});</script>
 </head>
 <body>
-    <div id="print"></div>
 
-    <p id="date">dd</p>
 
-    <table id="pbPrint-tabel">
-        <thead>
-        <tr>
-            <th id="pIdPrint">Produkbatch ID</th>
-            <th>Recept ID</th>
-            <th>Status</th>
-            <th>Dato</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <p id="printDate"></p>
+    <p id="printPbId"></p>
+    <p id="printReceptId"></p>
+
+    <div id="printTables"></div>
+
+    <p id="printStatus"></p>
+    <p id="pbStart"></p>
+
+
+
 </body>
 </html>
