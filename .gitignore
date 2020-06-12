@@ -1,5 +1,6 @@
 /.idea/*.xml
 /.idea/libraries/
+/.idea/runConfigurations/TomCat.xml
 
 *.class
 /target/
