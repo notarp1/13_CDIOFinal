@@ -49,8 +49,8 @@ public class BrugerDAO implements IBrugerDAO {
     public List<BrugerDTO> getBrugerList() throws DALException {
         List<BrugerDTO> liste = new ArrayList<BrugerDTO>();
         try {
-            ResultSet brugere = Statics.DB.get("SELECT * FROM Bruger ORDER BY oprId");
-            ResultSet brugerRoller = Statics.DB.get("SELECT * FROM BrugerRoller ORDER BY oprId ASC");
+            ResultSet brugere = Statics.DB.get("SELECT * FROM Bruger WHERE active = 1 ORDER BY oprId");
+            ResultSet brugerRoller = Statics.DB.get("SELECT * FROM BrugerRoller WHERE oprId IN (SELECT oprId FROM Bruger WHERE active = 1) ORDER BY oprId ASC");
             brugerRoller.next();
             while (brugere.next()) {
                 BrugerDTO bruger = new BrugerDTO();
@@ -60,9 +60,15 @@ public class BrugerDAO implements IBrugerDAO {
                 bruger.setCpr(brugere.getString("cpr"));
 
                 List<String> roller = new ArrayList<String>();
-                if (brugerRoller.getInt("oprId") == bruger.getOprId()) {
-                    roller.add(brugerRoller.getString("rolle"));
-                    brugerRoller.next();
+                boolean doing = true;
+                while (doing) {
+                    if (brugerRoller.getInt("oprId") == bruger.getOprId()) {
+                        roller.add(brugerRoller.getString("rolle"));
+                        if (!brugerRoller.next())
+                            doing = false;
+                    } else {
+                        doing = false;
+                    }
                 }
                 bruger.setRoller(roller);
 
@@ -79,6 +85,9 @@ public class BrugerDAO implements IBrugerDAO {
     public void createBruger(BrugerDTO opr) throws DALException {
         try {
             Statics.DB.update("INSERT INTO Bruger VALUES (" + opr.getOprId() + ", \"" + opr.getOprNavn() + "\", \"" + opr.getIni() + "\", \"" + opr.getCpr() + "\", 1)");
+            for (int i = 0; i < opr.getRoller().size(); i++) {
+                Statics.DB.update("INSERT INTO BrugerRoller VALUES (" + opr.getOprId() + ", \"" + opr.getRoller().get(i) + "\")");
+            }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new DALException("Database fejl: " + e.getMessage());

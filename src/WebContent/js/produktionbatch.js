@@ -1,3 +1,9 @@
+/**
+ * @Author Christian
+ */
+
+
+
 
 function switchPage(page) {
     $("body").load(page);
@@ -11,12 +17,13 @@ function switchPage(page) {
 $("#createPB").submit(function(event) {
     event.preventDefault();
     $.ajax({
-        url: "../api/pbService/createPB",
+        url: "api/pbService/createPB",
         data: JSON.stringify($("#createPB").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
-            alert("Produktbatch succesfuldt tilføjet!");
+            console.log(data);
+            alert(data)
         },
         error: function(XHR) {
             console.log(XHR);
@@ -99,8 +106,9 @@ function confirmDeleteUser(ID) {
                     contentType: "application/JSON",
                     method: "POST",
                     success: function (data) {
-                        alert("Bruger slettet succesfuldt!");
-                        switchPage("brugerAdmin.html");
+                        console.log(data);
+                        alert(data.responseText);
+                        switchPage("menu.html");
                     },
                     error: function (XHR) {
                         console.log(XHR);

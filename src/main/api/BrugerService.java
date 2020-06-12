@@ -43,6 +43,7 @@ public class BrugerService {
     }
 
     @POST
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createBruger(BrugerDTO bruger) {
         try {
             controller.createBruger(bruger);
@@ -54,6 +55,7 @@ public class BrugerService {
     }
 
     @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     public Response updateBruger(BrugerDTO bruger) {
         try {
             controller.updateBruger(bruger);
@@ -66,6 +68,7 @@ public class BrugerService {
 
     @DELETE
     @Path("{id}")
+    @Produces(MediaType.TEXT_PLAIN)
     public Response deleteBruger(@PathParam("id") int oprId) {
         try {
             controller.deleteBruger(oprId);

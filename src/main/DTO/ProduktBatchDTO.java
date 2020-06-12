@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.Date;
+
 public class ProduktBatchDTO {
     /** produkt batch id i området 1-99999999. Vælges af brugerne */
     int pbId;
@@ -7,6 +9,10 @@ public class ProduktBatchDTO {
     int status;
     /** recept id i området 1-99999999. Vælges af brugerne */
     int receptId;
+
+    long millis=System.currentTimeMillis();
+    java.sql.Date date =new java.sql.Date(millis);
+
 
     public int getPbId() {
         return pbId;
@@ -30,5 +36,12 @@ public class ProduktBatchDTO {
 
     public void setReceptId(int receptId) {
         this.receptId = receptId;
+    }
+
+    public void setDate(Date date){
+        this.date = date;
+    }
+    public java.sql.Date getDate(){
+        return date;
     }
 }
