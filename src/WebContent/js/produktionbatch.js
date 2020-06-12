@@ -41,21 +41,24 @@ function getPrintInfo(pbId, receptId, date, status) {
         document.getElementById("pbStart").innerHTML = "Produktions Start: " +  n;
 
     }
-    function getPbStatus(status) {
-        n = status;
-        if(status == 0){
-            document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
-        }
-        if(status == 1){
-            document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
-        }
-        if(status == 2){
-            document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
-        }
 
-    }
+
 
 }
+
+function getPbStatus(status) {
+    n = status;
+    if (status == 0) {
+        document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
+    }
+    if (status == 1) {
+        document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
+    }
+    if (status == 2) {
+        document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
+    }
+}
+
 
 function printAppend(print, i) {
     var loop = i;
@@ -146,11 +149,7 @@ function loadPrintPBK(pbk){
             setTimeout(() => {
 
                 var print = $("#printTables");
-
-                //$("#pbPrint-tabel").remove();
-
-
-                console.log("what");
+                getPbStatus(1);
 
                 printAppendTable(printPbk, print, 2);
 
