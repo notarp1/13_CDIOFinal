@@ -135,7 +135,7 @@ public class ProduktBatchService {
             return Response.status(Response.Status.OK).entity(pController.getProduktBatchKompList(pbId)).build();
         } catch (ControllerException e) {
             e.printStackTrace();
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
 
     }
