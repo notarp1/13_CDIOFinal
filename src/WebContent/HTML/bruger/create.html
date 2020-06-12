@@ -1,0 +1,31 @@
+<meta name="author" content="Theis">
+<div>
+    <form onsubmit="bruger.create(event)">
+        <label for="oprId">ID</label><br>
+        <input type="text" id="oprId" name="oprId"><br>
+        <label for="oprNavn">Navn</label><br>
+        <input type="text" id="oprNavn" name="oprNavn"><br>
+        <label for="ini">Initialer</label><br>
+        <input type="text" id="ini" name="ini"><br>
+        <label for="cpr">CPR</label><br>
+        <input type="text" id="cpr" name="cpr"><br>
+        <label>Roller</label><br>
+        <label for="Administrator">
+            <input type="checkbox" name="roller[]" id="Administrator" value="Administrator">
+            Administrator
+        </label><br>
+        <label for="Farmaceut">
+            <input type="checkbox" name="roller[]" id="Farmaceut" value="Farmaceut">
+            Farmaceut
+        </label><br>
+        <label for="Produktionsleder">
+            <input type="checkbox" name="roller[]" id="Produktionsleder" value="Produktionsleder">
+            Produktionsleder
+        </label><br>
+        <label for="Laborant">
+            <input type="checkbox" name="roller[]" id="Laborant" value="Laborant">
+            Laborant
+        </label><br>
+        <button>Opret</button>
+    </form>
+</div>

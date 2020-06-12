@@ -1,5 +1,6 @@
 :root {
     --dtu-red: #B50202;
+    --dtu-green: #1FD082;
     --dtu-red-light: #cc3737;
     --footer-border: black;
 }
@@ -26,11 +27,11 @@
 /* Main styling af siden */
 html{  }
 body{  }
-main{ max-width: 600px; margin: 0 auto; }
+main{ max-width: 750px; margin: 0 auto; }
 button{ cursor: pointer; }
 .button{ line-height: 2em; cursor: pointer; border-radius: 5px; background: var(--dtu-red); color: white; }
 .button:hover{ background: var(--dtu-red-light); }
-table{ border-collapse: collapse; margin-bottom: 1em; }
+table{ width:100%; border-collapse: collapse; }
 table thead{  }
 table thead tr { background-color: #dddddd; }
 table thead tr th { padding: 0.3em 0; }
@@ -39,10 +40,12 @@ table tbody tr{  }
 table tbody tr:nth-child(odd){  }
 table tbody tr:nth-child(even){ background-color: #eeeeee; }
 table tbody tr td{ padding: 0.3em 0; }
+label{ font-weight: bold; line-height: 1.5em; }
+input:not([type=checkbox]){ width: 100% }
 main #login{ text-align: center; }
 main #menu{ text-align: center; }
 .login-button{ margin: 0 15%; }
 .menu-button{ display: none; }
-#bruger-tabel{ width:100%; }
-footer{ max-width: 600px; margin: 0 auto; display: none; text-align: center; border-top: 1px solid var(--footer-border); padding-top: 0.5em; }
-footer .logout-button{ margin-left: 75%; width: 25%; }
+#bruger-tabel{  }
+footer{ max-width: 750px; margin: 1em auto 0; display: none; text-align: center; border-top: 1px solid var(--footer-border); padding-top: 0.5em; }
+footer .logout-button{ margin-left: 80%; width: 20%; }
