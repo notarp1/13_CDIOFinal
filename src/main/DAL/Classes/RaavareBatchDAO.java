@@ -10,6 +10,10 @@ import java.util.List;
 
 import static java.lang.Class.forName;
 
+/**
+ * @author Zahra
+ */
+
 public class RaavareBatchDAO implements IRaavareBatchDAO {
 
     private String host = "primary.folkmann.it";
@@ -21,6 +25,17 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     //Do not edit these variables
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://" + this.host + ":" + this.port + this.database + "?characterEncoding=latin1&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+
+    public static void main(String[] args) {
+        RaavareBatchDAO test = new RaavareBatchDAO();
+
+        try {
+            test.getRaavareBatch(100);
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws DALException {
@@ -36,9 +51,9 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
             if (resultSet.next()) {
                 RaavareBatchDTO batch = new RaavareBatchDTO();
-                batch.setRbId(resultSet.getInt("raavareBatchId"));
+                batch.setRbId(resultSet.getInt("rbId"));
                 batch.setRaavareId(resultSet.getInt("raavareId"));
-                batch.setMaengde(resultSet.getDouble("Maengde"));
+                batch.setMaengde(resultSet.getDouble("maengde"));
                 connection.close();
 
                 //Test
@@ -56,9 +71,14 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         }
     }
 
+    @Override
+    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException {
+        return null;
+    }
+
 
     @Override
-    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
+    public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
 
         List<RaavareBatchDTO> raavareBatchList = new ArrayList<>();
 
@@ -99,12 +119,6 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     }
 
     @Override
-    public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
-        return null;
-    }
-
-
-    @Override
     public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
         try {
             Class.forName(this.driver);
@@ -120,9 +134,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new DALException("Database fejl");
-
         }
-
     }
 
     @Override
@@ -140,8 +152,25 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new DALException("Database fejl");
-
         }
+    }
 
+    @Override
+    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
+        try {
+            Class.forName(this.driver);
+
+            String sqlManipulation = "DELETE FROM RaavareBatch WHERE RbId = " + raavarebatch.getRbId();
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+        }
     }
 }
