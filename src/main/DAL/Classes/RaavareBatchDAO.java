@@ -60,9 +60,14 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         }
     }
 
+    @Override
+    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException {
+        return null;
+    }
+
 
     @Override
-    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
+    public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
 
         List<RaavareBatchDTO> raavareBatchList = new ArrayList<>();
 
@@ -103,12 +108,6 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     }
 
     @Override
-    public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
-        return null;
-    }
-
-
-    @Override
     public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
         try {
             Class.forName(this.driver);
@@ -124,9 +123,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new DALException("Database fejl");
-
         }
-
     }
 
     @Override
@@ -144,8 +141,25 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new DALException("Database fejl");
-
         }
+    }
 
+    @Override
+    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
+        try {
+            Class.forName(this.driver);
+
+            String sqlManipulation = "DELETE FROM RaavareBatch WHERE RbId = " + raavarebatch.getRbId();
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+
+            connection.close();
+
+        }  catch (SQLException | ClassNotFoundException e ) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+        }
     }
 }
