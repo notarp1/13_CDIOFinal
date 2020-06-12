@@ -38,7 +38,7 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void createRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
+    public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
         rangeConfirmRB(raavarebatch);
         try {
             rBatch.createRaavareBatch(raavarebatch);
