@@ -51,7 +51,7 @@ public class RaavareBatchController implements IRaavareBatchController {
 
 
     @Override
-    public void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
+    public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
 
         rangeConfirmRB(raavarebatch.getRaavareId());
         try {
@@ -64,7 +64,7 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void deleteRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
+    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
         try {
             this.getRaavareBatch(raavarebatch.getRbId());
             rBatch.deleteRaavareBatch(raavarebatch);
@@ -75,9 +75,6 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
-    }
-
-    private void rangeConfirmRB() {
     }
 
     private void rangeConfirmRB(int rbId) throws ControllerException {
