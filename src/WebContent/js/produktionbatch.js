@@ -8,20 +8,48 @@ function switchPage(page) {
     $("body").load(page);
 }
 
+function loadPrintPB(pb){
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb.pbId},
+        contentType: "application/JSON",
+        method: "GET",
+        success: function (printPB) {
 
+            main.switchPage('HTML/produktBatch/pbPrint.html')
+            setTimeout(() => {
+                var print = $("#print");
+                print.html("");
+                console.log(printPB);
+                print.append(`<h1> ${printPB.pbId}  </h1> <br>
+                                    <h1> ${printPB.receptId}  </h1> <br>
+                                    <h1> ${printPB.status}  </h1> <br>
+                                    <h1> ${new Date(printPB.date).toDateString()}  </h1> <br>`);
+                console.log(print);
+            }, 10)
 
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+}
 
 //Tilføj produktbatch
 $("#createPB").submit(function(event) {
     event.preventDefault();
+    var pb = $("#createPB").serializeJSON();
     $.ajax({
         url: "api/pbService/createPB",
-        data: JSON.stringify($("#createPB").serializeJSON()),
+        data: JSON.stringify(pb),
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
             console.log(data);
-            alert(data)
+            alert(data);
+            loadPrintPB(pb);
+
         },
         error: function(XHR) {
             console.log(XHR);

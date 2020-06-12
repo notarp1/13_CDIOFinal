@@ -192,6 +192,7 @@ public class ProduktBatchController implements IProduktBatchController {
     }
 
     private void rangeConfirmPB(int pbId) throws ControllerException {
+        System.out.println(pbId);
         if (pbId < 1 || pbId > 99999999) {
             throw new ControllerException("Produktbatch ID ikke i den tilladte range{1..99999999}");
         }

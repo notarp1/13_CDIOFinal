@@ -57,6 +57,9 @@ let main = {
         main.switchPage("HTML/login.html", "Menu")
         $("footer").hide(0)
     },
+    logoutHide: () =>{
+        $("footer").hide(0);
+    },
     tilbage: () =>{
         main.switchPage(main.back)
     }, back:"",
