@@ -90,8 +90,8 @@ public class BrugerController implements IBrugerController {
             throw new ControllerException("INI skal være mindst 2 og max 4 tegn langt");
         if (2 > opr.getOprNavn().length() || opr.getOprNavn().length() > 20)
             throw new ControllerException("oprNavn skal være mindst 2 og max 20 tegn langt");
-        if (10 == opr.getCpr().length())
-            throw new ControllerException("CPR skal være 10 tegn langt");
+        if (opr.getCpr().length() != 10)
+            throw new ControllerException("CPR skal være 10 tegn langt, er " + opr.getCpr().length());
         if (opr.getRoller().size() == 0)
             throw new ControllerException("Brugeren skal have mindst 1 rolle");
     }

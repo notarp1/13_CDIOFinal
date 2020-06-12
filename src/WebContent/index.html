@@ -17,6 +17,10 @@
         <script type="text/javascript">
             $(() => {
                 main.switchPage("HTML/login.html", "Login")
+
+                main.call("api/hello", {}, () => {}, () => {
+                    main.notify("Der er ikke forbindelse til API'en!", "danger")
+                }, "GET")
             })
         </script>
         <link rel="stylesheet" href="css/stylesheet.css"/>
