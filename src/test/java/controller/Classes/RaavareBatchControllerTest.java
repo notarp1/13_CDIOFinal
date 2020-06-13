@@ -1,5 +1,5 @@
 package controller.Classes;
-
+/*
 import DTO.RaavareBatchDTO;
 import controller.ControllerException;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -70,3 +70,5 @@ public class RaavareBatchControllerTest {
     public void deleteRaavareBatch() {
     }
 }
+
+ */
