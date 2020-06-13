@@ -26,6 +26,17 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     private String driver = "com.mysql.cj.jdbc.Driver";
     private String url = "jdbc:mysql://" + this.host + ":" + this.port + this.database + "?characterEncoding=latin1&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
+    public static void main(String[] args) {
+        RaavareBatchDAO test = new RaavareBatchDAO();
+
+        try {
+            test.getRaavareBatch(100);
+        } catch (DALException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws DALException {
 
@@ -40,9 +51,9 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
             if (resultSet.next()) {
                 RaavareBatchDTO batch = new RaavareBatchDTO();
-                batch.setRbId(resultSet.getInt("raavareBatchId"));
+                batch.setRbId(resultSet.getInt("rbId"));
                 batch.setRaavareId(resultSet.getInt("raavareId"));
-                batch.setMaengde(resultSet.getDouble("Maengde"));
+                batch.setMaengde(resultSet.getDouble("maengde"));
                 connection.close();
 
                 //Test
@@ -112,7 +123,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "INSERT raavarebatch WHERE ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRbId() + "','" + raavarebatch.getMaengde() + "')";
+            String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRaavareId() + "','" + raavarebatch.getMaengde() + "')";
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
@@ -131,7 +142,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             forName(this.driver);
 
-            String sqlManipulation = "UPDATE RaavareBatch SET RbId = " + raavarebatch.getRbId() + ", raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE raavareMaengde = " + raavarebatch.getMaengde();
+            String sqlManipulation = "UPDATE RaavareBatch SET RbId = " + raavarebatch.getRbId() + ", raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);

@@ -1,4 +1,5 @@
 <meta name="author" content="Theis">
+<head></head>
 <div id="menu">
     <h1>Hvad vil du gøre?</h1>
 
@@ -6,13 +7,22 @@
     <br>
     <div class="menu-button button" onclick="main.switchPage('HTML/opretRåvarebatch.html')" data-Farmaceut>Opret råvbarebatch</div>
     <br>
-    <div class="menu-button button" onclick="main.switchPage('HTML/opretProduktbatch.html')" data-Farmaceut data-Produktionsleder>Opret produktbatch</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/opretProduktbatch.html')" data-Farmaceut data-Produktionsleder>Opret produktbatch</div>
+    <br>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbListe.html')" data-Produktionsleder data-Laborant>Se produktbatches</div>
+    <br>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/opretProduktbatchKomp.html')" data-Produktionsleder data-Laborant>Opret produktbatch-komponent</div>
+    <br>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbkListe.html')" data-Produktionsleder data-Laborant>Se produktbatch komponenter</div>
+    <br>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbPrint.html')" data-Produktionsleder data-Laborant>GET PB</div>
     <br>
     <div class="menu-button button" onclick="main.switchPage('HTML/afvej.html')" data-Farmaceut data-Produktionsleder data-Laborant>Afvej</div>
     <br>
 </div>
 <script type="text/javascript">
     $(() => {
+        main.tilbageHide();
         if (main.user.role === "Administrator")
             $(".menu-button[data-Administrator]").show(0)
         else if (main.user.role === "Farmaceut")
