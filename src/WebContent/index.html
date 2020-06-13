@@ -15,7 +15,7 @@
         <!--  -->
         <script type="text/javascript" src="js/json.js"></script>
         <!-- Custom stuff -->
-        <script type="text/javascript" src="js/essential.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
             $(() => {
                 main.switchPage("HTML/login.html", "Login")
@@ -30,7 +30,9 @@
     <body>
         <main></main>
         <footer>
+            <div class="tilbage-button button" onclick="main.tilbage('HTML/menu.html')">Tilbage</div>
             <div class="logout-button button" onclick="main.logout()">Log ud</div>
+
         </footer>
     </body>
 </html>

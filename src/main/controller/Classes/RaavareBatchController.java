@@ -13,10 +13,11 @@ import java.util.List;
  */
 public class RaavareBatchController implements IRaavareBatchController {
     static RaavareBatchDAO rBatch = new RaavareBatchDAO();
-    private RaavareBatchDTO raavarebatch;
 
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException {
+
+        rangeConfirmRB(rbId);
         try {
             return rBatch.getRaavareBatch(rbId);
         } catch (DALException e) {
@@ -36,10 +37,12 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void createRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
-        rangeConfirmRB();
+    public void createRaavareBatch(RaavareBatchDTO rBatchObjekt) throws ControllerException {
+        rangeConfirmRB(rBatchObjekt);
         try {
-            rBatch.createRaavareBatch(raavarebatch);
+            rBatch.createRaavareBatch(rBatchObjekt);
+
+
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke oprette Råvarebatch");
@@ -47,8 +50,9 @@ public class RaavareBatchController implements IRaavareBatchController {
 
     }
 
+
     @Override
-    public void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
+    public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
 
         rangeConfirmRB(raavarebatch.getRaavareId());
         try {
@@ -61,7 +65,7 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void deleteRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException {
+    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
         try {
             this.getRaavareBatch(raavarebatch.getRbId());
             rBatch.deleteRaavareBatch(raavarebatch);
@@ -71,7 +75,7 @@ public class RaavareBatchController implements IRaavareBatchController {
         }
     }
 
-    private void rangeConfirmRB() {
+    private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
     }
 
     private void rangeConfirmRB(int rbId) throws ControllerException {

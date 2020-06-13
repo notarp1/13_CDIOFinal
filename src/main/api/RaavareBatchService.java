@@ -31,12 +31,12 @@ public class RaavareBatchService {
         }
     }
 
-    @Path("getRBList")
+    @Path("createRB")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Response createRaavareBatch(RaavareBatchDTO rbId) {
+    public Response createRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try{
-            batchController.createRaavareBatch(rbId);
+            batchController.createRaavareBatch(rBatchObjekt);
             return Response.ok().entity("Raavarebatch oprettet succesfuldt!").build();
         } catch (ControllerException e) {
             e.printStackTrace();
@@ -46,9 +46,9 @@ public class RaavareBatchService {
 
     @Path("updateRB")
     @PUT
-    public Response updateRaavareBatch(RaavareBatchDTO rBatch) {
+    public Response updateRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try {
-            batchController.updateRaavareBatch(rBatch);
+            batchController.updateRaavareBatch(rBatchObjekt);
             return Response.ok().entity("Raavarebatch succesfuldt ændret!").build();
         } catch (ControllerException e) {
             e.printStackTrace();

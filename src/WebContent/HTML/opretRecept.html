@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recept</title>
+</head>
+<body>
+<h1>
+    <b>
+        <div style="text-align: center;">Opret Recept</div>
+
+    </b>
+</h1>
+
+
+<div style="text-align: center">
+    <form id = "createRB">
+        <label>Antal Råvare:</label><br>
+        <input type="number" id="antalRåvare" step="1" min="0" required pattern="[0-9.]+"><br><br>
+        <input type="submit" value="Tilføj"><br><br>
+
+        <label>Recept ID:</label><br>
+        <input type="number" name="receptID" required pattern="[0-9.]+"><br><br>
+
+        <label>Recept Navn:</label><br>
+        <input type="number" name="receptNavn" required
+               pattern="[a-åA-Å]*"><br><br>
+
+        <input type="submit" value="Opret Recept">
+
+
+    </form>
+
+</div>
+</body>
+</html>
