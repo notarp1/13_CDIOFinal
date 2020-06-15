@@ -5,7 +5,6 @@ import controller.ControllerException;
 import org.junit.Test;
 
 
-
 public class RaavareBatchControllerTest {
 
     @Test
@@ -61,3 +60,4 @@ public class RaavareBatchControllerTest {
     public void deleteRaavareBatch() {
     }
 }
+
