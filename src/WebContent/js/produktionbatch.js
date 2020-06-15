@@ -10,52 +10,106 @@ function switchPage(page) {
 
 
 
-function getPrintInfo(pbId, receptId, date, status) {
+function getPrintInfo(pbId, receptId, date, status, pStartDate, update) {
 
-    getPrintDate();
+    document.getElementById("printDate").innerHTML ="Udskrevet: " + getPrintDate();
     getPbId(pbId);
     getReceptId(receptId);
-    getPbDate(date);
-    getPbStatus(status);
-
-    function getPrintDate() {
-        n =  new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
-        document.getElementById("printDate").innerHTML ="Udskrevet: " +  m + "/" + d + "/" + y;
-    }
-
-    function getPbId(pbId) {
-        n = pbId;
-        document.getElementById("printPbId").innerHTML = "Produktbatch ID: " +  n;
-    }
-
-    function getReceptId(receptId) {
-        n = receptId;
-        document.getElementById("printReceptId").innerHTML = "Recept ID: " +  n;
-    }
-
-    function getPbDate(date) {
-        n = date;
-        document.getElementById("pbStart").innerHTML = "Produktions Start: " +  n;
-
-    }
-
+    getPbStatus(status, date, pbId, pStartDate, update);
 
 
 }
 
-function getPbStatus(status) {
-    n = status;
-    if (status == 0) {
+function getPrintDate() {
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+
+    if(m < 10) {
+        return y + "-0" + m + "-" + d;
+    } else return y + "-" + m + "-" + d;
+}
+
+function getPbId(pbId) {
+    n = pbId;
+    document.getElementById("printPbId").innerHTML = "Produktbatch ID: " +  n;
+}
+
+function getReceptId(receptId) {
+    n = receptId;
+    document.getElementById("printReceptId").innerHTML = "Recept ID: " +  n;
+}
+
+function getPbDate(date) {
+    n = date;
+    return n;
+
+}
+
+function getPbStatus(status, date, pbId, pStartDate, update) {
+
+
+
+    if (update == 0) {
         document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
-    }
-    if (status == 1) {
-        document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
-    }
-    if (status == 2) {
-        document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
+        document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
+
+    } else {
+
+        if (status == 0) {
+
+            document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
+            document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
+        } else {
+            $.ajax({
+                url: "api/pbService/getPB/",
+                data: {pbId: pbId},
+                contentType: "application/JSON",
+                method: "GET",
+                success: function (pb) {
+                    console.log(pb);
+                    if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
+                        if (status == 1) {
+                            if (pb.pStartDato == null) {
+
+                                pb.pStartDato = getPrintDate();
+                                pb.status = 1;
+                                console.log(pb);
+                            }
+                        }
+                        if (status == 2) {
+                            pb.status = 2;
+                        } else pb.status = status;
+
+                        $.ajax({
+                            url: "api/pbService/updatePB",
+                            data: JSON.stringify(pb),
+                            contentType: "application/JSON",
+                            method: "PUT",
+                            success: function (pbUp) {
+
+                                alert(pbUp);
+                                if (status == 1) {
+                                    document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
+                                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + pb.pStartDato;
+                                } else {
+                                    document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
+                                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + getPbDate(pStartDate);
+                                }
+                            },
+                            error: function (XHR) {
+                                console.log(XHR);
+                                alert("Fejl: " + XHR.responseText);
+                                main.switchPage('HTML/login.html')
+                            },
+
+                        });
+                    } else main.switchPage('HTML/login.html');
+
+                },
+            });
+        }
     }
 }
 
@@ -80,13 +134,19 @@ function printAppend(print, i) {
         </thead>
         <tbody id="tableItems${loop}">
         </tbody>
-    </table>`);
+    </table><br><br>`);
 
 }
 
 
-function printAppendTable(printPbk, print, times) {
-    a = times;
+function printAppendTable(print, pbkList) {
+    a = 0;
+
+    $.each(pbkList, function (v, k) {
+        a++;
+    });
+    console.log(a);
+
     for(let i = 0; i<a; i++) {
         printAppend(print, i);
         var print2 = $(`#printTables`).find(`#tableItems${i}`);
@@ -95,11 +155,11 @@ function printAppendTable(printPbk, print, times) {
     <td></td>
     <td></td>
     <td></td>
-    <td>${printPbk.tara}</td>
-    <td>${printPbk.netto}</td>
+    <td>${pbkList[i].tara}</td>
+    <td>${pbkList[i].netto}</td>
     <td></td>
-    <td>${printPbk.rbId}</td>
-    <td>${printPbk.oprId}</td>
+    <td>${pbkList[i].rbId}</td>
+    <td>${pbkList[i].oprId}</td>
     </tr>`);
        /* setTimeout(() => {
         }, 10)*/
@@ -108,18 +168,21 @@ function printAppendTable(printPbk, print, times) {
 }
 
 
-function loadPrintPB(pb){
+function loadPrintPB(pb, update){
+
+    console.log(pb.pbId);
+
     $.ajax({
         url: "api/pbService/getPB",
         data: {pbId: pb.pbId},
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
-            main.switchPage('HTML/produktBatch/pbPrint.html')
-
+            console.log(printPb);
+            main.switchPage('HTML/produktBatch/pbPrint.html');
             setTimeout(() => {
 
-                getPrintInfo(printPb.pbId, printPb.receptId, printPb.date, printPb.status);
+                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update);
 
                 var print = $("#printTables");
                 $("#pbPrint-tabel").remove();
@@ -138,31 +201,16 @@ function loadPrintPB(pb){
     });
 }
 
-function loadPrintPBK(pbk){
-    $.ajax({
-        url: "api/pbService/getPBK",
-        data: {pbId: pbk.pbId, rbId: pbk.rbId},
-        contentType: "application/JSON",
-        method: "GET",
-        success: function (printPbk) {
-            console.log("4");
-            setTimeout(() => {
+function loadPrintPBK(pbkList){
+    console.log("4");
+    setTimeout(() => {
 
-                var print = $("#printTables");
-                getPbStatus(1);
+        var print = $("#printTables");
 
-                printAppendTable(printPbk, print, 2);
+        printAppendTable(print, pbkList);
 
-
-                console.log(print);
-            }, 10)
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl: " + XHR.responseText);
-        },
-    });
+        console.log(print);
+    }, 10)
 }
 
 //Tilføj produktbatch
@@ -170,17 +218,19 @@ $("#createPB").submit(function(event) {
     event.preventDefault();
     var pb = $("#createPB").serializeJSON();
     $.ajax({
+
         url: "api/pbService/createPB",
         data: JSON.stringify(pb),
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
-            console.log(data);
+            console.log(pb);
             alert(data);
-            loadPrintPB(pb);
+            loadPrintPB(pb, 1);
 
         },
         error: function(XHR) {
+            console.log(pb);
             console.log(XHR);
             alert("Fejl: " + XHR.responseText);
         },
@@ -190,11 +240,9 @@ $("#createPB").submit(function(event) {
 //Tilføj produktbatchkomponent
 $("#createPBK").submit(function(event) {
     event.preventDefault();
-
-    var pbk = $("#createPBK").serializeJSON();
     $.ajax({
         url: "api/pbService/createPBK",
-        data: JSON.stringify(pbk),
+        data: JSON.stringify($("#createPBK").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
@@ -202,22 +250,20 @@ $("#createPBK").submit(function(event) {
             alert(data);
             var pb = $("#createPBK").serializeJSON();
             $.ajax({
-                url: "api/pbService/getPBKList",
+                url: "api/pbService/getPBKList/" + pb.pbId,
                 data: {pbId: pb.pbId},
                 contentType: "application/JSON",
                 method: "GET",
-                success: function (data2) {
-                    console.log(data2);
-                    alert(data2);
-                    loadPrintPB(pb);
-
+                success: function (pbkListe) {
+                    console.log(pbkListe);
+                    console.log(pb);
+                    loadPrintPB(pb, 0);
                     setTimeout(() => {
                         $("#pbPrint-tabel").remove();
                         console.log("3");
-                        loadPrintPBK(pbk)
+                        loadPrintPBK(pbkListe)
                     }, 1000)
                     ;
-
                 },
                 error: function(XHR) {
                     console.log(XHR);
@@ -233,6 +279,31 @@ $("#createPBK").submit(function(event) {
     });
 });
 
+$("#findPB").submit(function(event) {
+    event.preventDefault();
+
+        var pb = $("#findPB").serializeJSON();
+        $.ajax({
+            url: "api/pbService/getPBKList/",
+            data: {pbId: pb.pbId},
+            contentType: "application/JSON",
+            method: "GET",
+            success: function (pbkListe) {
+                console.log(pbkListe);
+                loadPrintPB(pb, 1);
+                setTimeout(() => {
+                    $("#pbPrint-tabel").remove();
+                    console.log("3");
+                    loadPrintPBK(pbkListe)
+                }, 1000)
+                ;
+            },
+            error: function(XHR) {
+                console.log(XHR);
+                alert("Fejl: " + XHR.responseText);
+            },
+        });
+});
 
 
 function loadPB() {
@@ -250,6 +321,7 @@ function loadPB() {
                     <td>${products.receptId}</td>
                     <td>${products.status}</td>
                     <td>${products.date}</td>
+                    <td>${products.pStartDato}</td>
                    <td><button onclick="confirmDeletePB(${products.pbId})">slet</button></td>
                 </tr>`);
             })
