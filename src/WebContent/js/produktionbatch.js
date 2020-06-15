@@ -464,9 +464,44 @@ window.onload = function () {
     });
 
 
-
-
 }
+
+
+
+
+function loadPBs(type) {
+    if(type == 0) {
+        var output = $("#createPBK").find("#pbId");
+        output.html("");
+    }
+
+    if(type == 1) {
+        var output = $("#findPB").find("#pbId");
+        output.html("");
+    }
+
+    a = 0;
+
+    $.ajax({
+        url: "api/pbService/getPBList",
+        contentType: "application/JSON",
+        success: function (products) {
+            console.log(products);
+            $.each(products, function (v, k) {
+                a++;
+            });
+            for(let i = 0; i<a; i++){
+                output.append(` <option value="${products[i].pbId}">${products[i].pbId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
+
 
 
 

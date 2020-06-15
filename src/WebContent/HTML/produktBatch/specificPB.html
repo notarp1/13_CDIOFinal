@@ -10,6 +10,7 @@
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
+    <script type="text/javascript">loadPBs(1)</script>
 
 
 </head>
@@ -22,16 +23,15 @@
     </b>
 </h1>
 
-<h3 style="text-align: center;">Husk at tjekke forrige status, inden ændring!</h3>
+
 <div style="text-align: center">
+
     <form id = "findPB">
 
-        <label>Produkt ID:</label><br>
-        <input type ="number" name="pbId"><br><br>
 
-        <label>Status:</label><br>
-        <input type ="number" placeholder="0"  name="status"><br><br>
+        <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
 
+        <label for="status"> Status:</label><br> <input type ="number" placeholder="0"  name="status" id="status"><br><br>
 
         <input type="submit"  value="Find Produktbatch"><br><br>
 
