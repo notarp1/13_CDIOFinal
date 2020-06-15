@@ -45,7 +45,7 @@ public class RaavareBatchService {
     }
 
     @Path("createRB")
-    @GET
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try{
