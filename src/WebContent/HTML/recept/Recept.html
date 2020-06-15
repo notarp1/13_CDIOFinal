@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Ismail" charset="UTF-8">
+    <script type="text/javascript" src='js/Recept.js'></script>
+    <title>Title</title>
+    <script>
+        $(document).ready(function () {
+                recpetList();
+
+        });
+    </script>
+
+    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.tilbageShow()</script>
+
+</head>
+<body>
+
+<table id="rList">
+    <thead>
+    <tr>
+        <th>ReceptID</th>
+        <th>ReceptNavn</th>
+        <th></th>
+    </tr>
+    </thead>
+
+</table>
+
+
+
+<button onclick="main.switchPage('HTML/recept/OpretRecept.html')">Opret ny recept</button>
+<button onclick="main.switchPage('HTML/recept/EditRecept.html')">Redigere recept</button>
+</body>
+</html>
