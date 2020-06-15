@@ -127,7 +127,6 @@ function printAppend(print, i) {
             <th>Tolerance</th>
             <th>Tara</th>
             <th>Netto(kg)</th>
-            <th>Tolerance</th>
             <th>Råvarebatch</th>
             <th>Opr</th>
         </tr>
@@ -157,7 +156,6 @@ function printAppendTable(print, pbkList) {
     <td></td>
     <td>${pbkList[i].tara}</td>
     <td>${pbkList[i].netto}</td>
-    <td></td>
     <td>${pbkList[i].rbId}</td>
     <td>${pbkList[i].oprId}</td>
     </tr>`);
