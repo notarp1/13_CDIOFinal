@@ -22,6 +22,7 @@ public class RaavareBatchService {
     @Path("getRB")
     @GET
     public Response getRaavareBatch(@QueryParam("rbId") int rbId) {
+
         try {
             return Response.status(Response.Status.OK).entity(batchController.getRaavareBatch(rbId)).build();
 
@@ -48,6 +49,7 @@ public class RaavareBatchService {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRaavareBatch(RaavareBatchDTO rBatchObjekt) {
+
         try{
             batchController.createRaavareBatch(rBatchObjekt);
             return Response.ok().entity("Raavarebatch oprettet succesfuldt!").build();
@@ -55,6 +57,7 @@ public class RaavareBatchService {
             e.printStackTrace();
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
+
     }
 
     @Path("updateRB")
