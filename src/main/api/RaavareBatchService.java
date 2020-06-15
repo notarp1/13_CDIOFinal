@@ -31,6 +31,19 @@ public class RaavareBatchService {
         }
     }
 
+    @Path("getRBList")
+    @GET
+    public Response getRaavareBatchList() {
+
+        try {
+            return Response.status(Response.Status.OK).entity(batchController.getRavvareBatchList()).build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+    }
+
     @Path("createRB")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
