@@ -31,8 +31,21 @@ public class RaavareBatchService {
         }
     }
 
-    @Path("createRB")
+    @Path("getRBList")
     @GET
+    public Response getRaavareBatchList() {
+
+        try {
+            return Response.status(Response.Status.OK).entity(batchController.getRavvareBatchList()).build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+    }
+
+    @Path("createRB")
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try{
@@ -46,6 +59,7 @@ public class RaavareBatchService {
 
     @Path("updateRB")
     @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     public Response updateRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try {
             batchController.updateRaavareBatch(rBatchObjekt);
@@ -58,9 +72,10 @@ public class RaavareBatchService {
 
     @Path("deleteRB")
     @DELETE
-    public Response deleteRaavareBatch(RaavareBatchDTO rBatch) {
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteRaavareBatch(RaavareBatchDTO rBatchObjekt) {
         try {
-            batchController.deleteRaavareBatch(rBatch);
+            batchController.deleteRaavareBatch(rBatchObjekt);
             return Response.ok().entity("Raavaretbatch succesfuldt slettet!").build();
         } catch (ControllerException e) {
             e.printStackTrace();

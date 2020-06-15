@@ -5,10 +5,10 @@
 //Tilføj råvarebatch
 $("#createRB").submit(function(event) {
     event.preventDefault();
-    $("#createRB").serializeJSON();
+    var rb_json = $("#createRB").serializeJSON();
     $.ajax({
         url: "api/rbService/createRB",
-        data: JSON.stringify(),
+        data: rb_json,
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
