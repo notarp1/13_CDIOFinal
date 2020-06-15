@@ -102,10 +102,13 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
     @Override
     public void updateProduktBatch(ProduktBatchDTO pBatch) throws DALException {
+        String sqlManipulation = "";
         try {
+            if(pBatch.getpStartDato() == null) {
+                sqlManipulation = "UPDATE ProduktBatch SET pbId = '" + pBatch.getPbId() + "', receptId = '" + pBatch.getReceptId() + "', status = '" + pBatch.getStatus() + "', pStartDato = " + pBatch.getpStartDato() + " WHERE pbId = " + pBatch.getPbId();
+            } else sqlManipulation = "UPDATE ProduktBatch SET pbId = '" + pBatch.getPbId() + "', receptId = '" + pBatch.getReceptId() + "', status = '" + pBatch.getStatus() + "', pStartDato = '" + pBatch.getpStartDato() + "' WHERE pbId = " + pBatch.getPbId();
 
-            String sqlManipulation = "UPDATE ProduktBatch SET pbId = '" + pBatch.getPbId() + "', receptId = '" + pBatch.getReceptId() +  "', status = '" + pBatch.getStatus() + "', pStartDato = '" + pBatch.getpStartDato() + "' WHERE pbId = " + pBatch.getPbId();
-            Statics.DB.update(sqlManipulation);
+                Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();

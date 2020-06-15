@@ -10,12 +10,12 @@ function switchPage(page) {
 
 
 
-function getPrintInfo(pbId, receptId, date, status, pStartDate, update) {
+function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
 
     document.getElementById("printDate").innerHTML ="Udskrevet: " + getPrintDate();
     getPbId(pbId);
     getReceptId(receptId);
-    getPbStatus(status, date, pbId, pStartDate, update);
+    getPbStatus(status, date, pbId, pStartDate, update, oldPb);
 
 
 }
@@ -47,7 +47,7 @@ function getPbDate(date) {
 
 }
 
-function getPbStatus(status, date, pbId, pStartDate, update) {
+function getPbStatus(status, date, pbId, pStartDate, update, oldPb) {
 
 
 
@@ -57,7 +57,7 @@ function getPbStatus(status, date, pbId, pStartDate, update) {
 
     } else {
 
-        if (status == 0) {
+        if (status == 0 && oldPb.status == 0) {
 
             document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
             document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
@@ -70,12 +70,18 @@ function getPbStatus(status, date, pbId, pStartDate, update) {
                 success: function (pb) {
                     console.log(pb);
                     if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
+                        if (status == 0) {
+                                pb.pStartDato = null;
+                                pb.status = 0;
+                                console.log("status0:" + pb);
+
+                        }
                         if (status == 1) {
                             if (pb.pStartDato == null) {
 
                                 pb.pStartDato = getPrintDate();
                                 pb.status = 1;
-                                console.log(pb);
+                                console.log("status1: " + pb);
                             }
                         }
                         if (status == 2) {
@@ -88,7 +94,7 @@ function getPbStatus(status, date, pbId, pStartDate, update) {
                             contentType: "application/JSON",
                             method: "PUT",
                             success: function (pbUp) {
-
+                                console.log("pbUpdate: " + pbUp);
                                 alert(pbUp);
                                 if (status == 1) {
                                     document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
@@ -144,7 +150,7 @@ function printAppendTable(print, pbkList) {
     $.each(pbkList, function (v, k) {
         a++;
     });
-    console.log(a);
+
 
     for(let i = 0; i<a; i++) {
         printAppend(print, i);
@@ -168,7 +174,6 @@ function printAppendTable(print, pbkList) {
 
 function loadPrintPB(pb, update){
 
-    console.log(pb.pbId);
 
     $.ajax({
         url: "api/pbService/getPB",
@@ -176,11 +181,11 @@ function loadPrintPB(pb, update){
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
-            console.log(printPb);
+            console.log("loadPrintPB" + printPb);
             main.switchPage('HTML/produktBatch/pbPrint.html');
             setTimeout(() => {
 
-                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update);
+                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb);
 
                 var print = $("#printTables");
                 $("#pbPrint-tabel").remove();
@@ -207,7 +212,7 @@ function loadPrintPBK(pbkList){
 
         printAppendTable(print, pbkList);
 
-        console.log(print);
+        console.log("loadPrintPBK" + print);
     }, 10)
 }
 
@@ -222,7 +227,7 @@ $("#createPB").submit(function(event) {
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
-            console.log(pb);
+            console.log("createPB" + pb);
             alert(data);
             loadPrintPB(pb, 1);
 
@@ -282,8 +287,8 @@ $("#findPB").submit(function(event) {
 
         var pb = $("#findPB").serializeJSON();
         $.ajax({
-            url: "api/pbService/getPBKList/",
-            data: {pbId: pb.pbId},
+            url: "api/pbService/getPBKList/" + pb.pbId,
+
             contentType: "application/JSON",
             method: "GET",
             success: function (pbkListe) {
