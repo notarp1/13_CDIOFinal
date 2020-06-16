@@ -13,4 +13,8 @@ public interface IRaavareBatchDAO {
     void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
 
     void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
+
+    void setRBId(int rbId);
+
+    void setRaavareId(int raavareId);
 }

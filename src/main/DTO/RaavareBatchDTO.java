@@ -31,4 +31,13 @@ public class RaavareBatchDTO {
     public void setMaengde(double maengde) {
         this.maengde = maengde;
     }
+
+    @Override
+    public String toString() {
+        return "RaavareBatchDTO{" +
+                "rbId=" + rbId +
+                ", raavareId=" + raavareId +
+                ", maengde=" + maengde +
+                '}';
+    }
 }
