@@ -24,6 +24,7 @@ public class ProduktBatchController implements IProduktBatchController {
 
 
 
+
     @Override
     public ProduktBatchDTO getProduktBatch(int pbId) throws ControllerException {
 
@@ -51,7 +52,7 @@ public class ProduktBatchController implements IProduktBatchController {
 
     @Override
     public void createProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
-        rangeConfirmStatus(produktbatch);
+        rangeConfirmStatus(produktbatch.getStatus());
         rangeConfirmPB(produktbatch.getPbId());
         try {
             pBatch.createProduktBatch(produktbatch);
@@ -67,7 +68,7 @@ public class ProduktBatchController implements IProduktBatchController {
     @Override
     public void updateProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
 
-        rangeConfirmStatus(produktbatch);
+        rangeConfirmStatus(produktbatch.getStatus());
         rangeConfirmPB(produktbatch.getPbId());
         try {
             this.getProduktBatch(produktbatch.getPbId());
@@ -198,8 +199,8 @@ public class ProduktBatchController implements IProduktBatchController {
 
     }
 
-    private void rangeConfirmStatus(ProduktBatchDTO produktbatch) throws ControllerException {
-        if(produktbatch.getStatus() < 0 || produktbatch.getStatus()>2){
+    private void rangeConfirmStatus(int status) throws ControllerException {
+        if(status < 0 || status > 2){
             throw new ControllerException("Produktbatch STATUS ikke i den tilladte range{0..2}");
         }
     }

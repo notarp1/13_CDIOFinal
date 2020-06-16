@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="author" content="Christian" charset="UTF-8">
+
+    <title>Opret ProduktBatchKomponent</title>
+
+    <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/produktionbatch.js"></script>
+
+
+    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.tilbageShow()</script>
+    <script type="text/javascript">loadPBs(0)</script>
+
+</head>
+
+<body>
+
+<h1>
+    <b>
+        <div style="text-align: center;">Opret Produktbatch-komponent</div>
+
+    </b>
+</h1>
+
+<div style="text-align: center">
+    <form id = "createPBK">
+
+
+        <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
+
+        <label>Råvarebatch ID:</label><br>
+        <input type ="number" name="rbId"><br><br>
+
+
+        <label>Tara:</label><br>
+        <input type ="number" step="0.0001" name="tara"><br><br>
+
+        <label>Netto:</label><br>
+        <input type ="number" step="0.0001" name="netto"><br><br>
+
+        <label>Operator ID</label><br>
+        <input type ="number" name="oprId"><br><br>
+
+
+        <input type="submit"  value="Opret Produktbatch-komponent"><br><br>
+
+    </form>
+
+
+</div>
+
+</body>
+
+</html>

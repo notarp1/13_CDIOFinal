@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="CDIOFinal">
-    <output-path>$PROJECT_DIR$/out/artifacts/CDIOFinal</output-path>
-    <root id="root">
-      <element id="javaee-facet-resources" facet="13_CDIOFinal/web/Web" />
-    </root>
-  </artifact>
-</component>

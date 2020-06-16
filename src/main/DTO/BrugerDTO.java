@@ -55,6 +55,22 @@ public class BrugerDTO {
         this.roller = roller;
     }
 
+    public boolean isAdministrator() {
+        return this.roller.contains("Administrator");
+    }
+
+    public boolean isFarmaceut() {
+        return this.roller.contains("Farmaceut");
+    }
+
+    public boolean isProduktionsleder() {
+        return this.roller.contains("Produktionsleder");
+    }
+
+    public boolean isLaborant() {
+        return this.roller.contains("Laborant");
+    }
+
     @Override
     public String toString() {
         return "Bruger: (" + this.oprId + ") [" + this.ini + "] " + this.oprNavn + ", CPR: " + this.cpr + ", Roller: " + this.roller.toString();
