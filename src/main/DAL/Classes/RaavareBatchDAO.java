@@ -32,7 +32,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         RaavareBatchDAO test = new RaavareBatchDAO();
 
         try {
-            test.getRaavareBatch(100);
+            test.getRaavareBatchList(100);
         } catch (DALException e) {
             e.printStackTrace();
         }
@@ -77,14 +77,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
 
     @Override
-    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException {
-        return null;
-    }
-
-
-    @Override
-    public List<RaavareBatchDTO> getRaavareBatchList(int raavareId) throws DALException {
-
+    public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
         List<RaavareBatchDTO> raavareBatchList = new ArrayList<>();
 
         try {
@@ -99,9 +92,51 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
             while (resultSet.next()) {
                 RaavareBatchDTO batch = new RaavareBatchDTO();
-                batch.setRbId(resultSet.getInt("raavareBatchId"));
+                batch.setRbId(resultSet.getInt("rbId"));
                 batch.setRaavareId(resultSet.getInt("raavareId"));
-                batch.setMaengde(resultSet.getDouble("Maengde"));
+                batch.setMaengde(resultSet.getDouble("maengde"));
+
+                raavareBatchList.add(batch);
+
+            }
+            connection.close();
+
+            //Test
+            String out = "RbId | RaavareId | Maengde";
+            for (int i = 0; i < raavareBatchList.size(); i++) {
+                out += "\n" + raavareBatchList.get(i).getRaavareId() + "\t\t" + raavareBatchList.get(i).getRbId() + "\t\t" + raavareBatchList.get(i).getMaengde();
+            }
+            System.out.println(out);
+
+            return raavareBatchList;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+        }
+    }
+
+
+    @Override
+    public List<RaavareBatchDTO> getRaavareBatchList(int rbId) throws DALException {
+
+        List<RaavareBatchDTO> raavareBatchList = new ArrayList<>();
+
+        try {
+            Class.forName(this.driver);
+            String sqlManipulation;
+
+            sqlManipulation = "SELECT * FROM RaavareBatch WHERE rbId=" + rbId;
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+
+            while (resultSet.next()) {
+                RaavareBatchDTO batch = new RaavareBatchDTO();
+                batch.setRbId(resultSet.getInt("rbId"));
+                batch.setRaavareId(resultSet.getInt("raavareId"));
+                batch.setMaengde(resultSet.getDouble("maengde"));
 
                 raavareBatchList.add(batch);
 
@@ -127,7 +162,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     @Override
     public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
         try {
-            String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "', '" + raavarebatch.getRbId() + "', '" + raavarebatch.getRaavareId() + "', '" + raavarebatch.getMaengde() + "')";
+            String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "', '" +  raavarebatch.getRaavareId() + "', '" + raavarebatch.getMaengde() + "')";
             Statics.DB.update(sqlManipulation);
 
 
@@ -173,7 +208,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             forName(this.driver);
 
-            String sqlManipulation = "UPDATE RaavareBatch SET RbId = " + raavarebatch.getRbId() + ", raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
+            String sqlManipulation = "UPDATE RaavareBatch SET raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);
