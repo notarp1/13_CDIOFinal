@@ -34,12 +34,16 @@ button{ cursor: pointer; }
 table{ width:100%; border-collapse: collapse; }
 table thead{  }
 table thead tr { background-color: #dddddd; }
-table thead tr th { padding: 0.3em 0; }
+table thead tr th { padding: 0.3em 0;}
 table tbody{  }
-table tbody tr{  }
+table tbody tr{ border: none  }
 table tbody tr:nth-child(odd){  }
 table tbody tr:nth-child(even){ background-color: #eeeeee; }
-table tbody tr td{ padding: 0.3em 0; }
+table tbody tr td{ padding: 0.3em 0; text-align: center}
+tr { border: none; }
+td {
+    border: solid 1px #dddddd;
+}
 label{ font-weight: bold; line-height: 1.5em; }
 input:not([type=checkbox]){ width: 50% }
 main #login{ text-align: center; }

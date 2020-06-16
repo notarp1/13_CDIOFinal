@@ -15,8 +15,8 @@ public class ProduktBatchDAOTest {
      */
 
 
-    private void createBatch(ProduktBatchDTO batch) {
-        batch.setPbId(99999999);
+    private void createBatch(ProduktBatchDTO batch, int pbId) {
+        batch.setPbId(pbId);
         batch.setStatus(3);
         batch.setReceptId(13);
     }
@@ -26,28 +26,9 @@ public class ProduktBatchDAOTest {
     public void getProduktBatch() {
 
         ProduktBatchDAO test = new ProduktBatchDAO();
-
-        try {
-            ProduktBatchDTO batch = new ProduktBatchDTO();
-
-            createBatch(batch);
-
-            test.deleteProduktBatch(batch);
-
-            batch = test.getProduktBatch(99999999);
-
-            if(batch.getPbId() == 99999999){
-                assert false;
-            }
-
-        } catch (DALException e) {
-            assert true;
-        }
-
-
         ProduktBatchDTO batch = new ProduktBatchDTO();
 
-        createBatch(batch);
+        createBatch(batch, 99999999);
         try {
             test.createProduktBatch(batch);
             assert true;
@@ -59,10 +40,39 @@ public class ProduktBatchDAOTest {
             e.printStackTrace();
             assert false;
         }
-
-
     }
 
+
+    @Test
+    public void getDelProduktBatch() {
+
+        ProduktBatchDAO test = new ProduktBatchDAO();
+        ProduktBatchDTO batch = new ProduktBatchDTO();
+        try {
+            createBatch(batch, 99999999);
+            test.deleteProduktBatch(batch);
+            batch = test.getProduktBatch(99999999);
+
+            if (batch.getPbId() == 99999999) {
+                assert false;
+            }
+        } catch (DALException e) {
+            assert true;
+        }
+    }
+
+    @Test
+    public void getFailedRangeProduktBatch() {
+
+        ProduktBatchDAO test = new ProduktBatchDAO();
+        try {
+            test.getProduktBatch(000000000);
+            assert false;
+        } catch (DALException e) {
+            e.printStackTrace();
+            assert true;
+        }
+    }
 
 
     @Test
@@ -72,7 +82,7 @@ public class ProduktBatchDAOTest {
         ProduktBatchDTO batch = new ProduktBatchDTO();
         Boolean contains = false;
 
-        createBatch(batch);
+        createBatch(batch, 99999999);
 
 
         List<ProduktBatchDTO> produktListe = new ArrayList<>();
@@ -112,7 +122,7 @@ public class ProduktBatchDAOTest {
         ProduktBatchDAO test = new ProduktBatchDAO();
         ProduktBatchDTO batch = new ProduktBatchDTO();
 
-        createBatch(batch);
+        createBatch(batch, 99999999);
 
         try {
             test.createProduktBatch(batch);
@@ -151,7 +161,7 @@ public class ProduktBatchDAOTest {
         ProduktBatchDAO test = new ProduktBatchDAO();
         ProduktBatchDTO batch = new ProduktBatchDTO();
 
-        createBatch(batch);
+        createBatch(batch, 99999999);
 
         try {
             test.createProduktBatch(batch);

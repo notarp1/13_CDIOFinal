@@ -123,7 +123,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             Class.forName(this.driver);
 
-            String sqlManipulation = "INSERT raavarebatch WHERE ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRbId() + "','" + raavarebatch.getMaengde() + "')";
+            String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRaavareId() + "','" + raavarebatch.getMaengde() + "')";
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
@@ -142,7 +142,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             forName(this.driver);
 
-            String sqlManipulation = "UPDATE RaavareBatch SET RbId = " + raavarebatch.getRbId() + ", raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE raavareMaengde = " + raavarebatch.getMaengde();
+            String sqlManipulation = "UPDATE RaavareBatch SET RbId = " + raavarebatch.getRbId() + ", raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);

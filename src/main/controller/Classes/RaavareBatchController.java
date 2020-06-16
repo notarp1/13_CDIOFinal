@@ -14,16 +14,6 @@ import java.util.List;
 public class RaavareBatchController implements IRaavareBatchController {
     static RaavareBatchDAO rBatch = new RaavareBatchDAO();
 
-    public static void main(String[] args) {
-        RaavareBatchController test = new RaavareBatchController();
-
-        try {
-            test.getRaavareBatch(100);
-        } catch (ControllerException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException {
 
@@ -47,10 +37,12 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
-        rangeConfirmRB(raavarebatch);
+    public void createRaavareBatch(RaavareBatchDTO rBatchObjekt) throws ControllerException {
+        rangeConfirmRB(rBatchObjekt);
         try {
-            rBatch.createRaavareBatch(raavarebatch);
+            rBatch.createRaavareBatch(rBatchObjekt);
+
+
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke oprette Råvarebatch");
