@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Ismail" charset="UTF-8">
+    <script type="text/javascript" src='js/Recept.js'></script>
+    <title>receptKomp</title>
+    <script>
+        $(document).ready(function () {
+            rKompList();
+
+        });
+    </script>
+
+    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.tilbageShow()</script>
+
+</head>
+<body>
+
+<table id="rKompList">
+    <thead>
+    <tr>
+        <th>ReceptID</th>
+        <th>RaavareID</th>
+        <th>Netto</th>
+        <th>tolerance</th>
+        <th></th>
+    </tr>
+    </thead>
+
+</table>
+
+
+
+<button onclick="main.switchPage('HTML/recept/OpretRKomp.html')">Opret ny receptKomp</button>
+<button onclick="main.switchPage('HTML/recept/EditRKomp.html')">Redigere recept</button>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ public interface IRaavareBatchController {
 
     RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException;
     List<RaavareBatchDTO> getRavvareBatchList() throws ControllerException;
+    List<RaavareBatchDTO> getRavvareBatchList(int rbId) throws ControllerException;
 
     void createRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
     void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;

@@ -8,6 +8,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author Ismail
+ */
+
 public class ReceptKompDAO implements IReceptKompDAO {
     private String host = "primary.folkmann.it";
     private String port = "3306";
@@ -145,7 +149,8 @@ public class ReceptKompDAO implements IReceptKompDAO {
     public void updateReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
         try {
             Class.forName(this.driver);
-            String sqlManipulation = "UPDATE ReceptKomp SET receptId = " + receptkomponent.getReceptId() + ", raavareId = '" + receptkomponent.getRaavareId() + "', nomNetto = '" + receptkomponent.getNomNetto() + "', tolerance = '" + receptkomponent.getTolerance() +"' WHERE receptId = " + receptkomponent.getReceptId();
+            String sqlManipulation = "UPDATE ReceptKomp SET receptId = " + receptkomponent.getReceptId() + ", raavareId = '" + receptkomponent.getRaavareId() + "', nomNetto = '" + receptkomponent.getNomNetto() + "', tolerance = '" + receptkomponent.getTolerance() +"' WHERE receptId = '" + receptkomponent.getReceptId() + "' AND raavareId =" + receptkomponent.getRaavareId();
+
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
 
             Statement statement = connection.createStatement();
@@ -162,7 +167,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
 
         try {
             Class.forName(this.driver);
-            String sqlManipulation = "DELETE FROM ReceptKomp where receptId =" + receptKomponent.getReceptId();
+            String sqlManipulation = "DELETE FROM ReceptKomp where receptId ='" + receptKomponent.getReceptId() + "' AND raavareId=" + receptKomponent.getRaavareId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);
@@ -173,8 +178,7 @@ public class ReceptKompDAO implements IReceptKompDAO {
             e.printStackTrace();
         }
 
+
     }
-
-
 }
 

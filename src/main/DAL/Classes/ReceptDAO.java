@@ -8,6 +8,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author Ismail
+ */
+
+
 public class ReceptDAO implements IReceptDAO {
     private String host = "primary.folkmann.it";
     private String port = "3306";
@@ -50,8 +55,9 @@ public class ReceptDAO implements IReceptDAO {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             System.out.println("findes ikke");
+            throw new DALException("Database fejl: " + e.getMessage());
         }
-        return null;
+
     }
 
     @Override
@@ -82,10 +88,9 @@ public class ReceptDAO implements IReceptDAO {
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            System.out.println("findes ikke");
+            throw new DALException("Database fejl: " + e.getMessage());
         }
 
-        return null;
     }
 
 

@@ -10,6 +10,8 @@ public class ProduktBatchDTO {
     /** recept id i området 1-99999999. Vælges af brugerne */
     int receptId;
 
+    java.sql.Date pStartDato;
+
     long millis=System.currentTimeMillis();
     java.sql.Date date =new java.sql.Date(millis);
 
@@ -43,5 +45,12 @@ public class ProduktBatchDTO {
     }
     public java.sql.Date getDate(){
         return date;
+    }
+
+    public void setpStartDato(Date date){
+        this.pStartDato = date;
+    }
+    public  java.sql.Date getpStartDato(){
+        return pStartDato;
     }
 }
