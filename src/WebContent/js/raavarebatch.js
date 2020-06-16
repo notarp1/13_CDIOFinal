@@ -45,14 +45,37 @@
                 console.log(fejlbesked);
                 alert("Fejl: " + fejlbesked.responseText)
             }
+        });
 
+        //Find specifik råvarebatches
+        $("#findRB").submit(function(event) {
+            event.preventDefault();
 
+            var rb = $("#findRB").serializeJSON();
+            $.ajax({
+                url: "api/rbService/getRBList/" + rb.rbId,
 
+                contentType: "application/JSON",
+                method: "GET",
+                success: function (rbListe) {
+                    console.log(rbListe);
 
+                    function loadPrintRB(rb, number) {
 
+                    }
 
-        })
-
-
-
+                    loadPrintRB(rb, 1);
+                    setTimeout(() => {
+                        $("#rbPrint-tabel").remove();
+                        console.log("3");
+                        loadPrintRB(rbListe)
+                    }, 1000)
+                    ;
+                },
+                error: function(XHR) {
+                    console.log(XHR);
+                    alert("Fejl: " + XHR.responseText);
+                },
+            });
+        });
     }
