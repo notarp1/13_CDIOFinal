@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  * @author Christine
  */
 
-@Path("RaaService")
+@Path("raaService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
