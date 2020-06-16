@@ -3,15 +3,13 @@
  */
 
 //Tilføj råvarebatch
-    console.log("Document ready!");
     $("#createRB").submit(function(event) {
-        console.log("Posting!");
         event.preventDefault();
-        var rb_json = $("#createRB").serializeJSON();
-        console.log(rb_json);
+
+        var RB_json = $("#createRB").serializeJSON();
         $.ajax({
             url: "api/rbService/createRB",
-            data: JSON.stringify(rb_json),
+            data: JSON.stringify(RB_json),
             contentType: "application/JSON",
             method: "POST",
             success: function (data) {
@@ -20,9 +18,41 @@
 
             },
             error: function(XHR) {
+                console.log(RB_json);
                 console.log(XHR);
                 alert("Fejl: " + XHR.responseText);
             },
         });
     });
 
+//Load og se råvarebatches
+    function loadRB() {
+        var rbTable =  $("#rb-table").find("tbody");
+        rbTable.html("");
+
+        $.ajax({
+            url: "api/rbService/getRBList",
+            contentType: "application/JSON",
+
+            success: function (raavareListe) {
+                console.log(raavareListe);
+                raavareListe.forEach(function (raavareListe){
+                    rbTable.append(`<tr> <td>${raavareListe.rbId}</td>
+                                     <td>${raavareListe.raavareId}</td>
+                                     <td>${raavareListe.maengde}</td></tr>`);
+                })},
+            error: function (fejlbesked) {
+                console.log(fejlbesked);
+                alert("Fejl: " + fejlbesked.responseText)
+            }
+
+
+
+
+
+
+        })
+
+
+
+    }

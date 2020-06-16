@@ -45,6 +45,20 @@ public class RaavareBatchService {
 
     }
 
+    @Path("getRBList/{rbId}")
+    @GET
+    public Response getRaavareBatchList(@PathParam("rbId") int rbId) {
+
+        try {
+            return Response.status(Response.Status.OK).entity(batchController.getRavvareBatchList(rbId)).build();
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+    }
+
+
     @Path("createRB")
     @POST
     @Produces(MediaType.TEXT_PLAIN)

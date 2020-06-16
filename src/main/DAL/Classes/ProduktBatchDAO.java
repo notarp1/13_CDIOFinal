@@ -32,6 +32,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
                 batch.setReceptId(resultSet.getInt("receptId"));
                 batch.setStatus(resultSet.getInt("status"));
                 batch.setDate(resultSet.getDate("dato"));
+                batch.setpStartDato(resultSet.getDate("pStartDato"));
 
                 return batch;
 
@@ -65,6 +66,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
                 batch.setReceptId(resultSet.getInt("receptId"));
                 batch.setStatus(resultSet.getInt("status"));
                 batch.setDate(resultSet.getDate("dato"));
+                batch.setpStartDato(resultSet.getDate("pStartDato"));
 
                 produktListe.add(batch);
             }
@@ -86,7 +88,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     public void createProduktBatch(ProduktBatchDTO pBatch) throws DALException {
 
         try {
-            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getReceptId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getDate() + "')";
+            String sqlManipulation = "INSERT ProduktBatch VALUES ('" + pBatch.getPbId() + "', '" + pBatch.getReceptId() + "', '" + pBatch.getStatus() + "', '" + pBatch.getDate() + "', " + "null" + ")";
             Statics.DB.update(sqlManipulation);
 
 
@@ -100,10 +102,13 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
     @Override
     public void updateProduktBatch(ProduktBatchDTO pBatch) throws DALException {
-
+        String sqlManipulation = "";
         try {
-            String sqlManipulation = "UPDATE ProduktBatch SET pbId = " + pBatch.getPbId() + ", status = '" + pBatch.getReceptId() + "', receptId = '" + pBatch.getStatus() + "' WHERE pbId = " + pBatch.getPbId();
-            Statics.DB.update(sqlManipulation);
+            if(pBatch.getpStartDato() == null) {
+                sqlManipulation = "UPDATE ProduktBatch SET pbId = '" + pBatch.getPbId() + "', receptId = '" + pBatch.getReceptId() + "', status = '" + pBatch.getStatus() + "', pStartDato = " + pBatch.getpStartDato() + " WHERE pbId = " + pBatch.getPbId();
+            } else sqlManipulation = "UPDATE ProduktBatch SET pbId = '" + pBatch.getPbId() + "', receptId = '" + pBatch.getReceptId() + "', status = '" + pBatch.getStatus() + "', pStartDato = '" + pBatch.getpStartDato() + "' WHERE pbId = " + pBatch.getPbId();
+
+                Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
             e.printStackTrace();

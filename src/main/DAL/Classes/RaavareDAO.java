@@ -169,4 +169,26 @@ public class RaavareDAO implements IRaavareDAO {
         }
 
     }
+
+    @Override
+    public void deleteRaavare(int raavareId) throws DALException{
+        try {
+            Class.forName(this.driver);
+
+
+            String sqlManipulation = "DELETE FROM Raavare WHERE raavareId = " + raavareId;
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlManipulation);
+            connection.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+        }
+
+
+
+    }
+
 }
