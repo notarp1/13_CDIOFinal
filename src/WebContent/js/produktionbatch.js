@@ -285,9 +285,9 @@ function printAppend(print, i) {
         <tr>
             <th>Råvare ID</th>
             <th>Råvare</th>
-            <th>Mængde</th>
+            <th>Mængde(kg)</th>
             <th>Tolerance</th>
-            <th>Tara</th>
+            <th>Tara(kg)</th>
             <th>Netto(kg)</th>
             <th>Råvarebatch</th>
             <th>Opr</th>
@@ -545,7 +545,7 @@ function confirmDeletePBK(pbId, rbId) {
  * ----------------------------------------------------------------------------------------
  */
 
-function loadPBs(type) {
+function loadPBKs(type) {
     if(type == 0) {
         var output = $("#createPBK").find("#pbId");
         output.html("");
@@ -558,7 +558,7 @@ function loadPBs(type) {
 
 
     $.ajax({
-        url: "api/pbService/getPBList",
+        url: "api/pbService/getPBKList",
         contentType: "application/JSON",
         success: function (products) {
             console.log(products);
