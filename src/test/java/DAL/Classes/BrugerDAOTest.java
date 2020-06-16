@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author Theis
@@ -26,6 +28,9 @@ public class BrugerDAOTest {
             bruger.setOprNavn("Unit Tester");
             bruger.setIni("TEST");
             bruger.setCpr("0000000000");
+            List<String> roller = new ArrayList<>();
+            roller.add("Laborant");
+            bruger.setRoller(roller);
             dao.createBruger(bruger);
             assert true;
         } catch (DALException e) {
