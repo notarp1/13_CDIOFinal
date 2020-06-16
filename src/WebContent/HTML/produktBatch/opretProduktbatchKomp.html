@@ -13,6 +13,8 @@
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
     <script type="text/javascript">loadPBs(0)</script>
+    <script type="text/javascript">loadRBs()</script>
+    <script type="text/javascript">loadUsers()</script>
 
 </head>
 
@@ -31,9 +33,8 @@
 
         <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
 
-        <label>Råvarebatch ID:</label><br>
-        <input type ="number" name="rbId"><br><br>
-
+        <label for="rbId">Råvarebatch ID:</label><br>
+        <select type ="number" name="rbId" id="rbId"></select><br><br>
 
         <label>Tara:</label><br>
         <input type ="number" step="0.0001" placeholder="0,0000" name="tara"><br><br>
@@ -41,8 +42,8 @@
         <label>Netto:</label><br>
         <input type ="number" step="0.0001" placeholder="0,0000" name="netto"><br><br>
 
-        <label>Operator ID</label><br>
-        <input type ="number" name="oprId"><br><br>
+        <label for="oprId">Operator ID</label><br>
+        <select type ="number" name="oprId" id="oprId"></select><br><br>
 
 
         <input type="submit"  value="Opret Produktbatch-komponent"><br><br>
