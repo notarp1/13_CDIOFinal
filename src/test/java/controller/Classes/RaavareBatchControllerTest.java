@@ -8,7 +8,7 @@ import org.junit.Test;
 public class RaavareBatchControllerTest {
 
     @Test
-    public void getRaavareBatch() {
+    public void getRaavareBatch()  {
     }
 
     @Test
@@ -48,8 +48,6 @@ public class RaavareBatchControllerTest {
                 e.printStackTrace();
                 assert false;
         }
-
-
     }
 
     @Test

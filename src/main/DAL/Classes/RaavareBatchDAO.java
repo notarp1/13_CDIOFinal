@@ -58,8 +58,9 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
                 batch.setMaengde(resultSet.getDouble("maengde"));
                 connection.close();
 
+
                 //Test
-                System.out.println("RbId:" + batch.getRbId() + "RaavareId:" + batch.getRaavareId() + "Maengde:" + batch.getMaengde());
+               System.out.println("RbId:" + batch.getRbId() + "RaavareId:" + batch.getRaavareId() + "Maengde:" + batch.getMaengde());
 
                 return batch;
             } else {
@@ -71,7 +72,9 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
             e.printStackTrace();
             throw new DALException("Database fejl");
         }
+
     }
+
 
     @Override
     public List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException {
@@ -200,5 +203,15 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
             e.printStackTrace();
             throw new DALException("Database fejl");
         }
+    }
+
+    @Override
+    public void setRBId(int rbId) {
+
+    }
+
+    @Override
+    public void setRaavareId(int raavareId) {
+
     }
 }
