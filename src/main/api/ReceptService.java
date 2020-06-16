@@ -135,6 +135,7 @@ public class ReceptService {
 
     @Path("createRKomp")
     @POST
+    @Produces(MediaType.TEXT_PLAIN)
     public Response createRkomp(ReceptKompDTO receptKomp){
         try {
             receptController.createReceptKomp(receptKomp);
@@ -148,6 +149,7 @@ public class ReceptService {
 
     @Path("updateRKomp")
     @PUT
+    @Produces(MediaType.TEXT_PLAIN)
     public Response updateRKomp(ReceptKompDTO receptKomp){
 
         try {

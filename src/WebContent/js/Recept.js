@@ -53,27 +53,28 @@ function deleteRecept(receptId) {
         contentType: "application/JSON",
         method: "GET",
         success: function (recept) {
-            console.log(recept)
-            if (confirm('vil du slette recept: '+ recept.receptId+ '?')) {
+            console.log(recept);
+            if (confirm('Vil du slette recept med ID : '+ recept.receptId+'?')) {
                 $.ajax({
-                    url: "/api/recept1/deleteR",
+                    url: "api/recept1/deleteR",
                     data: JSON.stringify({receptId: receptId}),
                     contentType: "application/JSON",
-                    type: "DELETE",
+                    method: "DELETE",
                     success: function (data) {
+                        console.log(data);
                         alert(data);
-                        switchPage("HTML/recept/Recept.html");
+                        main.switchPage('HTML/recept/Recept.html')
                     },
                     error: function (XHR) {
                         console.log(XHR);
-                        alert("Fejl:999" + XHR.responseText);
+                        alert("Fejl1:" + XHR.responseText);
                     },
                 });
             }
         },
         error: function (XHR) {
             console.log(XHR);
-            alert("Fejl:454" + XHR.responseText);
+            alert("Fejl2:" + XHR.responseText);
         },
     });
 }
@@ -134,6 +135,7 @@ $("#createRKomp").submit(function (event) {
 $("#updateRKomp").submit(function (event) {
     event.preventDefault()
     $.ajax({
+
         url: "api/recept1/updateRKomp",
         data: JSON.stringify($("#updateRKomp").serializeJSON()),
         contentType: "application/json",
@@ -151,30 +153,35 @@ $("#updateRKomp").submit(function (event) {
 });
 
 
-function deleteRKomp(receptId) {
+function deleteRKomp(receptId, raavareId) {
     $.ajax({
+        url: "api/recept1/getRKomp",
+        data: {receptId : receptId, raavareId : raavareId},
+        contentType: "application/JSON",
+        method: "GET",
         success: function (recept) {
-            console.log(recept)
-            if (confirm('vil du slette recept: '+ recept.receptId+ recept.raavareId +'?')) {
+            console.log(recept);
+            if (confirm('Vil du slette ReceptKomp med ID : '+recept.receptId + '  og Raavare ID: ' + recept.raavareId+'?')) {
                 $.ajax({
-                    url: "/api/recept1/deleteRKomp",
-                    data: JSON.stringify({receptId: receptId}),
+                    url: "api/recept1/deleteRkomp",
+                    data: JSON.stringify({receptId : receptId, raavareId : raavareId}),
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
+                        console.log(data);
                         alert(data);
-                        switchPage("HTML/recept/ReceptKomp.html");
+                        main.switchPage('HTML/recept/ReceptKomp.html')
                     },
                     error: function (XHR) {
                         console.log(XHR);
-                        alert("Fejl:999" + XHR.responseText);
+                        alert("Fejl:" + XHR.responseText);
                     },
                 });
             }
         },
         error: function (XHR) {
             console.log(XHR);
-            alert("Fejl:454" + XHR.responseText);
+            alert("Fejl:" + XHR.responseText);
         },
     });
 }
