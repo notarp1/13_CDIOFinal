@@ -2,9 +2,7 @@ package controller.Classes;
 
 import DTO.RaavareBatchDTO;
 import controller.ControllerException;
-
 import org.junit.Test;
-
 
 
 public class RaavareBatchControllerTest {
