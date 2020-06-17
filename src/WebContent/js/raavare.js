@@ -4,7 +4,8 @@
  */
 
 
-$("createRaa").submit(function (event){
+//Tilføj raavare
+$("#createRaa").submit(function (event){
     event.preventDefault();
     $.ajax({
         url: "api/raaService/createRaa",
@@ -23,8 +24,9 @@ $("createRaa").submit(function (event){
     });
 });
 
+// edit
 
-$("updateRaa").submit(function (event){
+$("#updateRaa").submit(function (event){
     event.preventDefault();
     $.ajax({
         url: "api/raaService/updateRaa",
@@ -41,21 +43,24 @@ $("updateRaa").submit(function (event){
     });
 });
 
-function raavareList() {
-    var getRaaList = $("#getRaaList");
+// se raavare listen
+function loadRaavare() {
+    var raavareTable = $("#raavare-table").find("tbody");
+    raavareTable.html("");
     $.ajax({
         type: "GET",
         url: "api/raaService/getRaaList",
         contentType: "application/JSON",
+
         success: function (data) {
             console.log(data);
             data.forEach(function (data) {
                 console.log(data);
-                getRaaList.append(`<tr>
+                raavareTable.append(`<tr>
                     <td>${data.raavareId}</td>
                     <td>${data.raavareNavn}</td>
                     <td>${data.leverandoer}</td>
-                    <td><button onclick="deleteRecept(${data.raavareId})">slet</button></td>
+                    <td><button onclick="deleteRaavare(${data.raavareId})">slet</button></td>
                 </tr>`);
             })
 
@@ -67,6 +72,5 @@ function raavareList() {
     })
 
 }
-
 
 
