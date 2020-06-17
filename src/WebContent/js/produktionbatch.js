@@ -76,6 +76,31 @@ $("#createPBK").submit(function(event) {
     });
 });
 
+
+//Opdater produktbatch-komponent
+$("#updatePBK").submit(function (event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: "api/pbService/updatePBK",
+        data: JSON.stringify($("#updatePBK").serializeJSON()),
+        contentType: "application/JSON",
+        method: "PUT",
+
+        success: function (data) {
+            console.log(data);
+            alert(data);
+            main.switchPage("HTML/produktBatch/pbkListe.html")
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText)
+        }
+    })
+
+})
+
 //Find specifik PB (specifikPB.html)
 
 $("#findPB").submit(function(event) {
@@ -552,6 +577,10 @@ function loadPBKs(type) {
     }
 
     if(type == 1) {
+        var output = $("#updatePBK").find("#pbId");
+        output.html("");
+    }
+    if(type == 2) {
         var output = $("#findPB").find("#pbId");
         output.html("");
     }
@@ -574,9 +603,16 @@ function loadPBKs(type) {
         },
     });
 }
-function loadRBs() {
-    var output = $("#createPBK").find("#rbId");
-    output.html("");
+function loadRBs(type) {
+
+    if(type == 0) {
+        var output = $("#createPBK").find("#rbId");
+        output.html("");
+    }
+    if(type == 1) {
+        var output = $("#updatePBK").find("#rbId");
+        output.html("");
+    }
 
     $.ajax({
         url: "api/rbService/getRBList",
@@ -595,9 +631,14 @@ function loadRBs() {
         },
     });
 }
-function loadUsers() {
-    var output = $("#createPBK").find("#oprId");
-        output.html("");
+function loadUsers(type) {
+
+    if(type == 0){
+        var output = $("#createPBK").find("#oprId");
+        output.html("");}
+    if(type == 1){
+        var output = $("#updatePBK").find("#oprId");
+        output.html("");}
 
     $.ajax({
         url: "api/bruger/all",
@@ -618,7 +659,28 @@ function loadUsers() {
     });
 }
 
+function loadRecepter() {
 
+    var output = $("#createPB").find("#receptId");
+    output.html("");
+
+    $.ajax({
+        url: "api/recept1/rList",
+        contentType: "application/JSON",
+        success: function (recepter) {
+            console.log(recepter);
+
+            for(let i = 0; i<recepter.length; i++){
+                output.append(` <option value="${recepter[i].receptId}">${recepter[i].receptId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
 
 
 

@@ -10,7 +10,7 @@
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadPBKs(1)</script>
+    <script type="text/javascript">loadPBKs(2)</script>
 
 
 </head>
@@ -31,7 +31,12 @@
 
         <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
 
-        <label for="status"> Status:</label><br> <input type ="number" placeholder="0"  name="status" id="status"><br><br>
+        <label for>Status:</label><br>
+        <select type ="number" name="status" id="status">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select><br><br>
 
         <input type="submit"  value="Find Produktbatch"><br><br>
 
