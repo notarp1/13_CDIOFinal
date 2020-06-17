@@ -9,7 +9,7 @@ $("#createRaa").submit(function (event){
     event.preventDefault();
     $.ajax({
         url: "api/raaService/createRaa",
-        data: JSON.stringify($("#createRaa").serializeJSON),
+        data: JSON.stringify($("#createRaa").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
         success: function (data) {
@@ -30,7 +30,8 @@ $("#updateRaa").submit(function (event){
     event.preventDefault();
     $.ajax({
         url: "api/raaService/updateRaa",
-        data: JSON.stringify($("#updateRaa").serializeJSON),
+        data: JSON.stringify($("#updateRaa").serializeJSON()),
+        contentType: "application/JSON",
         method: "PUT",
         success: function (data) {
             console.log(data);
@@ -42,6 +43,26 @@ $("#updateRaa").submit(function (event){
         },
     });
 });
+
+// slette raavare
+
+function deleteRaavare(raavareId){
+    $.ajax({
+        url: "api/raaService/deleteRaa?raavareId="+raavareId,
+        data: {raavareId: raavareId},
+        contentType: "application/JSON",
+        method: "DELETE",
+        success: function (raavare) {
+            alert(raavare);
+            loadRaavare();
+        },
+        error: function (xhr) {
+            console.log(xhr);
+            alert("Fejl: " + xhr.responseText);
+        }
+    })
+}
+
 
 // se raavare listen
 function loadRaavare() {
