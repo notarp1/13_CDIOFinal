@@ -11,6 +11,8 @@
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
 
+    <script type="text/javascript">loadRecepter()</script>
+
 
 </head>
 
@@ -30,12 +32,15 @@
         <input type ="number" name="pbId"><br><br>
 
 
-        <label>Recept ID:</label><br>
-        <input type ="number" name="receptId"><br><br>
+        <label for="receptId">Recept ID:</label><br>
+        <select type ="number" name="receptId" id="receptId"></select><br><br>
 
-        <label>Status:</label><br>
-        <input type ="number" placeholder="0"  name="status"><br><br>
-
+        <label for>Status:</label><br>
+        <select type ="number" name="status" id="status">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select><br><br>
 
         <input type="submit"  value="Opret Produktbatch"><br><br>
 

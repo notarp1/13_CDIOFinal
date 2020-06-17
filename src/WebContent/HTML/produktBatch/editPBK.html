@@ -1,34 +1,31 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta name="author" content="Christian" charset="UTF-8">
-
-    <title>Opret ProduktBatchKomponent</title>
+    <meta charset="UTF-8">
+    <title>Opdater Produktbatch-komponent</title>
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/produktionbatch.js"></script>
 
-
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadPBKs(0)</script>
-    <script type="text/javascript">loadRBs(0)</script>
-    <script type="text/javascript">loadUsers(0)</script>
+    <script type="text/javascript">loadPBKs(1)</script>
+    <script type="text/javascript">loadRBs(1)</script>
+    <script type="text/javascript">loadUsers(1)</script>
 
 </head>
-
 <body>
+
 
 <h1>
     <b>
-        <div style="text-align: center;">Opret Produktbatch-komponent</div>
+        <div style="text-align: center;">Opdater Produktbatch-komponent</div>
 
     </b>
 </h1>
 
 <div style="text-align: center">
-    <form id = "createPBK">
+    <form id = "updatePBK">
 
 
         <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
@@ -46,13 +43,9 @@
         <select type ="number" name="oprId" id="oprId"></select><br><br>
 
 
-        <input type="submit"  value="Opret Produktbatch-komponent"><br><br>
+        <input type="submit"  value="Opdater Produktbatch-komponent"><br><br>
 
     </form>
 
-
-</div>
-
 </body>
-
 </html>
