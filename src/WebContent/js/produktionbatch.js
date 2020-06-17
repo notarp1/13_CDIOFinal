@@ -58,7 +58,7 @@ $("#createPBK").submit(function(event) {
                     setTimeout(() => {
                         $("#pbPrint-tabel").remove();
                         console.log("3");
-                        loadPrintPBK(pbkListe)
+                        loadPrintPBK(pbkListe, pb)
                     }, 1000)
                     ;
                 },
@@ -77,6 +77,7 @@ $("#createPBK").submit(function(event) {
 });
 
 //Find specifik PB (specifikPB.html)
+
 $("#findPB").submit(function(event) {
     event.preventDefault();
 
@@ -92,7 +93,7 @@ $("#findPB").submit(function(event) {
             setTimeout(() => {
                 $("#pbPrint-tabel").remove();
                 console.log("3");
-                loadPrintPBK(pbkListe)
+                loadPrintPBK(pbkListe, pb)
             }, 1000)
             ;
         },
@@ -146,13 +147,13 @@ function loadPrintPB(pb, update){
 }
 
 //Henter hvilke PBK'er der skal appendes på print siden.
-function loadPrintPBK(pbkList){
+function loadPrintPBK(pbkList, pb){
     console.log("4");
     setTimeout(() => {
 
         var print = $("#printTables");
 
-        printAppendTable(print, pbkList);
+        printAppendTable(print, pbkList, pb);
 
         console.log("loadPrintPBK" + print);
     }, 10)
@@ -299,33 +300,103 @@ function printAppend(print, i) {
 }
 
 //Append pbk information på pbPrint.html
-function printAppendTable(print, pbkList) {
-    a = 0;
+function printAppendTable(print, pbkList, pb) {
 
-    $.each(pbkList, function (v, k) {
-        a++;
-    });
-
-
-    for(let i = 0; i<a; i++) {
-        printAppend(print, i);
+    for(let i = 0; i<pbkList.length; i++) {
+        console.log(pbkList.rbId);
+        getRbId(pbkList[i].rbId, (rbIdPrint) => {
+            getRaavare(rbIdPrint.raavareId, (raaPrint) => {
+                getTolerance(pb, rbIdPrint.raavareId, (tolerance) => {
+            console.log(raaPrint);
+            console.log(tolerance);
+            printAppend(print, i);
         var print2 = $(`#printTables`).find(`#tableItems${i}`);
             print2.append(`<tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>${rbIdPrint.raavareId}</td>
+    <td>${raaPrint}</td>
+    <td>${rbIdPrint.maengde}</td>
+    <td>${tolerance}</td>
     <td>${pbkList[i].tara}</td>
     <td>${pbkList[i].netto}</td>
     <td>${pbkList[i].rbId}</td>
     <td>${pbkList[i].oprId}</td>
     </tr>`);
-       /* setTimeout(() => {
-        }, 10)*/
+        })
+        })
+        })
     }
 
 }
 
+function getRbId(rbId, _callback) {
+    $.ajax({
+        url: "api/rbService/getRB",
+        data: {rbId: rbId},
+        contentType: "application/JSON",
+
+        success: function (rb) {
+            _callback(rb);
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+}
+
+
+function getRaavare(raavareId, _callback) {
+    $.ajax({
+        url: "api/raaService/getRaa",
+        data: {raavareId: raavareId},
+        contentType: "application/JSON",
+
+        success: function (raa) {
+            console.log(raa);
+
+            _callback(raa.raavareNavn);
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+}
+
+function getTolerance(pb, raavareId, _callback) {
+
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb.pbId},
+        contentType: "application/JSON",
+
+        success: function (data) {
+
+            $.ajax({
+                url: "api/recept1/getRKomp",
+                data: {receptId: data.receptId, raavareId: raavareId},
+                contentType: "application/JSON",
+
+                success: function (receptKomp) {
+                    console.log(receptKomp);
+                    _callback(receptKomp.tolerance);
+                },
+                error: function(XHR) {
+                    console.log(XHR);
+                    alert("Fejl: " + XHR.responseText);
+                },
+            });
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+
+
+}
 
 
 
@@ -365,6 +436,7 @@ function loadPB() {
 
 //Load PBK's (pbkListe.html)
 function loadPBK() {
+
     var table = $("#pbk-tabel").find("tbody");
     table.html("");
     $.ajax({
@@ -484,17 +556,14 @@ function loadPBs(type) {
         output.html("");
     }
 
-    a = 0;
 
     $.ajax({
         url: "api/pbService/getPBList",
         contentType: "application/JSON",
         success: function (products) {
             console.log(products);
-            $.each(products, function (v, k) {
-                a++;
-            });
-            for(let i = 0; i<a; i++){
+
+            for(let i = 0; i<products.length; i++){
                 output.append(` <option value="${products[i].pbId}">${products[i].pbId}</option>`);
             }
 
@@ -505,8 +574,49 @@ function loadPBs(type) {
         },
     });
 }
+function loadRBs() {
+    var output = $("#createPBK").find("#rbId");
+    output.html("");
 
+    $.ajax({
+        url: "api/rbService/getRBList",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
 
+            for(let i = 0; i<raavare.length; i++){
+                output.append(` <option value="${raavare[i].rbId}">${raavare[i].rbId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
+function loadUsers() {
+    var output = $("#createPBK").find("#oprId");
+        output.html("");
+
+    $.ajax({
+        url: "api/bruger/all",
+        contentType: "application/JSON",
+        method: "GET",
+        success: function (users) {
+            console.log(users);
+
+            for(let i = 0; i<users.length; i++){
+                output.append(` <option value="${users[i].oprId}">${users[i].oprNavn}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
 
 
 

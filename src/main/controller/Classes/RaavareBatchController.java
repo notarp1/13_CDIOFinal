@@ -30,7 +30,17 @@ public class RaavareBatchController implements IRaavareBatchController {
     public List<RaavareBatchDTO> getRavvareBatchList() throws ControllerException {
         try {
             return rBatch.getRaavareBatchList();
-        } catch (DALException | ClassNotFoundException e) {
+        } catch (DALException e) {
+            e.printStackTrace();
+            throw new ControllerException("Kunne ikke hente Råvarebatch list");
+        }
+    }
+
+    @Override
+    public List<RaavareBatchDTO> getRavvareBatchList(int rbId) throws ControllerException {
+        try {
+            return rBatch.getRaavareBatchList(rbId);
+        } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke hente Råvarebatch list");
         }
@@ -75,6 +85,11 @@ public class RaavareBatchController implements IRaavareBatchController {
         }
     }
 
+    @Override
+    public void getRaavareBatch(int rbId, Object rbId1) {
+
+    }
+
     private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
     }
 
@@ -84,15 +99,3 @@ public class RaavareBatchController implements IRaavareBatchController {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
