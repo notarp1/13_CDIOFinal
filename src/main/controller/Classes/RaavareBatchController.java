@@ -12,7 +12,7 @@ import java.util.List;
  * @author Zahra
  */
 public class RaavareBatchController implements IRaavareBatchController {
-    static RaavareBatchDAO rBatch = new RaavareBatchDAO();
+    RaavareBatchDAO rBatch = new RaavareBatchDAO();
 
     @Override
     public RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException {
@@ -22,7 +22,7 @@ public class RaavareBatchController implements IRaavareBatchController {
             return rBatch.getRaavareBatch(rbId);
         } catch (DALException e) {
             e.printStackTrace();
-            throw new ControllerException("Kunne ikke finde produkt");
+            throw new ControllerException("Kunne ikke finde råvare");
         }
     }
 
@@ -48,11 +48,9 @@ public class RaavareBatchController implements IRaavareBatchController {
 
     @Override
     public void createRaavareBatch(RaavareBatchDTO rBatchObjekt) throws ControllerException {
-        rangeConfirmRB(rBatchObjekt);
+        rangeConfirmRB(rBatchObjekt.getRbId());
         try {
             rBatch.createRaavareBatch(rBatchObjekt);
-
-
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke oprette Råvarebatch");
@@ -64,7 +62,7 @@ public class RaavareBatchController implements IRaavareBatchController {
     @Override
     public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
 
-        rangeConfirmRB(raavarebatch.getRaavareId());
+        rangeConfirmRB(raavarebatch.getRbId());
         try {
             this.getRaavareBatch(raavarebatch.getRbId());
             rBatch.updateRaavareBatch(raavarebatch);
@@ -83,14 +81,6 @@ public class RaavareBatchController implements IRaavareBatchController {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke slette Råvarebatch");
         }
-    }
-
-    @Override
-    public void getRaavareBatch(int rbId, Object rbId1) {
-
-    }
-
-    private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
     }
 
     private void rangeConfirmRB(int rbId) throws ControllerException {
