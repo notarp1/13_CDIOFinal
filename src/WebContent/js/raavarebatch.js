@@ -45,14 +45,31 @@
                 console.log(fejlbesked);
                 alert("Fejl: " + fejlbesked.responseText)
             }
-
-
-
-
-
-
         })
 
 
+//Find specifik RB
+        $("#findRB").submit(function(event) {
+            event.preventDefault();
+
+            var rb = $("#findRB").serializeJSON();
+            $.ajax({
+                url: "api/rbService/getRBList/" + rb.rbId,
+
+                contentType: "application/JSON",
+                method: "GET",
+                success: function (rbListe) {
+                    console.log(rbListe);
+                    setTimeout(() => {
+                        console.log("3");
+                    }, 1000)
+                    ;
+                },
+                error: function(XHR) {
+                    console.log(XHR);
+                    alert("Fejl: " + XHR.responseText);
+                },
+            });
+        });
 
     }
