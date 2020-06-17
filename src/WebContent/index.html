@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Velkommen</title>
-        <base href="http://localhost:8080/13_CDIOFinal_war_exploded/">
+        <!-- Til udvikling -->
+<!--        <base href="http://localhost:8080/13_CDIOFinal_war_exploded/">-->
+        <!-- Til production -->
+<!--        <base href="https://cdiofinal.folkmann.it/">-->
         <!-- jQuery 3.5.1 -->
         <script type="text/javascript" src="plugins/jQuery/jquery-3.5.1.min.js"></script>
         <!-- gritter 1.7.4 -->
@@ -18,6 +21,8 @@
         <script type="text/javascript" src="js/main.js"></script>
         <script type="text/javascript">
             $(() => {
+                if (window.origin === "http://cdiofinal.folkmann.it")
+                    window.location.href = "https://cdiofinal.folkmann.it"
                 main.switchPage("HTML/login.html", "Login")
 
                 main.call("api/hello", {}, () => {}, () => {
