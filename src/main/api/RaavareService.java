@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
  * @author Christine
  */
 
-@Path("RaaService")
+@Path("raaService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
@@ -47,7 +47,7 @@ public class RaavareService {
     }
 
     @Path("createRaa")
-    @PUT
+    @POST
     @Produces(MediaType.TEXT_PLAIN)
 
     public Response createRaavare(RaavareDTO raavare){
@@ -61,7 +61,7 @@ public class RaavareService {
     }
 
     @Path("updateRaa")
-    @POST
+    @PUT
     @Produces(MediaType.TEXT_PLAIN)
 
     public Response updateRaavare(RaavareDTO raavare){
