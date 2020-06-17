@@ -16,5 +16,4 @@ public interface IRaavareBatchController {
     void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
     void deleteRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
 
-    void getRaavareBatch(int rbId, Object rbId1);
 }
