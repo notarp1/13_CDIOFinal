@@ -46,7 +46,7 @@ td {
 }
 label{ font-weight: bold; line-height: 1.5em; }
 input:not([type=checkbox]){ width: 50% }
-main #login{ text-align: center; }
+main #login{ text-align: center; font-family: sans-serif; }
 main #menu{ text-align: center; font-family: sans-serif; }
 .login-button{ margin: 0 15% 1.5em; }
 .tilbage-button{width: 20%; float:left;}
