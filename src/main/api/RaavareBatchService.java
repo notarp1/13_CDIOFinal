@@ -57,7 +57,7 @@ public class RaavareBatchService {
 
     }
 
-    @Path("getRBList/{rbId}")
+        @Path("getRBList/{rbId}")
     @GET
     public Response getRaavareBatchList(@PathParam("rbId") int rbId) {
 

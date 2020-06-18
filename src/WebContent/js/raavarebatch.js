@@ -7,7 +7,7 @@ $("#createRB").submit(function (event) {
     event.preventDefault();
 
     var RB_json = $("#createRB").serializeJSON();
-
+    console.log(RB_json);
     $.ajax({
         url: "api/rbService/createRB",
         data: JSON.stringify(RB_json),
@@ -42,7 +42,7 @@ function loadRB() {
                                      <td>${raavareListe.rbId}</td>
                                      <td>${raavareListe.raavareId}</td>
                                      <td>${raavareListe.maengde}</td>
-                                     <td><button onclick="deleteRB(${data.rbId})">slet</button></td>
+                                     <td><button onclick="deleteRB(${raavareListe.rbId})">slet</button></td>
                                      </tr>`);
             })
         },
@@ -52,37 +52,12 @@ function loadRB() {
         }
     });
 
-
-
-//Find specifik RB
-    $("#findRB").submit(function (event) {
-        event.preventDefault();
-
-        var rb = $("#findRB").serializeJSON();
-        $.ajax({
-            url: "api/rbService/getRBList/" + rb.rbId,
-
-            contentType: "application/JSON",
-            method: "GET",
-            success: function (rbListe) {
-                console.log(rbListe);
-                setTimeout(() => {
-                    console.log("3");
-                }, 1000)
-                ;
-            },
-            error: function (XHR) {
-                console.log(XHR);
-                alert("Fejl: " + XHR.responseText);
-            },
-        });
-    });
-
 }
+
 
 //Opdater råvarebatch
 $("#updateRB").submit(function (event) {
-    event.preventDefault()
+    event.preventDefault();
     $.ajax({
         url: "api/rbService/updateRB",
         data: JSON.stringify($("#updateRB").serializeJSON()),
@@ -102,14 +77,33 @@ $("#updateRB").submit(function (event) {
 
 //slette råvarebatch
 function deleteRB(rbId) {
+    console.log(rbId);
     $.ajax({
         url: "api/rbService/getRB",
         data: {rbId: rbId},
-        contentType: "aplication/JSON",
-        media: "DELETE",
+        contentType: "application/JSON",
+        media: "GET",
         success: function (raavarebatch) {
-            alert(raavarebatch);
-            loadRB();
+            if(confirm('Vile du slette råvarebatch med ID:' + raavarebatch.rbId) + "?"){
+
+                $.ajax({
+                    url: "api/rbService/deleteRB",
+                    data: JSON.stringify(raavarebatch),
+                    contentType: "application/JSON",
+                    method: "DELETE",
+                    success: function (data) {
+                        console.log(data);
+                        alert(data);
+                        main.switchPage('HTML/raavareBatch/visRaavarebatch.html')
+                    },
+                    error: function (XHR) {
+                        console.log(XHR);
+                        alert("Fejl:" + XHR.responseText);
+                    },
+                });
+
+            }
+
         },
         error: function (xhr) {
             console.log(xhr);

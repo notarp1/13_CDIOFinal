@@ -30,8 +30,13 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     public static void main(String[] args) {
         RaavareBatchDAO test = new RaavareBatchDAO();
 
+        RaavareBatchDTO raa = new RaavareBatchDTO();
+
+        raa.setRbId(10);
+        raa.setRaavareId(10);
+        raa.setMaengde(2.1);
         try {
-            test.getRaavareBatchList(100);
+            test.createRaavareBatch(raa);
         } catch (DALException e) {
             e.printStackTrace();
         }
@@ -193,20 +198,13 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
     @Override
     public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
-        System.out.println(raavarebatch);
+
 
         try {
             Class.forName(this.driver);
 
             String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRaavareId() + "','" + raavarebatch.getMaengde() + "')";
             Statics.DB.update(sqlManipulation);
-
-
-            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sqlManipulation);
-
-            connection.close();
 
 
 
@@ -222,7 +220,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
         try {
             forName(this.driver);
 
-            String sqlManipulation = "UPDATE RaavareBatch SET raavareId = '" + raavarebatch.getRaavareId() + "', Maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
+            String sqlManipulation = "UPDATE RaavareBatch SET raavareId = '" + raavarebatch.getRaavareId() + "', maengde = '" + raavarebatch.getMaengde() + "' WHERE rbId = " + raavarebatch.getRbId();
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);

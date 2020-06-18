@@ -648,9 +648,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             data: {pbId: pbId},
             contentType: "application/JSON",
             method: "GET",
-            success: function (pbList) {
-                console.log(pbList);
-                if (confirm('Vil du slette produkbach med ID : ' + pbList.pbId + '?')) {
+            success: function (pb) {
+                console.log(pb);
+                if (confirm('Vil du slette produkbach med ID : ' + pb.pbId + '?')) {
                     $.ajax({
                         url: "api/pbService/deletePB",
                         data: JSON.stringify({pbId: pbId}),
