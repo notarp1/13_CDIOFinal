@@ -105,6 +105,43 @@ function recpetList() {
 
 }
 
+function getRecept(receptId, _callback){
+
+    $.ajax({
+        type: "GET",
+        url: "api/recept1/rId",
+        data: {receptId: receptId},
+        contentType: "application/JSON",
+        success: function (data) {
+            _callback(data);
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        }
+
+    });
+}
+
+function getSpecificReceptKomps(receptId, _callback){
+
+    $.ajax({
+        type: "GET",
+        url: "api/recept1/RKompList1",
+        data: {receptId: receptId},
+        contentType: "application/JSON",
+        success: function (data) {
+            _callback(data);
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        }
+
+    });
+
+}
+
 
 
 

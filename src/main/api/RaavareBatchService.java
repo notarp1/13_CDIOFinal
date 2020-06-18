@@ -31,6 +31,18 @@ public class RaavareBatchService {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
+    @Path("getRbId")
+    @GET
+    public Response getRaavareBatchId(@QueryParam("raavareId") int raavareId) {
+
+        try {
+            return Response.status(Response.Status.OK).entity(batchController.getRaavareBatchId(raavareId)).build();
+
+        } catch (ControllerException e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
 
     @Path("getRBList")
     @GET

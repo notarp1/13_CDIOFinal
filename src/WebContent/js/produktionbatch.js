@@ -34,6 +34,57 @@ $("#createPB").submit(function(event) {
     });
 });
 
+
+
+//Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
+$("#createPBKfirstPage").submit(function(event) {
+    event.preventDefault();
+    var pb = $("#pbId").val();
+
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
+        contentType: "application/JSON",
+        success: function (product) {
+
+            getSpecificReceptKomps(product.receptId, (sRk) => {
+                main.switchPage("HTML/produktBatch/opretProduktbatchKomp.html")
+                getRecept(product.receptId, (recept) =>{
+                    var print = $(`#recept-tabel`).find("tbody");
+                    sRk.forEach(function (sRk) {
+                        print.append(`<tr>
+                            <td>${sRk.receptId}</td>
+                            <td>${sRk.raavareId}</td>
+                            <td>${sRk.nomNetto}</td>
+                            <td>${sRk.tolerance}</td>
+                            <td>${product.rbId}</td>
+                            </tr>`)
+                    });
+
+                setTimeout(() => {
+                    $("#createPBK").find("#pbId").val(pb);
+                    document.getElementById("visID").innerHTML = "Produkt ID: " + pb;
+                    document.getElementById("recept").innerHTML = "Recept: " + recept.receptId;
+                    document.getElementById("receptNavn").innerHTML = "Produkt: " + recept.receptNavn;
+                }, 10)
+
+            });})
+
+
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+
+
+});
+
+
+
 //Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
 $("#createPBK").submit(function(event) {
     event.preventDefault();
@@ -346,17 +397,19 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
                         console.log(raaPrint);
                         console.log(tolerance);
                         printAppend(print, i);
+
+
                         var print2 = $(`#printTables`).find(`#tableItems${i}`);
                         print2.append(`<tr>
-    <td>${rbIdPrint.raavareId}</td>
-    <td>${raaPrint}</td>
-    <td>${rbIdPrint.maengde}</td>
-    <td>${tolerance}</td>
-    <td>${pbkList[i].tara}</td>
-    <td>${pbkList[i].netto}</td>
-    <td>${pbkList[i].rbId}</td>
-    <td>${pbkList[i].oprId}</td>
-    </tr>`);
+                            <td>${rbIdPrint.raavareId}</td>
+                            <td>${raaPrint}</td>
+                            <td>${rbIdPrint.maengde}</td>
+                            <td>${tolerance}</td>
+                            <td>${pbkList[i].tara}</td>
+                            <td>${pbkList[i].netto}</td>
+                            <td>${pbkList[i].rbId}</td>
+                            <td>${pbkList[i].oprId}</td>
+                            </tr>`);
                     })
                 })
             })
@@ -451,15 +504,17 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             success: function (products) {
                 console.log(products);
                 products.forEach(function (products) {
-                    console.log(products);
-                    table.append(`<tr>
+                    getRecept(products.receptId, (recept) =>{
+                        table.append(`<tr>
                     <td>${products.pbId}</td>
                     <td>${products.receptId}</td>
+                    <td>${recept.receptNavn}</td>
                     <td>${products.status}</td>
                     <td>${products.date}</td>
                     <td>${products.pStartDato}</td>
                    <td><button onclick="confirmDeletePB(${products.pbId})">slet</button></td>
-                </tr>`);
+                </tr>`);});
+
                 })
             },
             error: function (XHR) {
@@ -581,24 +636,32 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
      */
 //Load PB's pbId automatisk ind som forslag til pbId (specificPB.html)
 
-    function loadPBKs(type) {
+    function loadPBKs(type)     {
         if (type == 0) {
             var output = $("#createPBK").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBList";
         }
 
         if (type == 1) {
             var output = $("#updatePBK").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBKList";
         }
         if (type == 2) {
             var output = $("#findPB").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBList";
+        }
+        if (type == 3) {
+            var output = $("#createPBKfirstPage").find("#pbId");
+            output.html("");
+            var url1 = "api/pbService/getPBList";
         }
 
 
         $.ajax({
-            url: "api/pbService/getPBKList",
+            url: url1,
             contentType: "application/JSON",
             success: function (products) {
                 console.log(products);

@@ -75,6 +75,39 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
     }
 
+    @Override
+    public RaavareBatchDTO getRaavareBatchId(int raavareId) throws DALException {
+
+        try {
+            forName(this.driver);
+            String sqlManipulation;
+            sqlManipulation = "SELECT * FROM RaavareBatch WHERE raavareId='" + raavareId + "'";
+
+            Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlManipulation);
+
+            if (resultSet.next()) {
+                RaavareBatchDTO batch = new RaavareBatchDTO();
+                batch.setRbId(resultSet.getInt("rbId"));
+                batch.setRaavareId(resultSet.getInt("raavareId"));
+                batch.setMaengde(resultSet.getDouble("maengde"));
+                connection.close();
+
+
+                return batch;
+            } else {
+                connection.close();
+                throw new DALException("Kunne ikke finde raavaren");
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new DALException("Database fejl");
+        }
+
+    }
+
 
     @Override
     public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
