@@ -34,6 +34,123 @@ $("#createPB").submit(function(event) {
     });
 });
 
+
+
+//Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
+$("#createPBKfirstPage").submit(function(event) {
+    event.preventDefault();
+    var pb = $("#pbId").val();
+
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
+        contentType: "application/JSON",
+        success: function (product) {
+
+
+
+            main.switchPage("HTML/produktBatch/opretProduktbatchKomp.html");
+            getSpecificReceptKomps(product.receptId, (sRk) => {
+
+                var printPbk = $(`#pbk-tabel`).find("tbody");
+                printPbk.html("");
+                var print = $(`#recept-tabel`).find("tbody");
+                print.html("");
+                var output = $("#createPBK").find("#rbId");
+                output.html("");
+
+                getRecept(product.receptId, (recept) =>{
+
+                    $("#createPBK").find("#pbId").val(pb);
+
+                    getElementsBy(pb, recept.receptId, recept.receptNavn)
+                    getSpecificPBKList(pb, (pbkList) => {
+
+                        pbkList.forEach(function (pbkList) {
+                            printPbk.append(`<tr>
+                                <td>${pbkList.pbId}</td>                               
+                                <td>${pbkList.tara}</td>
+                                <td>${pbkList.netto}</td>
+                                <td>${pbkList.rbId}</td>
+                                 </tr>`);
+                        })
+                    });
+
+                    sRk.forEach(function (sRk) {
+                        getRaavareId(sRk.raavareId, (raavare) =>{
+                            output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
+                            print.append(`<tr>                   
+                            <td>${sRk.raavareId}</td>
+                            <td>${sRk.nomNetto} kg</td>
+                            <td>${sRk.tolerance} %</td>
+                            <td>${raavare.rbId}</td>
+                            </tr>`);
+
+                        });
+                    });
+
+                });
+            });
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+});
+
+function getElementsBy(pbId, receptId, receptNavn){
+    document.getElementById("visID").innerHTML = "Produkt ID: " + pbId;
+    document.getElementById("recept").innerHTML = "Recept: " + receptId;
+    document.getElementById("receptNavn").innerHTML = "Produkt: " + receptNavn;
+
+}
+
+$("#updatePBKfirstPage").submit(function(event) {
+    event.preventDefault();
+    var pb = $("#pbId").val();
+    console.log(pb);
+
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
+        contentType: "application/JSON",
+        success: function (product) {
+            main.switchPage("HTML/produktBatch/editPBK.html");
+
+                getRecept(product.receptId, (recept) => {
+                    $("#updatePBK").find("#pbId").val(pb);
+                    getElementsBy(pb, recept.receptId, recept.receptNavn);
+                    getSpecificPBKList(pb, (pbkList) =>{
+                        var rbIdAppend = $(`#updatePBK`).find("#rbId");
+                        rbIdAppend.html("");
+                        var printPbk = $(`#pbk-tabel`).find("tbody");
+                        printPbk.html("");
+
+                        pbkList.forEach(function (pbkList) {
+                            rbIdAppend.append(` <option value="${pbkList.rbId}">${pbkList.rbId}</option>`);
+
+                            printPbk.append(`<tr>
+                            <td>${pbkList.pbId}</td>
+                            <td>${pbkList.rbId}</td>
+                            <td>${pbkList.tara}</td>
+                            <td>${pbkList.netto}</td>
+                            <td>${pbkList.oprId}</td>
+                             </tr>`);
+                        })
+                    });
+            });
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+});
+
+
+
 //Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
 $("#createPBK").submit(function(event) {
     event.preventDefault();
@@ -80,7 +197,8 @@ $("#createPBK").submit(function(event) {
 //Opdater produktbatch-komponent
 $("#updatePBK").submit(function (event) {
     event.preventDefault();
-
+    var test = JSON.stringify($("#updatePBK").serializeJSON());
+    console.log(test);
     $.ajax({
         url: "api/pbService/updatePBK",
         data: JSON.stringify($("#updatePBK").serializeJSON()),
@@ -99,7 +217,7 @@ $("#updatePBK").submit(function (event) {
         }
     })
 
-})
+});
 
 //Find specifik PB (specifikPB.html)
 
@@ -346,17 +464,19 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
                         console.log(raaPrint);
                         console.log(tolerance);
                         printAppend(print, i);
+
+
                         var print2 = $(`#printTables`).find(`#tableItems${i}`);
                         print2.append(`<tr>
-    <td>${rbIdPrint.raavareId}</td>
-    <td>${raaPrint}</td>
-    <td>${rbIdPrint.maengde}</td>
-    <td>${tolerance}</td>
-    <td>${pbkList[i].tara}</td>
-    <td>${pbkList[i].netto}</td>
-    <td>${pbkList[i].rbId}</td>
-    <td>${pbkList[i].oprId}</td>
-    </tr>`);
+                            <td>${rbIdPrint.raavareId}</td>
+                            <td>${raaPrint}</td>
+                            <td>${rbIdPrint.maengde} kg</td>
+                            <td>${tolerance} %</td>
+                            <td>${pbkList[i].tara} kg</td>
+                            <td>${pbkList[i].netto} kg</td>
+                            <td>${pbkList[i].rbId}</td>
+                            <td>${pbkList[i].oprId}</td>
+                            </tr>`);
                     })
                 })
             })
@@ -451,16 +571,34 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             success: function (products) {
                 console.log(products);
                 products.forEach(function (products) {
-                    console.log(products);
-                    table.append(`<tr>
+                    getRecept(products.receptId, (recept) =>{
+                        table.append(`<tr>
                     <td>${products.pbId}</td>
                     <td>${products.receptId}</td>
+                    <td>${recept.receptNavn}</td>
                     <td>${products.status}</td>
                     <td>${products.date}</td>
                     <td>${products.pStartDato}</td>
                    <td><button onclick="confirmDeletePB(${products.pbId})">slet</button></td>
-                </tr>`);
+                </tr>`);});
+
                 })
+            },
+            error: function (XHR) {
+                console.log(XHR);
+                alert("Fejl:" + XHR.responseText);
+            },
+        });
+    }
+
+
+    function getSpecificPBKList(pbId, _callback) {
+
+        $.ajax({
+            url: "api/pbService/getPBKList/" + pbId,
+            contentType: "application/JSON",
+            success: function (products) {
+                _callback(products);
             },
             error: function (XHR) {
                 console.log(XHR);
@@ -581,24 +719,37 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
      */
 //Load PB's pbId automatisk ind som forslag til pbId (specificPB.html)
 
-    function loadPBKs(type) {
+    function loadPBKs(type)     {
         if (type == 0) {
             var output = $("#createPBK").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBList";
         }
 
         if (type == 1) {
             var output = $("#updatePBK").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBKList";
         }
         if (type == 2) {
             var output = $("#findPB").find("#pbId");
             output.html("");
+            var url1 = "api/pbService/getPBList";
+        }
+        if (type == 3) {
+            var output = $("#createPBKfirstPage").find("#pbId");
+            output.html("");
+            var url1 = "api/pbService/getPBList";
+        }
+        if (type == 4) {
+            var output = $("#updatePBKfirstPage").find("#pbId");
+            output.html("");
+            var url1 = "api/pbService/getPBList";
         }
 
 
         $.ajax({
-            url: "api/pbService/getPBKList",
+            url: url1,
             contentType: "application/JSON",
             success: function (products) {
                 console.log(products);

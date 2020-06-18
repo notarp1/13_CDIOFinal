@@ -126,10 +126,7 @@ function loadRB(type) {
         output.html("");
     }
 
-    if (type == 1) {
-        var output = $("#updateRB").find("#rbId");
-        output.html("");
-    }
+        })
 
     $.ajax({
         url: "api/rbService/getRBList",
@@ -152,3 +149,24 @@ function loadRB(type) {
     });
 }
 */
+
+    }
+    
+    
+    function getRaavareId(raavareId, _callback) {
+        $.ajax({
+            type: "GET",
+            url: "api/rbService/getRbId",
+            data: {raavareId: raavareId},
+            contentType: "application/JSON",
+            success: function (data) {
+                _callback(data);
+            },
+            error: function (XHR) {
+                console.log(XHR);
+                alert("Fejl:" + XHR.responseText);
+            }
+
+        });
+
+    }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRaavareBatchDAO {
     RaavareBatchDTO getRaavareBatch(int rbId) throws DALException;
-
+    RaavareBatchDTO getRaavareBatchId(int raavareId) throws DALException;
     List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException;
     List<RaavareBatchDTO> getRaavareBatchList(int rbId) throws DALException;
 

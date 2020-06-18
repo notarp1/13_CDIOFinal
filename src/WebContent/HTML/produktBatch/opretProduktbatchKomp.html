@@ -7,13 +7,13 @@
     <title>Opret ProduktBatchKomponent</title>
 
     <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/Recept.js"></script>
+    <script type="text/javascript" src="js/raavarebatch.js"></script>
     <script type="text/javascript" src="js/produktionbatch.js"></script>
 
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadPBKs(0)</script>
-    <script type="text/javascript">loadRBs(0)</script>
     <script type="text/javascript">loadUsers(0)</script>
 
 </head>
@@ -31,7 +31,10 @@
     <form id = "createPBK">
 
 
-        <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
+        <label id="visID"></label><br>
+        <input type="hidden" id="pbId" name="pbId">
+        <label id="recept"></label><br>
+        <label id="receptNavn"></label><br><br>
 
         <label for="rbId">Råvarebatch ID:</label><br>
         <select type ="number" name="rbId" id="rbId"></select><br><br>
@@ -50,7 +53,40 @@
 
     </form>
 
+</div>
 
+<div>
+    <h4>Receptkomponenter</h4>
+
+    <table id="recept-tabel">
+        <thead>
+        <tr>
+            <th>Råvare ID</th>
+            <th>Nominal Nettovægt</th>
+            <th>Tolerance</th>
+            <th>Råvarebatch</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Nuværende produktbatches</h4>
+
+    <table id="pbk-tabel">
+        <thead>
+        <tr>
+            <th>Produktbatch ID</th>
+            <th>Tara-vægt</th>
+            <th>Netto-vægt</th>
+            <th>Råvarebatch</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </div>
 
 </body>

@@ -27,6 +27,16 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
+    public RaavareBatchDTO getRaavareBatchId(int raavareId) throws ControllerException {
+        try {
+            return rBatch.getRaavareBatchId(raavareId);
+        } catch (DALException e) {
+            e.printStackTrace();
+            throw new ControllerException("Kunne ikke finde produkt");
+        }
+    }
+
+    @Override
     public List<RaavareBatchDTO> getRavvareBatchList() throws ControllerException {
         try {
             return rBatch.getRaavareBatchList();

@@ -9,6 +9,7 @@ import java.util.List;
 public interface IRaavareBatchController {
 
     RaavareBatchDTO getRaavareBatch(int rbId) throws ControllerException;
+    RaavareBatchDTO getRaavareBatchId(int raavareId) throws ControllerException;
     List<RaavareBatchDTO> getRavvareBatchList() throws ControllerException;
     List<RaavareBatchDTO> getRavvareBatchList(int rbId) throws ControllerException;
 

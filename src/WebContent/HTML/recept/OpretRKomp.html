@@ -6,8 +6,10 @@
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/Recept.js"></script>
 
-    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.back="HTML/recept/ReceptKomp.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
+    <script type="text/javascript">loadRKomp(0)</script>
+    <script type="text/javascript">loadRKompR(0)</script>
 
 </head>
 
@@ -23,12 +25,9 @@
 <div style="text-align: center">
     <form id ="createRKomp">
 
-        <label>Recept ID:</label><br>
-        <input type="number" name="receptId"> <br><br>
+        <label for="receptId">recept ID:</label><br><select type ="number" name="receptId" id="receptId"></select><br><br>
 
-
-        <label>Raavare ID:</label><br>
-        <input type="text" name="raavareId"><br><br>
+        <label for="raavareId">Råvare ID:</label><br><select type ="number" name="raavareId" id="raavareId"></select><br><br>
 
         <label>NomNetto:</label><br>
         <input type="text" name="nomNetto"><br><br>

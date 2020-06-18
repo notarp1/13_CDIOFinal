@@ -8,6 +8,7 @@
         $(document).ready(function () {
             rKompList();
 
+
         });
     </script>
 
@@ -17,23 +18,29 @@
 </head>
 <body>
 
+<h1>
+    <b>
+        <div style="text-align: center;">Opret receptKomp</div>
+
+    </b>
+</h1>
+
+<button onclick="main.switchPage('HTML/recept/OpretRKomp.html')">Opret ny receptKomp</button>
+<button onclick="main.switchPage('HTML/recept/EditRKomp.html')">Redigere receptKomp</button>
+
+
 <table id="rKompList">
     <thead>
     <tr>
         <th>ReceptID</th>
         <th>RaavareID</th>
         <th>Netto</th>
-        <th>tolerance</th>
+        <th>Tolerance</th>
         <th></th>
     </tr>
     </thead>
 
 </table>
-
-
-
-<button onclick="main.switchPage('HTML/recept/OpretRKomp.html')">Opret ny receptKomp</button>
-<button onclick="main.switchPage('HTML/recept/EditRKomp.html')">Redigere recept</button>
 
 </body>
 </html>

@@ -9,20 +9,25 @@
 
     <title>Edit</title>
 
-    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.back="HTML/recept/Recept.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
+    <script type="text/javascript">loadR(1)</script>
+
 
 </head>
 <body>
 
+<h1>
+    <b>
+        <div style="text-align: center;">Redigere recept</div>
+
+    </b>
+</h1>
+
 <div style="text-align: center";>
     <form id="updateR">
 
-
-        Recept ID: <br><br>
-        <input type="number" name="receptId">
-        <br>
-        <br>
+        <label for="receptId">recept ID:</label><br><select type ="number" name="receptId" id="receptId"></select><br><br>
 
         Recept Navn: <br><br>
         <input type="text" name="receptNavn">
