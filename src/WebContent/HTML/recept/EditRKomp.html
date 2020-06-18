@@ -7,8 +7,11 @@
 
     <title>Edit</title>
 
-    <script type="text/javascript">main.back="HTML/menu.html"</script>
+    <script type="text/javascript">main.back="HTML/recept/ReceptKomp.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
+    <script type="text/javascript">loadRKompUpdate(1)</script>
+    <script type="text/javascript">loadRKompRUpdate(1)</script>
+
 </head>
 <body>
 
@@ -22,13 +25,9 @@
 <div style="text-align: center";>
     <form id="updateRKomp">
 
+        <label for="receptId">recept ID:</label><br><select type ="number" name="receptId" id="receptId"></select><br><br>
 
-        <label>Recept ID:</label><br>
-        <input type="number" name="receptId"> <br><br>
-
-
-        <label>Raavare ID:</label><br>
-        <input type="text" name="raavareId"><br><br>
+        <label for="raavareId">Råvare ID:</label><br><select type ="number" name="raavareId" id="raavareId"></select><br><br>
 
         <label>NomNetto:</label><br>
         <input type="text" name="nomNetto"><br><br>
