@@ -4,32 +4,41 @@
     <h1>Hvad vil du gøre?</h1>
 
     <div class="menu-button button" onclick="main.switchPage('HTML/bruger/liste.html')" data-Administrator>Se brugere</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/opretRaavarebatch.html')" data-Farmaceut data-Produktionsleder>OPRET <br> RÅVAREBATCH</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/visRaavarebatch.html')" data-Farmaceut  data-Produktionsleder>VIS <br> RÅVAREBATCHES</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/opretProduktbatch.html')" data-Farmaceut data-Produktionsleder>OPRET <br> PRODUKTBATCH</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbListe.html')" data-Produktionsleder data-Laborant>VIS <br> PRODUKTBATCHES</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/1opretProduktbatchKomp.html')" data-Produktionsleder data-Laborant>AFVEJ<br>PRODUKTBATCH-KOMPONENT</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/editPBK.html')" data-Produktionsleder data-Laborant>OPDATER <br>PRODUKTBATCH-KOMPONENT</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbkListe.html')" data-Produktionsleder data-Laborant>VIS <br>PRODUKTBATCH-KOMPONENTER</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/specificPB.html')" data-Produktionsleder data-Laborant>VIS / OPDATER STATUS<br>PRODUKTBATCH</div>
 
+    <h2 data-Farmaceut>Råvarer</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavare/raavareListe.html')" data-Farmaceut>Vis råvarer</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavare/opretRaavare.html')" data-Farmaceut>Opret råvarer</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavare/editRaavare.html')" data-Farmaceut>Ret råvarer</div>
 
+    <h2 data-Farmaceut data-Produktionsleder>Råvarebatches</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/opretRaavarebatch.html')" data-Farmaceut data-Produktionsleder>Opret råvarebatch</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/visRaavarebatch.html')" data-Farmaceut  data-Produktionsleder>Vis råvarebatches</div>
 
+    <h2 data-Farmaceut data-Produktionsleder>Produktbatches</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/opretProduktbatch.html')" data-Farmaceut data-Produktionsleder>Opret produktbatch</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbListe.html')" data-Farmaceut data-Produktionsleder>Vis produktbatches</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/opretProduktbatchKomp.html')" data-Farmaceut data-Produktionsleder>Opret produktbatch-komponent</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/editPBK.html')" data-Farmaceut data-Produktionsleder>Opdater produktbatch-komponent</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/pbkListe.html')" data-Farmaceut data-Produktionsleder>Vis produktbatch-komponenter</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/specificPB.html')" data-Farmaceut data-Produktionsleder>Opdater/vis produktbatch</div>
 
-    <div class="menu-button button" onclick="main.switchPage('HTML/recept/Recept.html')" data-Farmaceut>administrere recept</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/recept/ReceptKomp.html')" data-Farmaceut>administrere receptKomp</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/afvej.html')" data-Laborant>Afvej</div>
+    <h2 data-Farmaceut>Recepter</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/recept/Recept.html')" data-Farmaceut>Administrer recept</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/recept/ReceptKomp.html')" data-Farmaceut>Administrer recept-komponent</div>
+
+    <h2 data-Farmaceut data-Produktionsleder>Afvej</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/afvej.html')" data-Farmaceut data-Produktionsleder data-Laborant>Afvej</div>
 </div>
 <script type="text/javascript">
     $(() => {
         main.tilbageHide();
         if (main.user.role === "Administrator")
-            $(".menu-button[data-Administrator]").show(0)
+            $("[data-Administrator]").show(0)
         else if (main.user.role === "Farmaceut")
-            $(".menu-button[data-Farmaceut]").show(0)
+            $("[data-Farmaceut]").show(0)
         else if (main.user.role === "Produktionsleder")
-            $(".menu-button[data-Produktionsleder]").show(0)
+            $("[data-Produktionsleder]").show(0)
         else if (main.user.role === "Laborant")
-            $(".menu-button[data-Laborant]").show(0)
+            $("[data-Laborant]").show(0)
     })
 </script>

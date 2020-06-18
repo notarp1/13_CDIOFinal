@@ -25,7 +25,7 @@
 .gritter-success{ background-color: rgba(92, 184, 92, .8) !important; }
 
 /* Main styling af siden */
-html{  }
+html{ background: #ededed; }
 body{  }
 main{ max-width: 750px; margin: 0 auto; }
 button{ cursor: pointer; }
@@ -50,7 +50,8 @@ main #login{ text-align: center; font-family: sans-serif; }
 main #menu{ text-align: center; font-family: sans-serif; }
 .login-button{ margin: 0 15% 1.5em; }
 .tilbage-button{width: 20%; float:left;}
-.menu-button{ display: none; margin: 0 15% 1.5em; }
+#menu h2{ display: none; margin-bottom: 0.3em; }
+#menu .button{ display: none; margin: 0 15% 1em; }
 #bruger-tabel{  }
 footer{ max-width: 750px; margin: 1em auto 0; display: none; text-align: center; border-top: 1px solid var(--footer-border); padding-top: 0.5em; }
 footer .logout-button{ margin-left: 80%; width: 20%; }
