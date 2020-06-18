@@ -79,7 +79,7 @@ $("#createPBKfirstPage").submit(function(event) {
                     });
 
                     sRk.forEach(function (sRk) {
-                        getRaavareId(sRk.raavareId, (raavare) =>{
+                        getRbId(sRk.raavareId, (raavare) =>{
                             output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
                             print.append(`<tr>                   
                             <td>${sRk.raavareId}</td>
@@ -461,7 +461,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
 
         for (let i = 0; i < pbkList.length; i++) {
             console.log(pbkList.rbId);
-            getRbId(pbkList[i].rbId, (rbIdPrint) => {
+            getRB(pbkList[i].rbId, (rbIdPrint) => {
                 getRaavare(rbIdPrint.raavareId, (raaPrint) => {
                     getTolerance(pb, rbIdPrint.raavareId, (tolerance) => {
                         console.log(raaPrint);
@@ -489,7 +489,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
 
     }
 
-    function getRbId(rbId, _callback) {
+    function getRB(rbId, _callback) {
         $.ajax({
             url: "api/rbService/getRB",
             data: {rbId: rbId},

@@ -144,7 +144,7 @@ function loadRB(type) {
 }
 */
 
-    function getRaavareId(raavareId, _callback) {
+    function getRbId(raavareId, _callback) {
         $.ajax({
             type: "GET",
             url: "api/rbService/getRbId",
@@ -161,3 +161,22 @@ function loadRB(type) {
         });
 
     }
+
+function getRb(rbId, _callback) {
+    $.ajax({
+        type: "GET",
+        url: "api/rbService/getRB",
+        data: {rbId: rbId},
+        contentType: "application/JSON",
+        success: function (data) {
+            console.log(data);
+            _callback(data);
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        }
+
+    });
+
+}
