@@ -50,7 +50,7 @@ function loadRB() {
             console.log(fejlbesked);
             alert("Fejl: " + fejlbesked.responseText)
         }
-    })
+    });
 
 
 
@@ -98,7 +98,7 @@ $("#updateRB").submit(function (event) {
             alert("Fejl: " + XHR.responseText);
         }
     })
-})
+});
 
 //slette råvarebatch
 function deleteRB(rbId) {
@@ -115,7 +115,7 @@ function deleteRB(rbId) {
             console.log(xhr);
             alert("Fejl: " + xhr.responseText);
         }
-    })
+    });
 }
 
 //Hent data fra database
@@ -150,9 +150,6 @@ function loadRB(type) {
 }
 */
 
-    }
-    
-    
     function getRaavareId(raavareId, _callback) {
         $.ajax({
             type: "GET",
