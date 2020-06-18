@@ -25,36 +25,6 @@ $("#createR").submit(function (event) {
 
 });
 
-//
-function loadR(type) {
-    if(type == 0) {
-        var output = $("#createR").find("#updateR");
-        output.html("");
-    }
-
-    if(type == 1) {
-        var output = $("#updateR").find("#receptId");
-        output.html("");
-    }
-
-
-    $.ajax({
-        url: "api/recept1/rList",
-        contentType: "application/JSON",
-        success: function (recept) {
-            console.log(recept);
-
-            for(let i = 0; i<recept.length; i++){
-                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
-            }
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-}
 
 $("#updateR").submit(function (event) {
     event.preventDefault()
@@ -156,113 +126,6 @@ $("#createRKomp").submit(function (event) {
 
 });
 
-//RKomp ID
-function loadRKomp(type) {
-    if(type == 0) {
-        var output = $("#createRKomp").find("#receptId");
-        output.html("");
-    }
-
-    $.ajax({
-        url: "api/recept1/rList",
-        contentType: "application/JSON",
-        success: function (recept) {
-            console.log(recept);
-
-            for(let i = 0; i<recept.length; i++){
-                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
-            }
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-
-}
-
-//RKomp raavare ID
-function loadRKompR(type) {
-    if(type == 0) {
-        var output = $("#createRKomp").find("#raavareId");
-        output.html("");
-    }
-
-
-    $.ajax({
-        url: "api/raaService/getRaaList",
-        contentType: "application/JSON",
-        success: function (raavare) {
-            console.log(raavare);
-
-            for(let i = 0; i<raavare.length; i++){
-                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
-            }
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-
-}
-
-function loadRKompUpdate(type) {
-
-    if(type == 1) {
-        var output = $("#updateRKomp").find("#receptId");
-        output.html("");
-    }
-
-
-    $.ajax({
-        url: "api/recept1/RKompList2",
-        contentType: "application/JSON",
-        success: function (recept) {
-            console.log(recept);
-
-            for(let i = 0; i<recept.length; i++){
-                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
-            }
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-
-}
-
-function loadRKompRUpdate(type) {
-
-    if(type == 1) {
-        var output = $("#updateRKomp").find("#raavareId");
-        output.html("");
-    }
-
-
-    $.ajax({
-        url: "api/recept1/RKompList2",
-        contentType: "application/JSON",
-        success: function (raavare) {
-            console.log(raavare);
-
-            for(let i = 0; i<raavare.length; i++){
-                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
-            }
-
-        },
-        error: function(XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-
-}
-
 $("#updateRKomp").submit(function (event) {
     event.preventDefault()
     $.ajax({
@@ -343,5 +206,144 @@ function rKompList() {
             alert("Fejl:" + XHR.responseText);
         }
     })
+
+}
+
+
+//Update af Recept
+function loadR(type) {
+    if(type == 1) {
+        var output = $("#updateR").find("#receptId");
+        output.html("");
+    }
+
+
+    $.ajax({
+        url: "api/recept1/rList",
+        contentType: "application/JSON",
+        success: function (recept) {
+            console.log(recept);
+
+            for(let i = 0; i<recept.length; i++){
+                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
+
+
+
+
+//oprettelse for ReceptKomp (receptID)
+function loadRKomp(type) {
+    if(type == 0) {
+        var output = $("#createRKomp").find("#receptId");
+        output.html("");
+    }
+
+    $.ajax({
+        url: "api/recept1/rList",
+        contentType: "application/JSON",
+        success: function (recept) {
+            console.log(recept);
+
+            for(let i = 0; i<recept.length; i++){
+                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+}
+
+//oprettelse af receptKomp (raavareId)
+function loadRKompR(type) {
+    if(type == 0) {
+        var output = $("#createRKomp").find("#raavareId");
+        output.html("");
+    }
+
+
+    $.ajax({
+        url: "api/raaService/getRaaList",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
+
+            for(let i = 0; i<raavare.length; i++){
+                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+}
+
+//update af ReceptKomp(recept ID)
+function loadRKompUpdate(type) {
+
+    if(type == 1) {
+        var output = $("#updateRKomp").find("#receptId");
+        output.html("");
+    }
+
+
+    $.ajax({
+        url: "api/recept1/RKompList2",
+        contentType: "application/JSON",
+        success: function (recept) {
+            console.log(recept);
+
+            for(let i = 0; i<recept.length; i++){
+                output.append(` <option value="${recept[i].receptId}">${recept[i].receptId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+}
+
+//update af ReceptKomp(raavare ID)
+function loadRKompRUpdate(type) {
+
+    if(type == 1) {
+        var output = $("#updateRKomp").find("#raavareId");
+        output.html("");
+    }
+
+
+    $.ajax({
+        url: "api/recept1/RKompList2",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
+
+            for(let i = 0; i<raavare.length; i++){
+                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
+            }
+
+        },
+        error: function(XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
 
 }
