@@ -6,12 +6,13 @@
     <title>Se specifik produktbatck</title>
 
     <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/Recept.js"></script>
     <script type="text/javascript" src="js/produktionbatch.js"></script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
     <script type="text/javascript">loadPBKs(2)</script>
-
+    <script type="text/javascript">loadPB(2)</script>
 
 </head>
 
@@ -38,12 +39,33 @@
             <option value="2">2</option>
         </select><br><br>
 
-        <input type="submit"  value="Find Produktbatch"><br><br>
+        <input type="submit"  value="Opdater status af Produktbatch"><br><br>
 
     </form>
 
 
 </div>
+
+<div>
+    <h4>Produktbatches</h4>
+
+    <table id="pb-tabel">
+        <thead>
+        <tr>
+            <th id="pIdPrint">Produkbatch ID</th>
+            <th>Recept ID</th>
+            <th>Recept Navn</th>
+            <th>Status</th>
+            <th>Oprettet</th>
+            <th>Produktionsstart</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 
 </body>
 

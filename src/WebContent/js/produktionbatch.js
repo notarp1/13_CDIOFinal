@@ -248,7 +248,6 @@ $("#findPB").submit(function(event) {
 });
 
 
-
 /**
  * ----------------------------------------------------------------------------------------
  * -------------- Funktionalitet for hvad der skal printes. Dato, status osv. -------------
@@ -401,7 +400,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
 
     }
 
-    function updatePb(pb, alert) {
+    function updatePb(pb, select) {
         $.ajax({
             url: "api/pbService/updatePB",
             data: JSON.stringify(pb),
@@ -409,7 +408,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             method: "PUT",
             success: function (pbUp) {
                 console.log("pbUpdate: " + pbUp);
-                if(alert==1) {
+                if(select==1) {
                     alert(pbUp);
                 }
                 if (status == 1) {
@@ -602,7 +601,6 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             },
             error: function (XHR) {
                 console.log(XHR);
-                alert("Fejl:" + XHR.responseText);
             },
         });
     }
