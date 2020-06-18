@@ -10,12 +10,9 @@ public interface IRaavareBatchDAO {
     RaavareBatchDTO getRaavareBatchId(int raavareId) throws DALException;
     List<RaavareBatchDTO> getRaavareBatchList() throws DALException, ClassNotFoundException;
     List<RaavareBatchDTO> getRaavareBatchList(int rbId) throws DALException;
+
     void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
     void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
-
     void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException;
 
-    void setRBId(int rbId);
-
-    void setRaavareId(int raavareId);
 }

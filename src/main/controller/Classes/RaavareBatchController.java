@@ -95,10 +95,6 @@ public class RaavareBatchController implements IRaavareBatchController {
         }
     }
 
-    @Override
-    public void getRaavareBatch(int rbId, Object rbId1) {
-
-    }
 
     private void rangeConfirmRB(RaavareBatchDTO raavarebatch) {
     }
