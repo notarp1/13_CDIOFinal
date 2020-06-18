@@ -67,6 +67,8 @@ $("#createPBKfirstPage").submit(function(event) {
                     getSpecificPBKList(pb, 0, (pbkList) => {
 
                         pbkList.forEach(function (pbkList) {
+                            getRb(pbkList.rbId, (rb) => {
+                                getRaavare(rb.raavareId, (rNavn) => {
                             var tara = getTara(pbkList.tara);
                             var netto = getNetto(pbkList.netto);
                             printPbk.append(`<tr>
@@ -74,23 +76,28 @@ $("#createPBKfirstPage").submit(function(event) {
                                 <td>${tara}</td>
                                 <td>${netto}</td>
                                 <td>${pbkList.rbId}</td>
+                                <td>${rNavn}</td>
                                  </tr>`);
-                        })
+                                 });
+                            });
+                        });
                     });
 
                     sRk.forEach(function (sRk) {
-                        getRbId(sRk.raavareId, (raavare) =>{
-                            output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
-                            print.append(`<tr>                   
+                        getRbId(sRk.raavareId, (raavare) => {
+                            getRaavare(sRk.raavareId, (rnavn) => {
+                                output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
+                                print.append(`<tr>                   
                             <td>${sRk.raavareId}</td>
                             <td>${sRk.nomNetto} kg</td>
                             <td>${sRk.tolerance} %</td>
                             <td>${raavare.rbId}</td>
+                            <td>${rnavn}</td>
                             </tr>`);
 
+                            });
                         });
                     });
-
                 });
             });
         },
