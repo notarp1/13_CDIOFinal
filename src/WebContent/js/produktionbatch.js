@@ -64,13 +64,15 @@ $("#createPBKfirstPage").submit(function(event) {
                     $("#createPBK").find("#pbId").val(pb);
 
                     getElementsBy(pb, recept.receptId, recept.receptNavn)
-                    getSpecificPBKList(pb, (pbkList) => {
+                    getSpecificPBKList(pb, 0, (pbkList) => {
 
                         pbkList.forEach(function (pbkList) {
+                            var tara = getTara(pbkList.tara);
+                            var netto = getNetto(pbkList.netto);
                             printPbk.append(`<tr>
                                 <td>${pbkList.pbId}</td>                               
-                                <td>${pbkList.tara}</td>
-                                <td>${pbkList.netto}</td>
+                                <td>${tara}</td>
+                                <td>${netto}</td>
                                 <td>${pbkList.rbId}</td>
                                  </tr>`);
                         })
@@ -121,7 +123,7 @@ $("#updatePBKfirstPage").submit(function(event) {
                 getRecept(product.receptId, (recept) => {
                     $("#updatePBK").find("#pbId").val(pb);
                     getElementsBy(pb, recept.receptId, recept.receptNavn);
-                    getSpecificPBKList(pb, (pbkList) =>{
+                    getSpecificPBKList(pb, 0, (pbkList) =>{
                         var rbIdAppend = $(`#updatePBK`).find("#rbId");
                         rbIdAppend.html("");
                         var printPbk = $(`#pbk-tabel`).find("tbody");
@@ -129,12 +131,13 @@ $("#updatePBKfirstPage").submit(function(event) {
 
                         pbkList.forEach(function (pbkList) {
                             rbIdAppend.append(` <option value="${pbkList.rbId}">${pbkList.rbId}</option>`);
-
+                            var tara = getTara(pbkList.tara);
+                            var netto = getNetto(pbkList.netto);
                             printPbk.append(`<tr>
                             <td>${pbkList.pbId}</td>
                             <td>${pbkList.rbId}</td>
-                            <td>${pbkList.tara}</td>
-                            <td>${pbkList.netto}</td>
+                            <td>${tara}</td>
+                            <td>${netto}</td>
                             <td>${pbkList.oprId}</td>
                              </tr>`);
                         })
@@ -225,6 +228,7 @@ $("#findPB").submit(function(event) {
     event.preventDefault();
 
     var pb = $("#findPB").serializeJSON();
+    console.log
     $.ajax({
         url: "api/pbService/getPBKList/" + pb.pbId,
 
@@ -464,15 +468,17 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
                         console.log(tolerance);
                         printAppend(print, i);
 
-
                         var print2 = $(`#printTables`).find(`#tableItems${i}`);
+                        var tara = getTara(pbkList[i].tara);
+                        var netto = getNetto(pbkList[i].netto);
+
                         print2.append(`<tr>
                             <td>${rbIdPrint.raavareId}</td>
                             <td>${raaPrint}</td>
                             <td>${rbIdPrint.maengde} kg</td>
                             <td>${tolerance} %</td>
-                            <td>${pbkList[i].tara} kg</td>
-                            <td>${pbkList[i].netto} kg</td>
+                            <td>${tara}</td>
+                            <td>${netto}</td>
                             <td>${pbkList[i].rbId}</td>
                             <td>${pbkList[i].oprId}</td>
                             </tr>`);
@@ -553,6 +559,20 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
 
     }
 
+    function getTara(tara) {
+        var taraStatus;
+        if(tara  == 0){
+            taraStatus = "Ikke afvejet!";
+        } else taraStatus = tara + " kg";
+        return taraStatus;
+    }
+    function getNetto(netto) {
+        var nettoStatus;
+        if(netto == 0){
+            nettoStatus = "Ikke afvejet!";
+        } else nettoStatus = netto + " kg";
+        return nettoStatus;
+    }
 
     /**
      * ----------------------------------------------------------------------------------------
@@ -568,20 +588,27 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
             url: "api/pbService/getPBList",
             contentType: "application/JSON",
             success: function (products) {
-                console.log(products);
-                products.forEach(function (products) {
-                    getRecept(products.receptId, (recept) =>{
-                        table.append(`<tr>
-                    <td>${products.pbId}</td>
-                    <td>${products.receptId}</td>
-                    <td>${recept.receptNavn}</td>
-                    <td>${products.status}</td>
-                    <td>${products.date}</td>
-                    <td>${products.pStartDato}</td>
-                   <td><button onclick="confirmDeletePB(${products.pbId})">slet</button></td>
-                </tr>`);});
+                    products.forEach(function (products) {
+                        getSpecificReceptKomps(products.receptId, (receptKomp) => {
+                            getSpecificPBKList(products.pbId, 1, (produktKomp) => {
 
-                })
+                            getRecept(products.receptId, (recept) => {
+                                table.append(`<tr>
+                        <td>${products.pbId}</td>
+                        <td>${products.receptId}</td>
+                        <td>${recept.receptNavn}</td>
+                        <td>${products.status}</td>
+                        <td>${products.date}</td>
+                        <td>${products.pStartDato}</td>
+                        <td>${produktKomp} / ${receptKomp.length}</td>
+                         
+                       <td><button onclick="confirmDeletePB(${products.pbId})">slet</button></td>
+                    </tr>`);
+                            });
+
+                        });
+                    });
+                });
             },
             error: function (XHR) {
                 console.log(XHR);
@@ -591,13 +618,22 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
     }
 
 
-    function getSpecificPBKList(pbId, _callback) {
-
+    function getSpecificPBKList(pbId, status, _callback) {
+        var notWeighted = 0;
         $.ajax({
             url: "api/pbService/getPBKList/" + pbId,
             contentType: "application/JSON",
             success: function (products) {
-                _callback(products);
+                if(status == 1) {
+                    products.forEach(function (products) {
+                        if (products.netto == 0 || products.tara == 0) {
+                            notWeighted++;
+                        }
+
+                    });
+                    _callback(products.length - notWeighted);
+                }
+                else _callback(products);
             },
             error: function (XHR) {
                 console.log(XHR);
@@ -613,17 +649,19 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
         $.ajax({
             url: "api/pbService/getPBKList",
             contentType: "application/JSON",
-            success: function (products) {
-                console.log(products);
-                products.forEach(function (products) {
-                    console.log(products);
+            success: function (pbkList) {
+                console.log(pbkList);
+                pbkList.forEach(function (pbkList) {
+                    console.log(pbkList);
+                    var tara = getTara(pbkList.tara);
+                    var netto = getNetto(pbkList.netto);
                     table.append(`<tr>
-                    <td>${products.pbId}</td>
-                    <td>${products.rbId}</td>
-                    <td>${products.tara}</td>
-                    <td>${products.netto}</td>
-                    <td>${products.oprId}</td>
-                   <td><button onclick="confirmDeletePBK(${products.pbId}, ${products.rbId})">slet</button></td>
+                    <td>${pbkList.pbId}</td>
+                    <td>${pbkList.rbId}</td>
+                    <td>${tara}</td>
+                    <td>${netto}</td>
+                    <td>${pbkList.oprId}</td>
+                   <td><button onclick="confirmDeletePBK(${pbkList.pbId}, ${pbkList.rbId})">slet</button></td>
                 </tr>`);
                 })
             },

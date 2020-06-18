@@ -65,7 +65,7 @@ $("#updateRB").submit(function (event) {
         method: "PUT",
         success: function (data) {
             console.log(data);
-            alert(data)
+            alert(data);
             main.switchPage("HTML/raavareBatch/visRaavarebatch.html")
         },
         error: function (XHR) {
