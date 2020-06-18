@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Zahra" charset="UTF-8">
+    <title>Opdater Råvarebatch</title>
+
+    <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/raavarebatch.js"></script>
+
+    <script type="text/javascript">main.back = "HTML/menu.html"</script>
+    <script type="text/javascript">main.tilbageShow()</script>
+
+</head>
+<body>
+
+
+<h1>
+    <b>
+        <div style="text-align: center;">Opdater Råvarebatch</div>
+
+    </b>
+</h1>
+
+<div style="text-align: center">
+    <form id="updateRB">
+
+        Råvare ID:</label><br>
+        <input type="number" name="rId" id="rId"><br><br>
+
+
+        Råvarebatch ID:</label><br>
+        <input type="number" name="rbId" id="rbId"><br><br>
+
+        Mængde:</label><br>
+        <input type="number" step="0.0000" placeholder="0.0000" name="maengde"><br><br>
+
+        <!--
+        <label for="rId">Råvare ID:</label><br>
+        <select type="number" name="rId" id="rId"></select><br><br>
+
+        <label for="rbId">Råvarebatch ID:</label><br>
+        <select type="number" name="rbId" id="rbId"></select><br><br>
+
+        <label>Mængde:</label><br>
+        <input type="number" step="0.0000" placeholder="0,0000" name="maengde"><br><br>
+
+        -->
+        <input type="submit" value="Opdater Råvarebatch"><br><br>
+
+
+    </form>
+</div>
+
+</body>
+</html>

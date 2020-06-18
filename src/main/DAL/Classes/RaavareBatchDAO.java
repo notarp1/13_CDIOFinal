@@ -3,7 +3,6 @@ package DAL.Classes;
 import DAL.DALException;
 import DAL.Interfaces.IRaavareBatchDAO;
 import DAL.Statics;
-import DTO.ProduktBatchDTO;
 import DTO.RaavareBatchDTO;
 
 import java.sql.*;
@@ -161,22 +160,6 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
     @Override
     public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
-        try {
-            String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "', '" +  raavarebatch.getRaavareId() + "', '" + raavarebatch.getMaengde() + "')";
-            Statics.DB.update(sqlManipulation);
-
-
-        }  catch (SQLException | ClassNotFoundException e ) {
-            e.printStackTrace();
-            throw new DALException("Database fejl");
-
-        }
-
-    }
-
-    /**
-    @Override
-    public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
         System.out.println(raavarebatch);
 
         try {
@@ -184,8 +167,6 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 
             String sqlManipulation = "INSERT RaavareBatch VALUES ('" + raavarebatch.getRbId() + "','" + raavarebatch.getRaavareId() + "','" + raavarebatch.getMaengde() + "')";
             Statics.DB.update(sqlManipulation);
-
-
 
 
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
@@ -201,7 +182,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
             throw new DALException("Database fejl");
         }
     }
-    */
+
 
     @Override
     public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
@@ -238,15 +219,6 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
             e.printStackTrace();
             throw new DALException("Database fejl");
         }
-    }
-
-    @Override
-    public void setRBId(int rbId) {
-
-    }
-
-    @Override
-    public void setRaavareId(int raavareId) {
 
     }
 }
