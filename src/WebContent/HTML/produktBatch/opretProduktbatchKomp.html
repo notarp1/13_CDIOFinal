@@ -8,12 +8,12 @@
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/Recept.js"></script>
+    <script type="text/javascript" src="js/raavarebatch.js"></script>
     <script type="text/javascript" src="js/produktionbatch.js"></script>
 
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadRBs(0)</script>
     <script type="text/javascript">loadUsers(0)</script>
 
 </head>
@@ -56,15 +56,31 @@
 </div>
 
 <div>
-    <h1>Produktbatches</h1>
+    <h4>Receptkomponenter</h4>
 
     <table id="recept-tabel">
         <thead>
         <tr>
-            <th>Recept ID</th>
             <th>Råvare ID</th>
             <th>Nominal Nettovægt</th>
             <th>Tolerance</th>
+            <th>Råvarebatch</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h4>Nuværende produktbatches</h4>
+
+    <table id="pbk-tabel">
+        <thead>
+        <tr>
+            <th>Produktbatch ID</th>
+            <th>Tara-vægt</th>
+            <th>Netto-vægt</th>
             <th>Råvarebatch</th>
         </tr>
         </thead>

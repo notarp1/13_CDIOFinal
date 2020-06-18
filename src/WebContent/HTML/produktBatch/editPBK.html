@@ -10,7 +10,6 @@
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
     <script type="text/javascript">loadPBKs(1)</script>
-    <script type="text/javascript">loadRBs(1)</script>
     <script type="text/javascript">loadUsers(1)</script>
 
 </head>
@@ -24,11 +23,15 @@
     </b>
 </h1>
 
+
 <div style="text-align: center">
     <form id = "updatePBK">
 
 
-        <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
+        <label id="visID"></label><br>
+        <input type="hidden" id="pbId" name="pbId">
+        <label id="recept"></label><br>
+        <label id="receptNavn"></label><br><br>
 
         <label for="rbId">Råvarebatch ID:</label><br>
         <select type ="number" name="rbId" id="rbId"></select><br><br>
@@ -46,6 +49,28 @@
         <input type="submit"  value="Opdater Produktbatch-komponent"><br><br>
 
     </form>
+
+</div>
+
+
+<div>
+    <h4>Produktbatches</h4>
+
+    <table id="pbk-tabel">
+        <thead>
+        <tr>
+            <th>Produktbatch ID</th>
+            <th>Råvarebatch ID</th>
+            <th>Tara-vægt</th>
+            <th>netto-vægt</th>
+            <th>Operator ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 
 </body>
 </html>
