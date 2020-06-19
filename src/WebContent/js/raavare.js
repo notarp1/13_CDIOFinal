@@ -95,3 +95,31 @@ function loadRaavare() {
 }
 
 
+//gør så man kan vælge mellem eksisterende raavare id'er naar man opdatere en raavare
+
+function loadRaavareSelection() {
+
+
+        var output = $("#updateRaa").find("#raavareId");
+        output.html("");
+
+
+
+    $.ajax({
+        url: "api/raaService/getRaaList",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
+
+            for (let i = 0; i < raavare.length; i++) {
+                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
+            }
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
+

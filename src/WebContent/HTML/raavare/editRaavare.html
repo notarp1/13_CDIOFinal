@@ -7,7 +7,7 @@
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/raavare.js"></script>
-
+    <script type="text/javascript">loadRaavareSelection()</script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
@@ -18,16 +18,16 @@
 <div style="text-align: center">
     <form id = "updateRaa">
 
-        Råvare ID: <br><br>
-        <input type="number" name="raavareId">
+        <label for ="raavareId"></label>  Råvare ID: <br><br>
+        <select type="number" name="raavareId" id="raavareId"></select>
         <br><br>
 
         Råvare Navn: <br><br>
-        <input type="text" name="raavareNavn">
+        <input type="text" name="raavareNavn" id="raavareNavn">
         <br><br>
 
         Leverandør: <br><br>
-        <input type="text" name="leverandoer">
+        <input type="text" name="leverandoer" id="leverandoer">
         <br><br>
 
         <input type="submit" value="Continue">

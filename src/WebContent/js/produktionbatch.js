@@ -721,38 +721,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb) {
     }
 
 // Slet PBK (pbkListe.html)
-    function confirmDeletePBK(pbId, rbId) {
-        $.ajax({
-            url: "api/pbService/getPBK",
-            data: {pbId: pbId, rbId: rbId},
-            contentType: "application/JSON",
-            method: "GET",
-            success: function (pbkList) {
-                console.log(pbkList);
-                if (confirm('Vil du slette produkbach-komponent med ID : ' + pbkList.pbId + '?')) {
-                    $.ajax({
-                        url: "api/pbService/deletePBK",
-                        data: JSON.stringify({pbId: pbId, rbId: rbId}),
-                        contentType: "application/JSON",
-                        method: "DELETE",
-                        success: function (data) {
-                            console.log(data);
-                            alert(data);
-                            main.switchPage('HTML/produktBatch/pbkListe.html')
-                        },
-                        error: function (XHR) {
-                            console.log(XHR);
-                            alert("Fejl:" + XHR.responseText);
-                        },
-                    });
-                }
-            },
-            error: function (XHR) {
-                console.log(XHR);
-                alert("Fejl:" + XHR.responseText);
-            },
-        });
-    }
+
 
 
     /**
