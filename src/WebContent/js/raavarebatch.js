@@ -113,51 +113,50 @@ function deleteRB(rbId) {
 }
 
 //Hent data fra database
-/**
-function loadRB(type) {
-    if (type == 0) {
-        var output = $("#createRB").find("#rbId");
-        output.html("");
-    }
+function loadRaavare() {
 
-        })
+    var output = $("#createRB").find("#raavareId");
+    output.html("");
 
     $.ajax({
-        url: "api/rbService/getRBList",
+        url: "api/raaService/getRaaList",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
-            var rbArray = [];
+
             for (let i = 0; i < raavare.length; i++) {
-                if (!rbArray.includes(raavare[i].rbId)) {
-                    output.append(` <option value="${raavare[i].rbId}">${raavare[i].rbId}</option>`);
-                    rbArray.push(raavare[i].rbId);
-                }
+                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
             }
+
         },
         error: function (XHR) {
             console.log(XHR);
             alert("Fejl:" + XHR.responseText);
         },
-
     });
 }
-*/
 
-    function getRaavareId(raavareId, _callback) {
-        $.ajax({
-            type: "GET",
-            url: "api/rbService/getRbId",
-            data: {raavareId: raavareId},
-            contentType: "application/JSON",
-            success: function (data) {
-                _callback(data);
-            },
-            error: function (XHR) {
-                console.log(XHR);
-                alert("Fejl:" + XHR.responseText);
+function loadRaavarebatch() {
+
+    var output = $("#updateRB").find("#rbId");
+    output.html("");
+
+    $.ajax({
+        url: "api/rbService/getRBList",
+        contentType: "application/JSON",
+        success: function (raavarebatch) {
+            console.log(raavarebatch);
+
+            for (let i = 0; i < raavarebatch.length; i++) {
+                output.append(` <option value="${raavarebatch[i].rbId}">${raavarebatch[i].rbId}</option>`);
             }
 
-        });
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
 
-    }
+}
+
