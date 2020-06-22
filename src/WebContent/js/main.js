@@ -8,21 +8,16 @@ let main = {
         $("title").html(title)
 
         if(_callback != null){
-
             setTimeout(() => {
-
                 _callback();
-
             }, 10)
-
         }
-
     },
     notify: (msg, type = "danger", sticky = false) => {
         $.gritter.add({
             text: msg,
             class_name: 'gritter-'+type,
-            sticky: sticky
+            sticky: sticky,
         })
     },
     call: ($url, $data, _success, _fail = null, $type = "POST", extra = null) => {
@@ -41,21 +36,24 @@ let main = {
             conf
         ).done((d, status, xhr) => {
             console.log(d)
-            _success(d);
+            _success(d)
         }).fail((xhr, status, error) => {
             console.log(xhr)
 
-            let msg = "Fejl: " + xhr.status + ", " + xhr.statusText
-            if(xhr.status === 404)
-                msg = "Filen blev ikke fundet på serveren."
-            else if(xhr.status === 403)
-                msg = "Du har ikke adgang til at kalde det script."
-            else if(xhr.status === 500)
-                msg = "Der skete en fejl på serveren. (500)"
-
-            main.notify(msg)
-            if(_fail != null)
+            if(_fail != null) {
                 _fail(xhr)
+            }
+            else {
+                let msg = "Fejl: " + xhr.status + ", " + xhr.statusText
+                if (xhr.status === 404)
+                    msg = "Filen blev ikke fundet på serveren."
+                else if (xhr.status === 403)
+                    msg = "Du har ikke adgang til at kalde det script."
+                else if (xhr.status === 500)
+                    msg = "Der skete en fejl på serveren. (500)"
+
+                main.notify(msg)
+            }
         })
     },
     login: (role) => {
@@ -68,19 +66,22 @@ let main = {
         main.switchPage("HTML/login.html", "Menu")
         $("footer").hide(0)
     },
-    logoutHide: () =>{
-        $("footer").hide(0);
+    footerHide: () => {
+        $("footer").hide(0)
     },
-    logoutShow: () =>{
-        $("footer").show(0);
+    footerShow: () => {
+        $("footer").show(0)
     },
-    tilbage: () =>{
+    tilbage: () => {
         main.switchPage(main.back)
-    }, back:"",
-    tilbageHide: () =>{
-        $(".tilbage-button").hide(0);
     },
-    tilbageShow: () =>{
-        $(".tilbage-button").show(0);
-    }
+    back: "",
+    tilbageHide: () => {
+        $(".tilbage-button").hide(0)
+    },
+    tilbageShow: (to = "") => {
+        $(".tilbage-button").show(0)
+        if (to != "")
+            main.back = to
+    },
 }
