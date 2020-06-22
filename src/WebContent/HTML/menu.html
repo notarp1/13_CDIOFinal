@@ -10,36 +10,40 @@
     <div class="menu-button button" onclick="main.switchPage('HTML/raavare/opretRaavare.html')" data-Farmaceut>Opret råvarer</div>
     <div class="menu-button button" onclick="main.switchPage('HTML/raavare/editRaavare.html')" data-Farmaceut>Ret råvarer</div>
 
-    <h2 data-Farmaceut data-Produktionsleder>Råvarebatches</h2>
-    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/opretRaavarebatch.html')" data-Farmaceut data-Produktionsleder>Opret råvarebatch</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/visRaavarebatch.html')" data-Farmaceut data-Produktionsleder>Vis råvarebatches</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/editRB.html')" data-Farmaceut data-Produktionsleder>Opdater råvarebatch</div>
+    <h2 data-Produktionsleder>Råvarebatches</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/opretRaavarebatch.html')" data-Produktionsleder>Opret råvarebatch</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/visRaavarebatch.html')" data-Produktionsleder>Vis råvarebatches</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/raavareBatch/editRB.html')" data-Produktionsleder>Opdater råvarebatch</div>
 
-    <h2 data-Farmaceut data-Produktionsleder>Produktbatches</h2>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPB')" data-Farmaceut data-Produktionsleder>Opret produktbatch</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/listPB.html')" data-Farmaceut data-Produktionsleder>Vis produktbatches</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPBKmain.html')" data-Farmaceut data-Produktionsleder>Opret produktbatch-komponent</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/updatePBKmain.html')" data-Farmaceut data-Produktionsleder>Opdater produktbatch-komponent</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/listPBK.html')" data-Farmaceut data-Produktionsleder>Vis produktbatch-komponenter</div>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/updatePBstatus.html')" data-Farmaceut data-Produktionsleder>Opdater produktbatch STATUS<br> eller VIS / PRINT produktbatch </div>
+    <h2 data-Produktionsleder>Produktbatches</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPB')" data-Produktionsleder>Opret produktbatch</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/listPB.html')" data-Produktionsleder>Vis produktbatches</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPBKmain.html')" data-Produktionsleder>Opret produktbatch-komponent</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/updatePBKmain.html')" data-Produktionsleder>Opdater produktbatch-komponent</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/listPBK.html')" data-Produktionsleder>Vis produktbatch-komponenter</div>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/updatePBstatus.html')" data-Produktionsleder>Opdater produktbatch STATUS<br> eller VIS / PRINT produktbatch </div>
 
     <h2 data-Farmaceut>Recepter</h2>
     <div class="menu-button button" onclick="main.switchPage('HTML/recept/Recept.html')" data-Farmaceut>Administrer recept</div>
     <div class="menu-button button" onclick="main.switchPage('HTML/recept/ReceptKomp.html')" data-Farmaceut>Administrer recept-komponent</div>
 
-    <h2 data-Farmaceut data-Produktionsleder>Afvej</h2>
-    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPBKmain.html')" data-Farmaceut data-Produktionsleder data-Laborant>Afvej</div>
+    <h2 data-Produktionsleder>Afvej</h2>
+    <div class="menu-button button" onclick="main.switchPage('HTML/produktBatch/createPBKmain.html')" data-Laborant>Afvej</div>
 </div>
 <script type="text/javascript">
     $(() => {
         main.tilbageHide();
-        if (main.user.role === "Administrator")
+        if (main.user.role === "Administrator") {
             $("[data-Administrator]").show(0)
-        else if (main.user.role === "Farmaceut")
+        } else if (main.user.role === "Farmaceut") {
             $("[data-Farmaceut]").show(0)
-        else if (main.user.role === "Produktionsleder")
             $("[data-Produktionsleder]").show(0)
-        else if (main.user.role === "Laborant")
             $("[data-Laborant]").show(0)
+        } else if (main.user.role === "Produktionsleder") {
+            $("[data-Produktionsleder]").show(0)
+            $("[data-Laborant]").show(0)
+        } else if (main.user.role === "Laborant") {
+            $("[data-Laborant]").show(0)
+        }
     })
 </script>
