@@ -309,7 +309,7 @@ $("#createPBK").submit(function(event) {
                 var pb = $("#createPBK").serializeJSON();
                 $.ajax({
                     url: "api/pbService/getPBKList/" + pb.pbId,
-                    data: {pbId: pb.pbId},
+
                     contentType: "application/JSON",
                     method: "GET",
                     success: function (pbkListe) {
@@ -383,11 +383,15 @@ $("#findPB").submit(function(event) {
 
             loadPrintPB(pb, update, (isSuccesfull) => {
                 $("#pbPrint-tabel").remove();
+
+
+
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
-                    } //else if(!isSuccesfull) {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
+                    }// else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
+
             });
         },
         error: function(XHR) {

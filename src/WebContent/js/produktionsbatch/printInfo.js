@@ -15,8 +15,7 @@ function loadPrintPB(pb, update, _callback){
         method: "GET",
         success: function (printPb) {
             main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
-                console.log(printPb + "saoidjasd");
-                console.log("Satus" + printPb.status);
+
                 getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (isSuccesfull) => {
 
                 var print = $("#printTables");
@@ -40,7 +39,6 @@ function loadPrintPB(pb, update, _callback){
 function loadPrintPBK(pbkList, pb, _callback){
 
         var print = $("#printTables");
-    alert("EWE")
         printTablePBK(print, pbkList, pb, () =>{
             _callback();
         });
@@ -247,9 +245,7 @@ function printTablePBK(print, pbkList, pb, _callback) {
                                 </tr>`);
                             a++;
 
-                            if (a == pbkList.length) {
-                                _callback();
-                            }
+
                         });
                     });
 
@@ -257,7 +253,10 @@ function printTablePBK(print, pbkList, pb, _callback) {
             });
         });
 
-
+        if (a == pbkList.length) {
+            alert("AAA")
+            _callback();
+        }
 
     }
 }
