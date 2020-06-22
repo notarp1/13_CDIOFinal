@@ -1,10 +1,9 @@
 
 /**
  * ----------------------------------------------------------------------------------------
- * -------------- Funktionalitet for hvad der skal printes. Dato, tabeller, status osv. -------------
+ * -------------- Funktionalitet for hvad der skal printes. Dato, tabeller, status osv. ---
  * ----------------------------------------------------------------------------------------
  */
-
 
 //Henter hvad der skal printes, bruges af getPrintInfo()
 function loadPrintPB(pb, update){
@@ -24,11 +23,9 @@ function loadPrintPB(pb, update){
 
                 var print = $("#printTables");
                 $("#pbPrint-tabel").remove();
-                console.log("1");
 
                 printEmptyTablePBK(print, 1);
 
-                console.log("2");
             }, 10)
 
         },

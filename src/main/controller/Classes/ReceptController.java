@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 
-public class ReceptController implements IReceptController {
+public class  ReceptController implements IReceptController {
 
     private ReceptDAO recpetData = new ReceptDAO();
     private ReceptKompDAO receptKompD = new ReceptKompDAO();
