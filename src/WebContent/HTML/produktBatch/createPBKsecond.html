@@ -8,13 +8,15 @@
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/Recept.js"></script>
+    <script type="text/javascript" src="js/raavare.js"></script>
     <script type="text/javascript" src="js/raavarebatch.js"></script>
-    <script type="text/javascript" src="js/produktionbatch.js"></script>
-
+    <script type="text/javascript" src="js/produktionsbatch/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadUsers(0)</script>
+    <script type="text/javascript">loadSuggestionsUser(0)</script>
 
 </head>
 
@@ -47,6 +49,9 @@
 
         <label for="oprId">Operator ID</label><br>
         <select type ="number" name="oprId" id="oprId"></select><br><br>
+
+        <label for="goPrint">Gå til print?</label>
+        <input type="checkbox" id="goPrint"><br><br>
 
 
         <input type="submit"  value="Opret Produktbatch-komponent"><br><br>

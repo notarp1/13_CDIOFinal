@@ -40,7 +40,7 @@ public class RaavareBatchController implements IRaavareBatchController {
     public List<RaavareBatchDTO> getRavvareBatchList() throws ControllerException {
         try {
             return rBatch.getRaavareBatchList();
-        } catch (DALException e) {
+        } catch (DALException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke hente Råvarebatch list");
         }
