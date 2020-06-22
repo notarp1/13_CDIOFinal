@@ -5,16 +5,12 @@
     <title>Opdater Produktbatch-komponent</title>
 
     <script type="text/javascript" src="js/json.js"></script>
-    <script type="text/javascript" src="js/Recept.js"></script>
-    <script type="text/javascript" src="js/raavare.js"></script>
-    <script type="text/javascript" src="js/raavarebatch.js"></script>
-    <script type="text/javascript" src="js/produktionsbatch/produktionbatch.js"></script>
-    <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
-    <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
+    <script type="text/javascript" src="js/produktionbatch.js"></script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadSuggestionsUser(1)</script>
+    <script type="text/javascript">loadPBKs(1)</script>
+    <script type="text/javascript">loadUsers(1)</script>
 
 </head>
 <body>
@@ -57,37 +53,17 @@
 </div>
 
 
-
 <div>
-    <h4>Receptkomponenter</h4>
-
-    <table id="recept-tabel">
-        <thead>
-        <tr>
-            <th>Råvarebatch</th>
-            <th>Råvarenavn</th>
-            <th>RåvareID</th>
-            <th>Nominal Nettovægt</th>
-            <th>Tolerance</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-
-<div>
-    <h4>Nuværende produktbatches</h4>
+    <h4>Produktbatches</h4>
 
     <table id="pbk-tabel">
         <thead>
         <tr>
-            <th>Råvarebatch</th>
-            <th>Råvarenavn</th>
-            <th>Råvare ID</th>
+            <th>Produktbatch ID</th>
+            <th>Råvarebatch ID</th>
             <th>Tara-vægt</th>
-            <th>Netto-vægt</th>
+            <th>netto-vægt</th>
+            <th>Operator ID</th>
         </tr>
         </thead>
         <tbody>

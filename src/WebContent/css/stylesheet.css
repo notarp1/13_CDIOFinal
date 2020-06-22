@@ -27,11 +27,11 @@
 /* Main styling af siden */
 html{ background: #ededed; }
 body{  }
-main{ max-width: 850px; margin: 0 auto; }
+main{ max-width: 750px; margin: 0 auto; }
 button{ cursor: pointer; }
 .button{ line-height: 2em; cursor: pointer; border-radius: 5px; background: var(--dtu-red); color: white; }
 .button:hover{ background: var(--dtu-red-light); }
-table{ width: 100%; border-collapse: collapse; }
+table{ width:100%; border-collapse: collapse; }
 table thead{  }
 table thead tr { background-color: #dddddd; }
 table thead tr th { padding: 0.3em 0;}

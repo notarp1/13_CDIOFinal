@@ -118,7 +118,9 @@ public class ProduktBatchController implements IProduktBatchController {
             List<ProduktBatchKompDTO> list = new ArrayList<>();
             list = pkBatch.getProduktBatchKompList(pbId);
 
-           return list;
+            if(list.isEmpty()){
+                throw new ControllerException("Advarsel: Kunne ikke finde produktbatch-komponent, tjek om det indtastede pbID er korrekt.");
+            } else return list;
 
 
         } catch (DALException e) {
