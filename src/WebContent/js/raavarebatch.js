@@ -113,10 +113,17 @@ function deleteRB(rbId) {
 }
 
 //Hent data fra database
-function loadRaavare() {
+function loadRaavareList(value) {
 
-    var output = $("#createRB").find("#raavareId");
-    output.html("");
+    if(value == 0) {
+        var output = $("#createRB").find("#raavareId");
+        output.html("");
+    }
+    if(value == 1) {
+        var output = $("#updateRB").find("#raavareId");
+        output.html("");
+    }
+
 
     $.ajax({
         url: "api/raaService/getRaaList",
