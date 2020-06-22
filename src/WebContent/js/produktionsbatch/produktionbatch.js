@@ -15,51 +15,6 @@
  */
 
 
-$("#updatePBKfirstPage").submit(function(event) {
-    event.preventDefault();
-    var pb = $("#pbId").val();
-    console.log(pb);
-
-    $.ajax({
-        url: "api/pbService/getPB",
-        data: {pbId: pb},
-        contentType: "application/JSON",
-        success: function (product) {
-            main.switchPage("HTML/produktBatch/updatePBKsecond.html");
-
-            getRecept(product.receptId, (recept) => {
-                $("#updatePBK").find("#pbId").val(pb);
-                getElementsBy(pb, recept.receptId, recept.receptNavn);
-                getSpecificPBKList(pb, 0, (pbkList) =>{
-                    var rbIdAppend = $(`#updatePBK`).find("#rbId");
-                    rbIdAppend.html("");
-                    var printPbk = $(`#pbk-tabel`).find("tbody");
-                    printPbk.html("");
-
-                    pbkList.forEach(function (pbkList) {
-                        rbIdAppend.append(` <option value="${pbkList.rbId}">${pbkList.rbId}</option>`);
-                        var tara = getTara(pbkList.tara);
-                        var netto = getNetto(pbkList.netto);
-                        printPbk.append(`<tr>
-                            <td>${pbkList.pbId}</td>
-                            <td>${pbkList.rbId}</td>
-                            <td>${tara}</td>
-                            <td>${netto}</td>
-                            <td>${pbkList.oprId}</td>
-                             </tr>`);
-                    })
-                });
-            });
-        },
-        error: function (XHR) {
-            console.log(XHR);
-            alert("Fejl:" + XHR.responseText);
-        },
-    });
-
-});
-
-
 
 //Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
 $("#createPBKfirstPage").submit(function(event) {
@@ -74,7 +29,7 @@ $("#createPBKfirstPage").submit(function(event) {
 
 
 
-            main.switchPage("HTML/produktBatch/createPBKsecond.html");
+            main.switchPage("HTML/produktBatch/createPBKsecond.html", "Opret produktbatch");
             getSpecificReceptKomps(product.receptId, (sRk) => {
 
                 var printPbk = $(`#pbk-tabel`).find("tbody");
@@ -89,14 +44,84 @@ $("#createPBKfirstPage").submit(function(event) {
                     $("#createPBK").find("#pbId").val(pb);
 
                     getElementsBy(pb, recept.receptId, recept.receptNavn);
-                    createPBKEssentials(pb, pbkRdy, () =>{
+                    createPBKEssentials(pb, pbkRdy,1, () =>{
 
 
                         sRk.forEach(function (sRkElement) {
+
                             getRbId(sRkElement.raavareId, (raavare) => {
                                 getRaavare(sRkElement.raavareId, (rnavn) => {
-                                    output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
-                                    if(!pbkRdy.includes(raavare.rbId)){
+                                console.log(sRkElement.raavareId);
+
+                                    if(!pbkRdy.includes(sRkElement.raavareId)){
+                                        output.append(` <option value="${raavare.rbId}">${raavare.rbId}</option>`);
+                                        print.append(`<tr>                   
+                                    <td style="color: red">${raavare.rbId}</td>
+                                    <td  style="color: red">${rnavn}</td>
+                                    <td  style="color: red">${sRkElement.raavareId}</td>
+                                    <td  style="color: red">${sRkElement.nomNetto} kg</td>
+                                    <td  style="color: red">${sRkElement.tolerance} %</td>                                                  
+                                    </tr>`)
+                                    } else
+                                        print.append(`<tr>                   
+                            <td>${raavare.rbId}</td>
+                            <td>${rnavn}</td>
+                            <td>${sRkElement.raavareId}</td>
+                            <td>${sRkElement.nomNetto} kg</td>
+                            <td>${sRkElement.tolerance} %</td>                                                  
+                            </tr>`);
+
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+});
+
+$("#updatePBKfirstPage").submit(function(event) {
+    event.preventDefault();
+    var pb = $("#pbId").val();
+    var pbkRdy = [];
+    $.ajax({
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
+        contentType: "application/JSON",
+        success: function (product) {
+
+
+
+            main.switchPage("HTML/produktBatch/updatePBKsecond.html", "Opdater produktbatch");
+            getSpecificReceptKomps(product.receptId, (sRk) => {
+
+                var printPbk = $(`#pbk-tabel`).find("tbody");
+                printPbk.html("");
+                var print = $(`#recept-tabel`).find("tbody");
+                print.html("");
+                var output = $("#updatePBK").find("#rbId");
+                output.html("");
+
+                getRecept(product.receptId, (recept) =>{
+
+                    $("#updatePBK").find("#pbId").val(pb);
+
+                    getElementsBy(pb, recept.receptId, recept.receptNavn);
+                    createPBKEssentials(pb, pbkRdy, 1, () =>{
+
+
+                        sRk.forEach(function (sRkElement) {
+
+                            getRbId(sRkElement.raavareId, (raavare) => {
+                                getRaavare(sRkElement.raavareId, (rnavn) => {
+                                    console.log(sRkElement.raavareId);
+
+                                    if(!pbkRdy.includes(sRkElement.raavareId)){
                                         print.append(`<tr>                   
                                     <td style="color: red">${raavare.rbId}</td>
                                     <td  style="color: red">${rnavn}</td>
@@ -136,10 +161,16 @@ $("#createPBKfirstPage").submit(function(event) {
 
 //Denne callback funktion sikre at pbk listen hentes før receptkomponent listen.
 //Dette giver muligheden for at markere hvilke receptkomponenter der mangler at blive afvejet.
-function createPBKEssentials(pb, pbkRdy, _callback){
+function createPBKEssentials(pb, pbkRdy, val, _callback){
     var printPbk = $(`#pbk-tabel`).find("tbody");
     printPbk.html("");
     var i = 0;
+
+    if(val==1){
+        var output = $("#updatePBK").find("#rbId");
+        output.html("");
+    }
+
     getSpecificPBKList(pb, 0, (pbkList) => {
 
         if(pbkList.length == 0){
@@ -147,8 +178,12 @@ function createPBKEssentials(pb, pbkRdy, _callback){
         }
         pbkList.forEach(function (pbkListInside) {
             i++;
+
             getRb(pbkListInside.rbId, (rb) => {
-                pbkRdy.push(pbkListInside.rbId);
+                pbkRdy.push(rb.raavareId);
+                if(val==1) {
+                    output.append(` <option value="${pbkListInside.rbId}">${pbkListInside.rbId}</option>`);
+                }
                 getRaavare(rb.raavareId, (rNavn) => {
                     var tara = getTara(pbkListInside.tara);
                     var netto = getNetto(pbkListInside.netto);
@@ -258,20 +293,20 @@ $("#createPBK").submit(function(event) {
                     contentType: "application/JSON",
                     method: "GET",
                     success: function (pbkListe) {
-                        loadPrintPB(pb, 0);
-                        setTimeout(() => {
+                        loadPrintPB(pb, 0, (callback) => {
+
                             $("#pbPrint-tabel").remove();
 
-                            loadPrintPBK(pbkListe, pb)
-                        }, 1000)
-                        ;
+                            loadPrintPBK(pbkListe, pb);
+
+                        });
                     },
                     error: function (XHR) {
                         console.log(XHR);
                         alert("Fejl: " + XHR.responseText);
                     },
                 });
-            } else main.switchPage('HTML/produktBatch/createPBKmain.html');
+            } else main.switchPage('HTML/produktBatch/createPBKmain.html', "Opret produktbatch");
 
         },
         error: function(XHR) {
@@ -295,7 +330,7 @@ $("#updatePBK").submit(function (event) {
         success: function (data) {
             console.log(data);
             alert(data);
-            main.switchPage("HTML/produktBatch/listPBK.html")
+            main.switchPage("HTML/produktBatch/listPBK.html", "Se PBK liste")
 
         },
         error: function (XHR) {
@@ -312,20 +347,16 @@ $("#findPB").submit(function(event) {
     event.preventDefault();
 
     var pb = $("#findPB").serializeJSON();
-    console.log
     $.ajax({
         url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
         method: "GET",
         success: function (pbkListe) {
             console.log(pbkListe);
-            loadPrintPB(pb, 1);
-            setTimeout(() => {
+            loadPrintPB(pb, 1, (callback) => {
                 $("#pbPrint-tabel").remove();
-                console.log("3");
                 loadPrintPBK(pbkListe, pb)
-            }, 1000)
-            ;
+            });
         },
         error: function(XHR) {
             console.log(XHR);
@@ -391,7 +422,6 @@ function loadPBK() {
         success: function (pbkList) {
             console.log(pbkList);
             pbkList.forEach(function (pbkList) {
-                console.log(pbkList);
                 var tara = getTara(pbkList.tara);
                 var netto = getNetto(pbkList.netto);
                 table.append(`<tr>
@@ -435,7 +465,7 @@ function confirmDeletePB(pbId) {
                     success: function (data) {
                         console.log(data);
                         alert(data);
-                        main.switchPage('HTML/produktBatch/listPB.html')
+                        main.switchPage('HTML/produktBatch/listPB.html', "Se PB Liste");
                     },
                     error: function (XHR) {
                         console.log(XHR);
@@ -469,7 +499,7 @@ function confirmDeletePBK(pbId, rbId) {
                     success: function (data) {
                         console.log(data);
                         alert(data);
-                        main.switchPage('HTML/produktBatch/listPBK.html')
+                        main.switchPage('HTML/produktBatch/listPBK.html', "Se PBK Liste")
                     },
                     error: function (XHR) {
                         console.log(XHR);

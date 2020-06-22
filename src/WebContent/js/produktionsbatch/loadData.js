@@ -109,3 +109,23 @@ function loadSuggestionsRecepter() {
         },
     });
 }
+
+
+function getUser(id, _callback) {
+
+    $.ajax({
+        url: "api/bruger/" + id,
+        contentType: "application/JSON",
+        method: "GET",
+        success: function (user) {
+                console.log(user.oprNavn);
+            _callback(user);
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+}

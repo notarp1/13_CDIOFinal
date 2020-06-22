@@ -3,9 +3,20 @@
  */
 let main = {
     user: {},
-    switchPage: (page, title = "") => {
+    switchPage: (page, title = "", _callback = null) => {
         $("main").load(page)
         $("title").html(title)
+
+        if(_callback != null){
+
+            setTimeout(() => {
+
+                _callback();
+
+            }, 10)
+
+        }
+
     },
     notify: (msg, type = "danger", sticky = false) => {
         $.gritter.add({
