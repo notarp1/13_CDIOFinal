@@ -152,6 +152,23 @@ $("#updatePBKfirstPage").submit(function(event) {
     });
 });
 
+$("#findPBKList").submit(function (event) {
+
+    event.preventDefault();
+    var pb = $("#findPBKList").serializeJSON();
+    console.log(pb);
+
+    main.switchPage("HTML/produktBatch/listPBK.html", "Produktionsbatch Liste", () => {
+
+        loadPBK(pb);
+    })
+
+
+
+
+
+});
+
 
 /**
  * ----------------------------------------------------------------------------------------
@@ -369,7 +386,7 @@ $("#findPB").submit(function(event) {
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
-                    } else main.switchPage("HTML/produktBatch/updatePBstatus.html");
+                    } //else if(!isSuccesfull) {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
             });
         },
@@ -427,27 +444,32 @@ function loadPB() {
 
 
 //Load PBK's ind i tabel (listPBK.html / specificPB)
-function loadPBK() {
+function loadPBK(pb) {
 
     var table = $("#pbk-tabel").find("tbody");
     table.html("");
     $.ajax({
-        url: "api/pbService/getPBKList",
+        url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
         success: function (pbkList) {
             console.log(pbkList);
             pbkList.forEach(function (pbkList) {
-                var tara = getTara(pbkList.tara);
-                var netto = getNetto(pbkList.netto);
-                table.append(`<tr>
-                    <td>${pbkList.pbId}</td>
-                    <td>${pbkList.rbId}</td>
-                    <td>${tara}</td>
-                    <td>${netto}</td>
-                    <td>${pbkList.oprId}</td>
-                   <td><button onclick="confirmDeletePBK(${pbkList.pbId}, ${pbkList.rbId})">slet</button></td>
-                </tr>`);
-            })
+                getRb(pbkList.rbId, (rb) => {
+                    getRaavare(rb.raavareId, (rnavn) => {
+                        var tara = getTara(pbkList.tara);
+                        var netto = getNetto(pbkList.netto);
+                        table.append(`<tr>
+                            <td>${pbkList.pbId}</td>
+                            <td>${pbkList.rbId}</td>
+                            <td>${rnavn}</td>
+                            <td>${tara}</td>
+                            <td>${netto}</td>
+                            <td>${pbkList.oprId}</td>
+                           <td><button onclick="confirmDeletePBK(${pbkList.pbId}, ${pbkList.rbId})">slet</button></td>
+                        </tr>`);
+                    });
+                });
+            });
         },
         error: function (XHR) {
             console.log(XHR);
@@ -514,7 +536,7 @@ function confirmDeletePBK(pbId, rbId) {
                     success: function (data) {
                         console.log(data);
                         alert(data);
-                        main.switchPage('HTML/produktBatch/listPBK.html', "Se PBK Liste")
+                        main.switchPage('HTML/produktBatch/listPBKmain.html', "Se PBK Liste")
                     },
                     error: function (XHR) {
                         console.log(XHR);

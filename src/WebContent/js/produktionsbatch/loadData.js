@@ -32,6 +32,11 @@ function loadSuggestionsPB(type)     {
         output.html("");
         var url1 = "api/pbService/getPBList";
     }
+    if (type == 5) {
+        var output = $("#findPBKList").find("#pbId");
+        output.html("");
+        var url1 = "api/pbService/getPBList";
+    }
 
 
     $.ajax({

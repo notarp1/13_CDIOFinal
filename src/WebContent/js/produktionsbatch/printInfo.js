@@ -8,7 +8,6 @@
 //Henter hvad der skal printes, bruges af getPrintInfo()
 function loadPrintPB(pb, update, _callback){
 
-
     $.ajax({
         url: "api/pbService/getPB",
         data: {pbId: pb.pbId},
@@ -16,7 +15,7 @@ function loadPrintPB(pb, update, _callback){
         method: "GET",
         success: function (printPb) {
             main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
-                console.log(printPb);
+                console.log(printPb + "saoidjasd");
                 console.log("Satus" + printPb.status);
                 getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (isSuccesfull) => {
 
@@ -41,8 +40,8 @@ function loadPrintPB(pb, update, _callback){
 function loadPrintPBK(pbkList, pb, _callback){
 
         var print = $("#printTables");
-
-        printTablePBK(print, pbkList, pb, (callback) =>{
+    alert("EWE")
+        printTablePBK(print, pbkList, pb, () =>{
             _callback();
         });
 
@@ -193,7 +192,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
  */
 
 //Append pb information på printPB.html
-function printEmptyTablePBK(print, i, _callback = null) {
+function printEmptyTablePBK(print, i, _callback) {
     var loop = i;
 
 
@@ -214,13 +213,13 @@ function printEmptyTablePBK(print, i, _callback = null) {
         </tbody>
     </table><br><br>`);
 
-    if (_callback != null) {
-        setTimeout(() => {
 
-            _callback();
+    setTimeout(() => {
 
-        }, 10)
-    }
+        _callback();
+
+    }, 10)
+
 
 }
 
