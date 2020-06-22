@@ -1,5 +1,7 @@
 <meta name="author" content="Theis">
 <div>
+    <h1>Ret bruger</h1>
+
     <form onsubmit="bruger.update(event)">
         <input type="hidden" id="oprId" name="oprId">
         <label for="oprNavn">Navn</label><br>
@@ -28,3 +30,8 @@
         <button>Opdater</button>
     </form>
 </div>
+<script type="text/javascript">
+    $(() => {
+        main.tilbageShow("HTML/bruger/liste.html")
+    })
+</script>
