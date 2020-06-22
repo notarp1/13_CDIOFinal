@@ -18,18 +18,10 @@ public class RaavareController implements IRaavareController {
 
     private RaavareDAO raavarec = new RaavareDAO();
 
-    public static void main(String[] args) {
-        RaavareController test = new RaavareController();
-        RaavareDTO raavare = new RaavareDTO();
-        raavare.setRaavareNavn("Tomato");
-        raavare.setRaavareId(9293);
-        raavare.setLeverandoer("Abemad");
-        try {
-            test.deleteRaavare(raavare.getRaavareId());
-        } catch (ControllerException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
+
 
     @Override
     public RaavareDTO getRaavare(int raavareId) throws ControllerException{
