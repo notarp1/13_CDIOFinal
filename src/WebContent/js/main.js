@@ -71,6 +71,9 @@ let main = {
     logoutHide: () =>{
         $("footer").hide(0);
     },
+    logoutShow: () =>{
+        $("footer").show(0);
+    },
     tilbage: () =>{
         main.switchPage(main.back)
     }, back:"",

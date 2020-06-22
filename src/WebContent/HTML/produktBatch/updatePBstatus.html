@@ -13,6 +13,11 @@
     <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
     <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
 
+    <script type="text/javascript">
+        $(() => {
+            main.logoutShow();
+        })
+    </script>
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
     <script type="text/javascript">loadSuggestionsPB(2)</script>
@@ -36,6 +41,10 @@
 
 
         <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
+
+
+        <label for="upStatus">Opdater status?</label>
+        <input type="checkbox" id="upStatus"><br><br>
 
         <label for>Status:</label><br>
         <select type ="number" name="status" id="status">

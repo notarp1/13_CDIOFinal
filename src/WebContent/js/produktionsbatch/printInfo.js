@@ -15,15 +15,16 @@ function loadPrintPB(pb, update, _callback){
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
-            main.switchPage('HTML/produktBatch/printPB.html', "PB-print", (callback) => {
-
-                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (callback) => {
+            main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
+                console.log(printPb);
+                console.log("Satus" + printPb.status);
+                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (isSuccesfull) => {
 
                 var print = $("#printTables");
                 $("#pbPrint-tabel").remove();
 
-                    printEmptyTablePBK(print, 1, (callback) => {
-                        _callback();
+                    printEmptyTablePBK(print, 1, () => {
+                        _callback(isSuccesfull);
                     });
                 });
             });
@@ -37,11 +38,13 @@ function loadPrintPB(pb, update, _callback){
 }
 
 //Fortæller hvor hvilke tabel PBK info skal appendes til
-function loadPrintPBK(pbkList, pb){
+function loadPrintPBK(pbkList, pb, _callback){
 
         var print = $("#printTables");
 
-        printTablePBK(print, pbkList, pb);
+        printTablePBK(print, pbkList, pb, (callback) =>{
+            _callback();
+        });
 
 
 }
@@ -52,12 +55,13 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
     document.getElementById("printDate").innerHTML = "Udskrevet: " + getPrintDate();
     getPbId(pbId);
     getReceptId(receptId);
-    getPbStatus(status, date, pbId, pStartDate, update, oldPb);
+    getPbStatus(status, date, pbId, pStartDate, update, oldPb, (isSuccesful) => {
     setTimeout(() => {
 
-        _callback();
+        _callback(isSuccesful);
 
     }, 10)
+    });
 
     //Hent nuværende date
     function getPrintDate() {
@@ -90,20 +94,25 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
 
     }
 
-    function getPbStatus(status, date, pbId, pStartDate, update, oldPb) {
+    function getPbStatus(status, date, pbId, pStartDate, update, oldPb, _callback) {
 
-
+        console.log("Satus" + oldPb.status);
         if (update == 0) {
-            document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
-            document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
 
-        } else {
-
-            if (status == 0 && oldPb.status == 0) {
-
+            if(oldPb.status == 0) {
                 document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
                 document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
-            } else {
+            } else if(oldPb.status == 1) {
+                document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
+                document.getElementById("pbStart").innerHTML = "Produktions Start: " + oldPb.pStartDato;
+            }else if(oldPb.status == 2) {
+                document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
+                document.getElementById("pbStart").innerHTML = "Produktions Start: " + getPbDate(pStartDate);
+            }
+            _callback(true);
+
+        }  else {
+
                 $.ajax({
                     url: "api/pbService/getPB/",
                     data: {pbId: pbId},
@@ -112,12 +121,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
                     success: function (pb) {
                         console.log(pb);
 
-                        if (status == 1 && oldPb.status == 1) {
-                            updatePb(pb, 0);
-
-                        } else if (status == 2 && oldPb.status == 2) {
-                            updatePb(pb, 0);
-
+                        if (status == 0 && oldPb.status == 0 ||status == 1 && oldPb.status == 1 || status == 2 && oldPb.status == 2) {
+                            alert("FEJL: Du kan ikke opdatere status til den nuværende status.")
+                            _callback(false);
                         } else if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
 
                             if (status == 0) {
@@ -136,12 +142,14 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
                             } else pb.status = status;
 
                             updatePb(pb, 1);
+                            _callback(true);
 
                         } else main.switchPage('HTML/login.html', "Login");
+                        _callback(false);
 
                     },
                 });
-            }
+
         }
 
     }
@@ -157,7 +165,10 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
                 if(select==1) {
                     alert(pbUp);
                 }
-                if (status == 1) {
+                if (pb.status == 0) {
+                    document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
+                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
+                }else if (pb.status == 1) {
                     document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
                     document.getElementById("pbStart").innerHTML = "Produktions Start: " + pb.pStartDato;
                 } else {
@@ -182,7 +193,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
  */
 
 //Append pb information på printPB.html
-function printEmptyTablePBK(print, i, _callback) {
+function printEmptyTablePBK(print, i, _callback = null) {
     var loop = i;
 
 
@@ -203,27 +214,29 @@ function printEmptyTablePBK(print, i, _callback) {
         </tbody>
     </table><br><br>`);
 
-    setTimeout(() => {
+    if (_callback != null) {
+        setTimeout(() => {
 
-        _callback();
+            _callback();
 
-    }, 10)
+        }, 10)
+    }
 
 }
 
 //Append pbk information på printPB.html
-function printTablePBK(print, pbkList, pb) {
-
+function printTablePBK(print, pbkList, pb, _callback) {
+    var a = 0;
     for (let i = 0; i < pbkList.length; i++) {
         getRb(pbkList[i].rbId, (rbIdPrint) => {
             getRaavare(rbIdPrint.raavareId, (raaPrint) => {
                 getTolerance(pb, rbIdPrint.raavareId, (tolerance) => {
                     getUser(pbkList[i].oprId, (user) => {
-                        printEmptyTablePBK(print, i);
-                        var print2 = $(`#printTables`).find(`#tableItems${i}`);
-                        var tara = getTara(pbkList[i].tara);
-                        var netto = getNetto(pbkList[i].netto);
-                        print2.append(`<tr>
+                        printEmptyTablePBK(print, i, () => {
+                            var print2 = $(`#printTables`).find(`#tableItems${i}`);
+                            var tara = getTara(pbkList[i].tara);
+                            var netto = getNetto(pbkList[i].netto);
+                            print2.append(`<tr>
                                 <td>${rbIdPrint.raavareId}</td>
                                 <td>${raaPrint}</td>
                                 <td>${rbIdPrint.maengde} kg</td>
@@ -233,11 +246,21 @@ function printTablePBK(print, pbkList, pb) {
                                 <td>${pbkList[i].rbId}</td>
                                 <td>${user.oprNavn}</td>
                                 </tr>`);
+                            a++;
+
+                            if (a == pbkList.length) {
+                                _callback();
+                            }
+                        });
                     });
+
                 });
             });
         });
-    };
+
+
+
+    }
 }
 
 
