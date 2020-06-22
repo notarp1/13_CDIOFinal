@@ -65,7 +65,7 @@ $("#updateRB").submit(function (event) {
         method: "PUT",
         success: function (data) {
             console.log(data);
-            alert(data)
+            alert(data);
             main.switchPage("HTML/raavareBatch/visRaavarebatch.html")
         },
         error: function (XHR) {
@@ -113,26 +113,74 @@ function deleteRB(rbId) {
 }
 
 //Hent data fra database
-function loadRaavareList(value) {
-
-    if(value == 0) {
-        var output = $("#createRB").find("#raavareId");
-        output.html("");
-    }
-    if(value == 1) {
-        var output = $("#updateRB").find("#raavareId");
+/**
+function loadRB(type) {
+    if (type == 0) {
+        var output = $("#createRB").find("#rbId");
         output.html("");
     }
 
+        })
 
     $.ajax({
-        url: "api/raaService/getRaaList",
+        url: "api/rbService/getRBList",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
+            var rbArray = [];
+            for (let i = 0; i < raavare.length; i++) {
+                if (!rbArray.includes(raavare[i].rbId)) {
+                    output.append(` <option value="${raavare[i].rbId}">${raavare[i].rbId}</option>`);
+                    rbArray.push(raavare[i].rbId);
+                }
+            }
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+
+    });
+}
+*/
+
+    function getRbId(raavareId, _callback) {
+        $.ajax({
+            type: "GET",
+            url: "api/rbService/getRbId",
+            data: {raavareId: raavareId},
+            contentType: "application/JSON",
+            success: function (data) {
+                _callback(data);
+            },
+            error: function (XHR) {
+                console.log(XHR);
+                alert("Fejl:" + XHR.responseText);
+            }
+
+        });
+
+    }
+
+function loadRBs(type) {
+
+    if (type == 0) {
+        var output = $("#createPBK").find("#rbId");
+        output.html("");
+    }
+    if (type == 1) {
+        var output = $("#updatePBK").find("#rbId");
+        output.html("");
+    }
+
+    $.ajax({
+        url: "api/rbService/getRBList",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
 
             for (let i = 0; i < raavare.length; i++) {
-                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
+                output.append(` <option value="${raavare[i].rbId}">${raavare[i].rbId}</option>`);
             }
 
         },
@@ -143,27 +191,22 @@ function loadRaavareList(value) {
     });
 }
 
-function loadRaavarebatch() {
 
-    var output = $("#updateRB").find("#rbId");
-    output.html("");
-
+function getRb(rbId, _callback) {
     $.ajax({
-        url: "api/rbService/getRBList",
+        type: "GET",
+        url: "api/rbService/getRB",
+        data: {rbId: rbId},
         contentType: "application/JSON",
-        success: function (raavarebatch) {
-            console.log(raavarebatch);
-
-            for (let i = 0; i < raavarebatch.length; i++) {
-                output.append(` <option value="${raavarebatch[i].rbId}">${raavarebatch[i].rbId}</option>`);
-            }
-
+        success: function (data) {
+            console.log(data);
+            _callback(data);
         },
         error: function (XHR) {
             console.log(XHR);
             alert("Fejl:" + XHR.responseText);
-        },
+        }
+
     });
 
 }
-
