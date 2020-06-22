@@ -95,7 +95,27 @@ function loadRaavare() {
 }
 
 
+function getRaavare(raavareId, _callback) {
+    $.ajax({
+        url: "api/raaService/getRaa",
+        data: {raavareId: raavareId},
+        contentType: "application/JSON",
 //gør så man kan vælge mellem eksisterende raavare id'er naar man opdatere en raavare
+
+        success: function (raa) {
+            console.log(raa);
+
+            _callback(raa.raavareNavn);
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+}
+
+
 
 function loadRaavareSelection() {
 
