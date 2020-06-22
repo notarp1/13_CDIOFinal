@@ -369,29 +369,23 @@ $("#findPB").submit(function(event) {
     event.preventDefault();
     var upStatus = $("#findPB").find("#upStatus").is(":checked");
     var pb = $("#findPB").serializeJSON();
-    var update;
-
-    if(upStatus){
-        update = 1;
-    } else update = 0;
+    var update = (upStatus ? 1 : 0);
 
     $.ajax({
         url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
         method: "GET",
         success: function (pbkListe) {
-
+            console.log(pbkListe)
             loadPrintPB(pb, update, (isSuccesfull) => {
+                console.log(isSuccesfull)
                 $("#pbPrint-tabel").remove();
-
-
 
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
                     }// else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
-
             });
         },
         error: function(XHR) {

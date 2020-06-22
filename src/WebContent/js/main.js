@@ -4,14 +4,15 @@
 let main = {
     user: {},
     switchPage: (page, title = "", _callback = null) => {
-        $("main").load(page)
+        console.log("Switching to", page, title)
         $("title").html(title)
-
-        if(_callback != null){
-            setTimeout(() => {
-                _callback();
-            }, 10)
-        }
+        $("main").load(page, () => {
+            if (_callback != null) {
+                setTimeout(() => {
+                    _callback();
+                }, 10)
+            }
+        })
     },
     notify: (msg, type = "danger", sticky = false) => {
         $.gritter.add({

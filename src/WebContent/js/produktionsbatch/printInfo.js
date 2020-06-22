@@ -5,9 +5,8 @@
  * ----------------------------------------------------------------------------------------
  */
 
-//Henter hvad der skal printes, bruges af getPrintInfo()
-function loadPrintPB(pb, update, _callback){
-
+// Henter hvad der skal printes, bruges af getPrintInfo()
+function loadPrintPB(pb, update, _callback) {
     $.ajax({
         url: "api/pbService/getPB",
         data: {pbId: pb.pbId},
@@ -15,18 +14,15 @@ function loadPrintPB(pb, update, _callback){
         method: "GET",
         success: function (printPb) {
             main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
-
                 getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (isSuccesfull) => {
-
-                var print = $("#printTables");
-                $("#pbPrint-tabel").remove();
+                    var print = $("#printTables");
+                    $("#pbPrint-tabel").remove();
 
                     printEmptyTablePBK(print, 1, () => {
                         _callback(isSuccesfull);
                     });
                 });
             });
-
         },
         error: function(XHR) {
             console.log(XHR);
@@ -35,120 +31,93 @@ function loadPrintPB(pb, update, _callback){
     });
 }
 
-//Fortæller hvor hvilke tabel PBK info skal appendes til
+// Fortæller hvor hvilke tabel PBK info skal appendes til
 function loadPrintPBK(pbkList, pb, _callback){
-
-        var print = $("#printTables");
-        printTablePBK(print, pbkList, pb, () =>{
-            _callback();
-        });
-
-
+    var print = $("#printTables");
+    printTablePBK(print, pbkList, pb, _callback);
 }
 
-//Henter hvad der skal printes, bruges af loadPrintPb()
+// Henter hvad der skal printes, bruges af loadPrintPb()
 function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _callback) {
-
-    document.getElementById("printDate").innerHTML = "Udskrevet: " + getPrintDate();
+    getPbDate();
     getPbId(pbId);
     getReceptId(receptId);
     getPbStatus(status, date, pbId, pStartDate, update, oldPb, (isSuccesful) => {
-    setTimeout(() => {
-
-        _callback(isSuccesful);
-
-    }, 10)
+        setTimeout(() => {
+            _callback(isSuccesful);
+        }, 10)
     });
 
-    //Hent nuværende date
+    // Hent nuværende date
     function getPrintDate() {
-        n = new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
-
-        if (m < 10) {
-            return y + "-0" + m + "-" + d;
-        } else return y + "-" + m + "-" + d;
+        let n = new Date();
+        return n.getFullYear() + "-" + ((String)(n.getMonth() + 1)).padStart(2, '0') + "-" + (String)(n.getDate()).padStart(2, '0');
     }
 
-    //Return pbId, indsæt pbId på printPB.html
+    // Hent nuværende date, indsæt i printPB.html
+    function getPbDate() {
+        let n = new Date();
+        $("#printDate").html("Udskrevet: " + getPrintDate());
+    }
+
+    // Return pbId, indsæt pbId på printPB.html
     function getPbId(pbId) {
-        n = pbId;
-        document.getElementById("printPbId").innerHTML = "Produktbatch ID: " + n;
+        $("#printPbId").html("Produktbatch ID: " + pbId);
     }
 
     // Return receptId, indsæt receptId på printPB.html
     function getReceptId(receptId) {
-        n = receptId;
-        document.getElementById("printReceptId").innerHTML = "Recept ID: " + n;
-    }
-
-    //Return pb oprettelses dato
-    function getPbDate(date) {
-        n = date;
-        return n;
-
+        $("#printReceptId").html("Recept ID: " + receptId);
     }
 
     function getPbStatus(status, date, pbId, pStartDate, update, oldPb, _callback) {
-
         console.log("Satus" + oldPb.status);
         if (update == 0) {
-
-            if(oldPb.status == 0) {
-                document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
-            } else if(oldPb.status == 1) {
-                document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + oldPb.pStartDato;
-            }else if(oldPb.status == 2) {
-                document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + getPbDate(pStartDate);
+            if (oldPb.status == 0) {
+                $("#printStatus").html("Status: 'oprettet'");
+                $("#pbStart").html("Produktions Start: " + "-ikke begyndt-");
+            } else if (oldPb.status == 1) {
+                $("#printStatus").html("Status: 'under produktion'");
+                $("#pbStart").html("Produktions Start: " + oldPb.pStartDato);
+            } else if (oldPb.status == 2) {
+                $("#printStatus").html("Status: 'afsluttet'");
+                $("#pbStart").html("Produktions Start: " + pStartDate);
             }
             _callback(true);
+        } else {
+            $.ajax({
+                url: "api/pbService/getPB/",
+                data: {pbId: pbId},
+                contentType: "application/JSON",
+                method: "GET",
+                success: function (pb) {
+                    console.log("pb: ", pb);
 
-        }  else {
-
-                $.ajax({
-                    url: "api/pbService/getPB/",
-                    data: {pbId: pbId},
-                    contentType: "application/JSON",
-                    method: "GET",
-                    success: function (pb) {
-                        console.log(pb);
-
-                        if (status == 0 && oldPb.status == 0 ||status == 1 && oldPb.status == 1 || status == 2 && oldPb.status == 2) {
-                            alert("FEJL: Du kan ikke opdatere status til den nuværende status.")
-                            _callback(false);
-                        } else if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
-
-                            if (status == 0) {
-                                pb.pStartDato = null;
-                                pb.status = 0;
-                            }
-                            if (status == 1) {
-                                if (pb.pStartDato == null) {
-                                    pb.pStartDato = getPrintDate();
-                                    pb.status = 1;
-
-                                }
-                            }
-                            if (status == 2) {
-                                pb.status = 2;
-                            } else pb.status = status;
-
-                            updatePb(pb, 1);
-                            _callback(true);
-
-                        } else main.switchPage('HTML/login.html', "Login");
+                    if (status == oldPb.status) {
+                        alert("FEJL: Du kan ikke opdatere status til den nuværende status.")
                         _callback(false);
+                    } else if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
+                        if (status <= 0) {
+                            pb.pStartDato = null;
+                            pb.status = 0;
+                        } else if (status == 1) {
+                            if (pb.pStartDato == null) {
+                                pb.pStartDato = getPrintDate();
+                                pb.status = 1;
+                            }
+                        } else if (status >= 2) {
+                            pb.status = 2;
+                        }
 
-                    },
-                });
-
+                        updatePb(pb, 1);
+                        _callback(true);
+                    } else {
+                        main.switchPage('HTML/login.html', "Login");
+                        _callback(false);
+                    }
+                },
+            });
         }
-
     }
 
     function updatePb(pb, select) {
@@ -158,29 +127,28 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
             contentType: "application/JSON",
             method: "PUT",
             success: function (pbUp) {
-                console.log("pbUpdate: " + pbUp);
-                if(select==1) {
+                console.log("pbUpdate: ", pbUp);
+                if (select == 1) {
                     alert(pbUp);
                 }
                 if (pb.status == 0) {
                     document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
                     document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
-                }else if (pb.status == 1) {
+                } else if (pb.status == 1) {
                     document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
                     document.getElementById("pbStart").innerHTML = "Produktions Start: " + pb.pStartDato;
                 } else {
                     document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
-                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + getPbDate(pStartDate);
+                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + pStartDate;
                 }
             },
             error: function (XHR) {
                 console.log(XHR);
                 alert("Fejl: " + XHR.responseText);
-                main.switchPage('HTML/login.html', "Login")
+                main.switchPage('HTML/menu.html', "Menu")
             },
         });
     }
-
 }
 
 /**
@@ -189,12 +157,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
  * ----------------------------------------------------------------------------------------
  */
 
-//Append pb information på printPB.html
+// Append pb information på printPB.html
 function printEmptyTablePBK(print, i, _callback) {
-    var loop = i;
-
-
-    print.append(` <table id="pbPrint-tabel">
+    print.append(`<table id="pbPrint-tabel">
         <thead>
         <tr>
             <th>Råvare ID</th>
@@ -207,21 +172,17 @@ function printEmptyTablePBK(print, i, _callback) {
             <th>Opr</th>
         </tr>
         </thead>
-        <tbody id="tableItems${loop}">
+        <tbody id="tableItems${i}">
         </tbody>
-    </table><br><br>`);
-
+    </table>
+    <br><br>`);
 
     setTimeout(() => {
-
         _callback();
-
     }, 10)
-
-
 }
 
-//Append pbk information på printPB.html
+// Append pbk information på printPB.html
 function printTablePBK(print, pbkList, pb, _callback) {
     var a = 0;
     for (let i = 0; i < pbkList.length; i++) {
@@ -245,33 +206,26 @@ function printTablePBK(print, pbkList, pb, _callback) {
                                 </tr>`);
                             a++;
 
-
+                            // Hvis a er lig længden på listen, så er det sidste og der skal laves callback
+                            if (a == pbkList.length) {
+                                _callback();
+                            }
                         });
                     });
-
                 });
             });
         });
-
-        if (a == pbkList.length) {
-            alert("AAA")
-            _callback();
-        }
-
     }
 }
 
 
-//Henter tolerance til printTablePBK
+// Henter tolerance til printTablePBK
 function getTolerance(pb, raavareId, _callback) {
-
     $.ajax({
         url: "api/pbService/getPB",
         data: {pbId: pb.pbId},
         contentType: "application/JSON",
-
         success: function (data) {
-
             $.ajax({
                 url: "api/recept1/getRKomp",
                 data: {receptId: data.receptId, raavareId: raavareId},
@@ -286,30 +240,27 @@ function getTolerance(pb, raavareId, _callback) {
                     alert("Fejl: " + XHR.responseText);
                 },
             });
-
         },
         error: function (XHR) {
             console.log(XHR);
             alert("Fejl: " + XHR.responseText);
         },
     });
-
-
 }
 
-//Henter taravægt og tjekker om det er afvejet eller ej
+// Henter taravægt og tjekker om det er afvejet eller ej
 function getTara(tara) {
     var taraStatus;
-    if(tara  == 0){
+    if (tara  == 0) {
         taraStatus = "Ikke afvejet!";
     } else taraStatus = tara + " kg";
     return taraStatus;
 }
 
-//Henter nettovægt og tjekker om det er afvejet eller ej
+// Henter nettovægt og tjekker om det er afvejet eller ej
 function getNetto(netto) {
     var nettoStatus;
-    if(netto == 0){
+    if (netto == 0) {
         nettoStatus = "Ikke afvejet!";
     } else nettoStatus = netto + " kg";
     return nettoStatus;
