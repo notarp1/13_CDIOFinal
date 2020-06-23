@@ -19,9 +19,9 @@ import javax.ws.rs.core.Response;
 public class RaavareBatchService {
     private IRaavareBatchController batchController = new RaavareBatchController();
 
-    @Path("getRB")
+    @Path("{rbId}")
     @GET
-    public Response getRaavareBatch(@QueryParam("rbId") int rbId) {
+    public Response getRaavareBatch(@PathParam("rbId") int rbId) {
 
         try {
             return Response.status(Response.Status.OK).entity(batchController.getRaavareBatch(rbId)).build();
@@ -31,7 +31,7 @@ public class RaavareBatchService {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
-    @Path("getRbId")
+    @Path("raavare/{id}")
     @GET
     public Response getRaavareBatchId(@QueryParam("raavareId") int raavareId) {
 
@@ -44,7 +44,7 @@ public class RaavareBatchService {
         }
     }
 
-    @Path("getRBList")
+    @Path("list")
     @GET
     public Response getRaavareBatchList() {
 
@@ -57,7 +57,7 @@ public class RaavareBatchService {
 
     }
 
-        @Path("getRBList/{rbId}")
+    @Path("list/{rbId}")
     @GET
     public Response getRaavareBatchList(@PathParam("rbId") int rbId) {
 
@@ -70,8 +70,6 @@ public class RaavareBatchService {
 
     }
 
-
-    @Path("createRB")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRaavareBatch(RaavareBatchDTO rBatchObjekt) {
@@ -86,7 +84,6 @@ public class RaavareBatchService {
 
     }
 
-    @Path("updateRB")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateRaavareBatch(RaavareBatchDTO rBatchObjekt) {
@@ -99,12 +96,12 @@ public class RaavareBatchService {
         }
     }
 
-    @Path("deleteRB")
+    @Path("{id}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteRaavareBatch(RaavareBatchDTO rBatchObjekt) {
+    public Response deleteRaavareBatch(@PathParam("id") int rbId) {
         try {
-            batchController.deleteRaavareBatch(rBatchObjekt);
+            batchController.deleteRaavareBatch(rbId);
             return Response.ok().entity("Raavaretbatch succesfuldt slettet!").build();
         } catch (ControllerException e) {
             e.printStackTrace();
