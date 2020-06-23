@@ -254,7 +254,10 @@ function getSpecificPBKList(pbId, status, _callback) {
         },
         error: function (XHR) {
             console.log(XHR);
-            _callback(0);
+
+            if(status == 1){
+                _callback(0);
+            } else _callback([]);
         },
     });
 }
@@ -310,18 +313,14 @@ $("#createPBK").submit(function(event) {
                 var pb = $("#createPBK").serializeJSON();
                 $.ajax({
                     url: "api/pbService/getPBKList/" + pb.pbId,
-
                     contentType: "application/JSON",
                     method: "GET",
                     success: function (pbkListe) {
                             loadPrintPB(pb, 0, () => {
-
                             $("#pbPrint-tabel").remove();
-
                             loadPrintPBK(pbkListe, pb,  () => {
                                 window.print();
                             });
-
                         });
                     },
                     error: function (XHR) {
@@ -330,7 +329,6 @@ $("#createPBK").submit(function(event) {
                     },
                 });
             } else main.switchPage('HTML/produktBatch/createPBKmain.html', "Opret produktbatch");
-
         },
         error: function(XHR) {
             console.log(XHR);
@@ -371,7 +369,6 @@ $("#findPB").submit(function(event) {
     var upStatus = $("#findPB").find("#upStatus").is(":checked");
     var pb = $("#findPB").serializeJSON();
     var update = (upStatus ? 1 : 0);
-
     $.ajax({
         url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
