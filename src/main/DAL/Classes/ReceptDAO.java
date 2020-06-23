@@ -131,10 +131,10 @@ public class ReceptDAO implements IReceptDAO {
     }
 
     @Override
-    public void deleteRecept(ReceptDTO recept) throws DALException {
+    public void deleteRecept(int receptId) throws DALException {
         try {
             Class.forName(this.driver);
-            String sqlManipulation = "DELETE FROM Recept where receptId =" + recept.getReceptId();
+            String sqlManipulation = "DELETE FROM Recept where receptId =" + receptId;
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);

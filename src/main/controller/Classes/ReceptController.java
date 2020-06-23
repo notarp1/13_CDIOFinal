@@ -70,9 +70,9 @@ public class ReceptController implements IReceptController {
     }
 
     @Override
-    public void deleteRecept(ReceptDTO recept) throws ControllerException {
+    public void deleteRecept(int receptId) throws ControllerException {
         try {
-            recpetData.deleteRecept(recept);
+            recpetData.deleteRecept(receptId);
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke slettes");
@@ -142,9 +142,9 @@ public class ReceptController implements IReceptController {
     }
 
     @Override
-    public void deleteReceptKomp(ReceptKompDTO receptkomponent) throws ControllerException {
+    public void deleteReceptKomp(int receptId, int raavaareId) throws ControllerException {
         try {
-            receptKompD.deleteReceptKomp(receptkomponent);
+            receptKompD.deleteReceptKomp(receptId, raavaareId);
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke slette");

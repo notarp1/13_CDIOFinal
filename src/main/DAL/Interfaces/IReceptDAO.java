@@ -10,6 +10,6 @@ public interface IReceptDAO {
     List<ReceptDTO> getReceptList() throws DALException;
     void createRecept(ReceptDTO recept) throws DALException;
     void updateRecept(ReceptDTO recept) throws DALException;
-    void deleteRecept(ReceptDTO recept) throws DALException;
+    void deleteRecept(int receptId) throws DALException;
 
 }

@@ -15,15 +15,15 @@ import javax.ws.rs.core.Response;
  * @Author Ismail
  */
 
-@Path("recept1")
+@Path("recept")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ReceptService {
     private IReceptController receptController = new ReceptController();
 
-    @Path("rId")
+    @Path("{receptId}")
     @GET
-    public Response getRecept1(@QueryParam("receptId") int receptId){
+    public Response getRecept1(@PathParam("receptId") int receptId){
 
         try {
             return Response.ok().entity(receptController.getRecept(receptId)).build();
@@ -34,7 +34,7 @@ public class ReceptService {
 
     }
 
-    @Path("rList")
+    @Path("list")
     @GET
     public Response getReceptList1() {
 
@@ -48,7 +48,6 @@ public class ReceptService {
         }
     }
 
-    @Path("createR")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRecept1(ReceptDTO recept) {
@@ -62,7 +61,6 @@ public class ReceptService {
 
     }
 
-    @Path("updateR")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateRecept1(ReceptDTO recept){
@@ -77,12 +75,12 @@ public class ReceptService {
         }
     }
 
-    @Path("deleteR")
+    @Path("{receptId}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteRecept1(ReceptDTO recept){
+    public Response deleteRecept1(@PathParam("receptId") int receptId){
         try {
-            receptController.deleteRecept(recept);
+            receptController.deleteRecept(receptId);
 
             return Response.ok().entity("Recept slettet").build();
         } catch (ControllerException e) {
@@ -91,10 +89,10 @@ public class ReceptService {
         }
     }
 
-    @Path("getRKomp")
+    @Path("komp/{receptId}/{raavareId}")
     @GET
-    public Response getRKomp(@QueryParam("receptId") int receptId,
-                             @QueryParam("raavareId") int raavareId){
+    public Response getRKomp(@PathParam("receptId") int receptId,
+                             @PathParam("raavareId") int raavareId){
 
         try {
             return Response.ok().entity(receptController.getReceptKomp(receptId,raavareId)).build();
@@ -105,9 +103,9 @@ public class ReceptService {
 
     }
 
-    @Path("RKompList1")
+    @Path("komp/list/{receptId}")
     @GET
-    public Response getRKompList(@QueryParam("receptId") int receptId){
+    public Response getRKompList(@PathParam("receptId") int receptId){
 
         try {
             return Response.ok().entity(receptController.getReceptKompList(receptId)).build();
@@ -117,7 +115,7 @@ public class ReceptService {
         }
     }
 
-    @Path("RKompList2")
+    @Path("komp/list")
     @GET
     public Response getRkomplist2(){
 
@@ -130,7 +128,7 @@ public class ReceptService {
 
     }
 
-    @Path("createRKomp")
+    @Path("komp")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createRkomp(ReceptKompDTO receptKomp){
@@ -143,8 +141,7 @@ public class ReceptService {
         }
     }
 
-
-    @Path("updateRKomp")
+    @Path("komp")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateRKomp(ReceptKompDTO receptKomp){
@@ -159,14 +156,14 @@ public class ReceptService {
 
     }
 
-
-    @Path("deleteRkomp")
+    @Path("komp/{receptId}/{raavareId}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteRKomp(ReceptKompDTO receptkomp){
+    public Response deleteRKomp(@PathParam("receptId") int receptId,
+                                @PathParam("raavareId") int raavareId){
 
         try {
-            receptController.deleteReceptKomp(receptkomp);
+            receptController.deleteReceptKomp(receptId, raavareId);
             return Response.ok().entity("ReceptKomp slettet").build();
         } catch (ControllerException e) {
             e.printStackTrace();
