@@ -311,7 +311,7 @@ function loadRKompR(type) {
 
 
     $.ajax({
-        url: "api/raaService/getRaaList",
+        url: "api/raaService/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
