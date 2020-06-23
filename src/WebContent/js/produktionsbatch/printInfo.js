@@ -43,9 +43,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
     getPbId(pbId);
     getReceptId(receptId);
     getPbStatus(status, date, pbId, pStartDate, update, oldPb, (isSuccesful) => {
-        setTimeout(() => {
-            _callback(isSuccesful);
-        }, 10)
+
+        _callback(isSuccesful);
+
     });
 
     // Hent nuværende date
@@ -101,10 +101,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
                             pb.pStartDato = null;
                             pb.status = 0;
                         } else if (status == 1) {
-                            if (pb.pStartDato == null) {
                                 pb.pStartDato = getPrintDate();
                                 pb.status = 1;
-                            }
+
                         } else if (status >= 2) {
                             pb.status = 2;
                         }

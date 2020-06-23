@@ -376,7 +376,6 @@ $("#findPB").submit(function(event) {
         contentType: "application/JSON",
         method: "GET",
         success: function (pbkListe) {
-            console.log(pbkListe)
             loadPrintPB(pb, update, (isSuccesfull) => {
                 console.log(isSuccesfull)
                 $("#pbPrint-tabel").remove();
@@ -384,7 +383,7 @@ $("#findPB").submit(function(event) {
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
-                    }// else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
+                    } else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
             });
         },

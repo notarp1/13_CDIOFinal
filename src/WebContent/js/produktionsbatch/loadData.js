@@ -104,7 +104,7 @@ function loadSuggestionsRecepter() {
             console.log(recepter);
 
             for (let i = 0; i < recepter.length; i++) {
-                output.append(` <option value="${recepter[i].receptId}">${recepter[i].receptId}</option>`);
+                output.append(` <option value="${recepter[i].receptId}">${recepter[i].receptNavn}</option>`);
             }
 
         },
