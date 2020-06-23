@@ -254,6 +254,7 @@ function getSpecificPBKList(pbId, status, _callback) {
         },
         error: function (XHR) {
             console.log(XHR);
+            _callback(0);
         },
     });
 }
