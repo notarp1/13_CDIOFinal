@@ -1,6 +1,5 @@
 package controller.Interfaces;
 
-import DAL.DALException;
 import DTO.ProduktBatchDTO;
 import DTO.ProduktBatchKompDTO;
 import controller.ControllerException;
@@ -17,7 +16,7 @@ public interface IProduktBatchController {
 
     void createProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException;
     void updateProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException;
-    void deleteProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException;
+    void deleteProduktBatch(int pbId) throws ControllerException;
 
 
 
@@ -31,7 +30,7 @@ public interface IProduktBatchController {
 
     void updateProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws ControllerException;
 
-    void deleteProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws ControllerException;
+    void deleteProduktBatchKomp(int pbId, int rbId) throws ControllerException;
 
 
 }

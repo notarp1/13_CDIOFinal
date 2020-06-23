@@ -9,33 +9,33 @@ function loadSuggestionsPB(type)     {
     if (type == 0) {
         var output = $("#createPBK").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBList";
+        var url1 = "api/pbService/list";
     }
 
     if (type == 1) {
         var output = $("#updatePBK").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBKList";
+        var url1 = "api/pbService/PBK/List";
     }
     if (type == 2) {
         var output = $("#findPB").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBList";
+        var url1 = "api/pbService/list";
     }
     if (type == 3) {
         var output = $("#createPBKfirstPage").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBList";
+        var url1 = "api/pbService/list";
     }
     if (type == 4) {
         var output = $("#updatePBKfirstPage").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBList";
+        var url1 = "api/pbService/list";
     }
     if (type == 5) {
         var output = $("#findPBKList").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/getPBList";
+        var url1 = "api/pbService/list";
     }
 
 

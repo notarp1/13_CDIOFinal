@@ -12,6 +12,6 @@ public interface IProduktBatchDAO {
 
     void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
     void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
-    void deleteProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
+    void deleteProduktBatch(int pbId) throws DALException;
 
 }
