@@ -100,7 +100,7 @@ function getRaavare(raavareId, _callback) {
         url: "api/raaService/getRaa",
         data: {raavareId: raavareId},
         contentType: "application/JSON",
-//gør så man kan vælge mellem eksisterende raavare id'er naar man opdatere en raavare
+
 
         success: function (raa) {
             console.log(raa);
@@ -116,7 +116,7 @@ function getRaavare(raavareId, _callback) {
 }
 
 
-
+//gør så man kan vælge mellem eksisterende raavare id'er naar man opdatere en raavare
 function loadRaavareSelection() {
 
 
