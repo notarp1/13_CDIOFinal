@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response;
 public class ReceptService {
     private IReceptController receptController = new ReceptController();
 
-
     @Path("rId")
     @GET
     public Response getRecept1(@QueryParam("receptId") int receptId){
@@ -34,8 +33,6 @@ public class ReceptService {
         }
 
     }
-
-
 
     @Path("rList")
     @GET

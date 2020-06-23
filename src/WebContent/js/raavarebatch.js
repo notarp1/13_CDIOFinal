@@ -79,15 +79,14 @@ $("#updateRB").submit(function (event) {
 function deleteRB(rbId) {
     console.log(rbId);
     $.ajax({
-        url: "api/rbService/getRB/" + rbId,
+        url: "api/rbService/" + rbId,
         contentType: "application/JSON",
         media: "GET",
         success: function (raavarebatch) {
             if(confirm('Vile du slette råvarebatch med ID:' + raavarebatch.rbId) + "?"){
 
                 $.ajax({
-                    url: "api/rbService/",
-                    data: JSON.stringify(raavarebatch),
+                    url: "api/rbService/" + rbId,
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
@@ -193,7 +192,7 @@ function loadRBs(type) {
 function getRb(rbId, _callback) {
     $.ajax({
         type: "GET",
-        url: "api/rbService/getRB/" + rbId,
+        url: "api/rbService/" + rbId,
         contentType: "application/JSON",
         success: function (data) {
             console.log(data);

@@ -95,7 +95,7 @@ function loadRaavare() {
 
 function getRaavare(raavareId, _callback) {
     $.ajax({
-        url: "api/raaService/getRaa/" + raavareId,
+        url: "api/raaService/" + raavareId,
         contentType: "application/JSON",
 
 
@@ -142,7 +142,7 @@ function loadRaavareSelection() {
 
 function getRaavare(raavareId, _callback) {
     $.ajax({
-        url: "api/raaService/getRaa/" + raavareId,
+        url: "api/raaService/" + raavareId,
         contentType: "application/JSON",
 
         success: function (raa) {
