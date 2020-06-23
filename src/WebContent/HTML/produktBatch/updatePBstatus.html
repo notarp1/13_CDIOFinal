@@ -3,15 +3,24 @@
 
 <head>
     <meta name="author" content="Christian" charset="UTF-8">
-    <title>Se specifik produktbatck</title>
+    <title>Se/Opdater produktbatch</title>
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/Recept.js"></script>
-    <script type="text/javascript" src="js/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/raavare.js"></script>
+    <script type="text/javascript" src="js/raavarebatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
 
+    <script type="text/javascript">
+        $(() => {
+            main.footerShow();
+        })
+    </script>
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadPBKs(2)</script>
+    <script type="text/javascript">loadSuggestionsPB(2)</script>
     <script type="text/javascript">loadPB(2)</script>
 
 </head>
@@ -25,6 +34,7 @@
 </h1>
 
 
+
 <div style="text-align: center">
 
     <form id = "findPB">
@@ -32,19 +42,27 @@
 
         <label for="pbId">Produkt ID:</label><br><select type ="number" name="pbId" id="pbId"></select><br><br>
 
+
+
         <label for>Status:</label><br>
         <select type ="number" name="status" id="status">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="0">Oprettet</option>
+            <option value="1">Under produktion</option>
+            <option value="2">Afsluttet</option>
         </select><br><br>
 
-        <input type="submit"  value="Opdater status af Produktbatch"><br><br>
+        <label for="upStatus">OPDATER STATUS?</label>
+        <input type="checkbox" id="upStatus"><br><br>
+
+
+        <input type="submit"  value="OPDATER (status) / VIS Produktbatch "><br><br>
 
     </form>
 
 
 </div>
+
+<p>OBS: Hvis du ønsker at opdatere en produktbatch STATUS, husk at krydse "Opdater Status" af. </p>
 
 <div>
     <h4>Produktbatches</h4>
@@ -58,6 +76,7 @@
             <th>Status</th>
             <th>Oprettet</th>
             <th>Produktionsstart</th>
+            <th>Afvejet Komponenter</th>
             <th></th>
         </tr>
         </thead>

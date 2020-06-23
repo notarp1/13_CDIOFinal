@@ -142,3 +142,23 @@ function loadRaavareSelection() {
     });
 }
 
+function getRaavare(raavareId, _callback) {
+    $.ajax({
+        url: "api/raaService/getRaa",
+        data: {raavareId: raavareId},
+        contentType: "application/JSON",
+
+        success: function (raa) {
+            console.log(raa);
+
+            _callback(raa.raavareNavn);
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl: " + XHR.responseText);
+        },
+    });
+}
+
+

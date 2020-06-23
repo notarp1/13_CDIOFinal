@@ -8,13 +8,15 @@
 
     <script type="text/javascript" src="js/json.js"></script>
     <script type="text/javascript" src="js/Recept.js"></script>
+    <script type="text/javascript" src="js/raavare.js"></script>
     <script type="text/javascript" src="js/raavarebatch.js"></script>
-    <script type="text/javascript" src="js/produktionbatch.js"></script>
-
+    <script type="text/javascript" src="js/produktionsbatch/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
-    <script type="text/javascript">loadUsers(0)</script>
+    <script type="text/javascript">loadSuggestionsUser(0)</script>
 
 </head>
 
@@ -39,14 +41,14 @@
         <label for="rbId">Råvarebatch ID:</label><br>
         <select type ="number" name="rbId" id="rbId"></select><br><br>
 
-        <label>Tara:</label><br>
-        <input type ="number" step="0.0001" placeholder="0,0000" name="tara"><br><br>
-
-        <label>Netto:</label><br>
-        <input type ="number" step="0.0001" placeholder="0,0000" name="netto"><br><br>
+        <input type="hidden" id="tara" name="tara" value="0">
+        <input type="hidden" id="netto" name="netto" value="0">
 
         <label for="oprId">Operator ID</label><br>
         <select type ="number" name="oprId" id="oprId"></select><br><br>
+
+        <label for="goPrint">Gå til print?</label>
+        <input type="checkbox" id="goPrint"><br><br>
 
 
         <input type="submit"  value="Opret Produktbatch-komponent"><br><br>
@@ -61,10 +63,12 @@
     <table id="recept-tabel">
         <thead>
         <tr>
-            <th>Råvare ID</th>
+            <th>Råvarebatch</th>
+            <th>Råvarenavn</th>
+            <th>RåvareID</th>
             <th>Nominal Nettovægt</th>
             <th>Tolerance</th>
-            <th>Råvarebatch</th>
+
         </tr>
         </thead>
         <tbody>
@@ -78,10 +82,11 @@
     <table id="pbk-tabel">
         <thead>
         <tr>
-            <th>Produktbatch ID</th>
+            <th>Råvarebatch</th>
+            <th>Råvarenavn</th>
+            <th>Råvare ID</th>
             <th>Tara-vægt</th>
             <th>Netto-vægt</th>
-            <th>Råvarebatch</th>
         </tr>
         </thead>
         <tbody>
