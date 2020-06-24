@@ -16,7 +16,7 @@ function loadPrintPB(pb, update, _callback) {
             main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
                 getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato,
                     update, printPb, (isSuccesfull) => {
-                    var print = $("#printTables");
+                        var print = $("#printTables");
                     $("#pbPrint-tabel").remove();
 
                     printEmptyTablePBK(print, 1, () => {

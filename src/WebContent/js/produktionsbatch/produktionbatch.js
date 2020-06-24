@@ -351,7 +351,7 @@ $("#updatePBK").submit(function (event) {
         success: function (data) {
             console.log(data);
             alert(data);
-            main.switchPage("HTML/produktBatch/listPBK.html", "Se PBK liste")
+            main.switchPage("HTML/produktBatch/updatePBKmain.html", "Afvej")
 
         },
         error: function (XHR) {
