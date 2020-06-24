@@ -8,8 +8,7 @@
 // Henter hvad der skal printes, bruges af getPrintInfo()
 function loadPrintPB(pb, update, _callback) {
     $.ajax({
-        url: "api/pbService/getPB",
-        data: {pbId: pb.pbId},
+        url: "api/pbService/" + pb.pbId,
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
@@ -86,8 +85,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
             _callback(true);
         } else {
             $.ajax({
-                url: "api/pbService/getPB/",
-                data: {pbId: pbId},
+                url: "api/pbService/" + pbId,
                 contentType: "application/JSON",
                 method: "GET",
                 success: function (pb) {
@@ -122,7 +120,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
 
     function updatePb(pb, select) {
         $.ajax({
-            url: "api/pbService/updatePB",
+            url: "api/pbService",
             data: JSON.stringify(pb),
             contentType: "application/JSON",
             method: "PUT",
@@ -222,13 +220,11 @@ function printTablePBK(print, pbkList, pb, _callback) {
 // Henter tolerance til printTablePBK
 function getTolerance(pb, raavareId, _callback) {
     $.ajax({
-        url: "api/pbService/getPB",
-        data: {pbId: pb.pbId},
+        url: "api/pbService/" + pb.pbId,
         contentType: "application/JSON",
         success: function (data) {
             $.ajax({
-                url: "api/recept1/getRKomp",
-                data: {receptId: data.receptId, raavareId: raavareId},
+                url: "api/recept/komp/" + data.receptId + "/" + raavareId,
                 contentType: "application/JSON",
 
                 success: function (receptKomp) {

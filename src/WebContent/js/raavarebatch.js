@@ -126,7 +126,7 @@ function loadRaavareList(value) {
 
 
     $.ajax({
-        url: "api/raaService/getRaaList",
+        url: "api/raaService/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
@@ -149,7 +149,7 @@ function loadRaavarebatch() {
     output.html("");
 
     $.ajax({
-        url: "api/rbService/getRBList",
+        url: "api/rbService/list",
         contentType: "application/JSON",
         success: function (raavarebatch) {
             console.log(raavarebatch);
