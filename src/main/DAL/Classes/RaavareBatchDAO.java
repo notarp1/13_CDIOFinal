@@ -130,11 +130,11 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
     }
 
     @Override
-    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
+    public void deleteRaavareBatch(int rbId) throws DALException {
 
         try {
 
-            String sqlManipulation = "DELETE FROM RaavareBatch WHERE rbId = " + raavarebatch.getRbId();
+            String sqlManipulation = "DELETE FROM RaavareBatch WHERE rbId = " + rbId;
             Statics.DB.update(sqlManipulation);
 
         } catch (SQLException | ClassNotFoundException e) {

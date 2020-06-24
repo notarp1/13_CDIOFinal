@@ -6,12 +6,17 @@
     <title>Opret ProduktBatch</title>
 
     <script type="text/javascript" src="js/json.js"></script>
-    <script type="text/javascript" src="js/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/Recept.js"></script>
+    <script type="text/javascript" src="js/raavare.js"></script>
+    <script type="text/javascript" src="js/raavarebatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/produktionbatch.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/loadData.js"></script>
+    <script type="text/javascript" src="js/produktionsbatch/printInfo.js"></script>
 
     <script type="text/javascript">main.back="HTML/menu.html"</script>
     <script type="text/javascript">main.tilbageShow()</script>
 
-    <script type="text/javascript">loadRecepter()</script>
+    <script type="text/javascript">loadSuggestionsRecepter()</script>
 
 
 </head>
@@ -37,9 +42,9 @@
 
         <label for>Status:</label><br>
         <select type ="number" name="status" id="status">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="0">Oprettet</option>
+            <option value="1">Under produktion</option>
+            <option value="2">Afsluttet</option>
         </select><br><br>
 
         <input type="submit"  value="Opret Produktbatch"><br><br>

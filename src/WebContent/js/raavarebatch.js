@@ -9,7 +9,7 @@ $("#createRB").submit(function (event) {
     var RB_json = $("#createRB").serializeJSON();
     console.log(RB_json);
     $.ajax({
-        url: "api/rbService/createRB",
+        url: "api/rbService",
         data: JSON.stringify(RB_json),
         contentType: "application/JSON",
         method: "POST",
@@ -26,13 +26,12 @@ $("#createRB").submit(function (event) {
 });
 
 //Load og se råvarebatches
-
 function loadRB() {
     var rbTable = $("#rb-table").find("tbody");
     rbTable.html("");
 
     $.ajax({
-        url: "api/rbService/getRBList",
+        url: "api/rbService/list",
         contentType: "application/JSON",
 
         success: function (raavareListe) {
@@ -59,7 +58,7 @@ function loadRB() {
 $("#updateRB").submit(function (event) {
     event.preventDefault();
     $.ajax({
-        url: "api/rbService/updateRB",
+        url: "api/rbService",
         data: JSON.stringify($("#updateRB").serializeJSON()),
         contentType: "application/JSON",
         method: "PUT",
@@ -79,16 +78,14 @@ $("#updateRB").submit(function (event) {
 function deleteRB(rbId) {
     console.log(rbId);
     $.ajax({
-        url: "api/rbService/getRB",
-        data: {rbId: rbId},
+        url: "api/rbService/" + rbId,
         contentType: "application/JSON",
         media: "GET",
         success: function (raavarebatch) {
             if(confirm('Vile du slette råvarebatch med ID:' + raavarebatch.rbId) + "?"){
 
                 $.ajax({
-                    url: "api/rbService/deleteRB",
-                    data: JSON.stringify(raavarebatch),
+                    url: "api/rbService/" + rbId,
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
@@ -123,7 +120,7 @@ function loadRB(type) {
         })
 
     $.ajax({
-        url: "api/rbService/getRBList",
+        url: "api/rbService/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
@@ -147,8 +144,7 @@ function loadRB(type) {
     function getRbId(raavareId, _callback) {
         $.ajax({
             type: "GET",
-            url: "api/rbService/getRbId",
-            data: {raavareId: raavareId},
+            url: "api/rbService/raavare/" + raavareId,
             contentType: "application/JSON",
             success: function (data) {
                 _callback(data);
@@ -174,7 +170,7 @@ function loadRBs(type) {
     }
 
     $.ajax({
-        url: "api/rbService/getRBList",
+        url: "api/rbService/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
@@ -195,8 +191,7 @@ function loadRBs(type) {
 function getRb(rbId, _callback) {
     $.ajax({
         type: "GET",
-        url: "api/rbService/getRB",
-        data: {rbId: rbId},
+        url: "api/rbService/" + rbId,
         contentType: "application/JSON",
         success: function (data) {
             console.log(data);

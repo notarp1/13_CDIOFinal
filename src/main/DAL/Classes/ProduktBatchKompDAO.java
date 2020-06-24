@@ -3,7 +3,6 @@ package DAL.Classes;
 import DAL.DALException;
 import DAL.Interfaces.IProduktBatchKompDAO;
 import DAL.Statics;
-import DTO.ProduktBatchDTO;
 import DTO.ProduktBatchKompDTO;
 
 import java.sql.*;
@@ -170,11 +169,11 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
     }
 
     @Override
-    public void deleteProduktBatchKomp(ProduktBatchKompDTO pkBatch) throws DALException {
+    public void deleteProduktBatchKomp(int pbId, int rbId) throws DALException {
 
         try {
 
-            String sqlManipulation = "DELETE FROM ProduktBatchKomp WHERE pbId = '" + pkBatch.getPbId() + "' AND rbId =" + pkBatch.getRbId();
+            String sqlManipulation = "DELETE FROM ProduktBatchKomp WHERE pbId = '" + pbId + "' AND rbId =" + rbId;
             Statics.DB.update(sqlManipulation);
 
         }  catch (SQLException | ClassNotFoundException e ) {
