@@ -8,15 +8,13 @@
 // Henter hvad der skal printes, bruges af getPrintInfo()
 function loadPrintPB(pb, update, _callback) {
     $.ajax({
-        url: "api/pbService/getPB",
-        data: {pbId: pb.pbId},
+        url: "api/pbService/" + pb.pbId,
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
             main.switchPage('HTML/produktBatch/printPB.html', "PB-print", () => {
-                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato,
-                    update, printPb, (isSuccesfull) => {
-                        var print = $("#printTables");
+                getPrintInfo(pb.pbId, printPb.receptId, printPb.date, pb.status, printPb.pStartDato, update, printPb, (isSuccesfull) => {
+                    var print = $("#printTables");
                     $("#pbPrint-tabel").remove();
 
                     printEmptyTablePBK(print, 1, () => {
@@ -48,113 +46,107 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
         _callback(isSuccesful);
 
     });
-}
 
+    // Hent nuværende date
+    function getPrintDate() {
+        let n = new Date();
+        return n.getFullYear() + "-" + ((String)(n.getMonth() + 1)).padStart(2, '0') + "-" + (String)(n.getDate()).padStart(2, '0');
+    }
 
-// Hent nuværende date, indsæt i printPB.html
-function getPbDate() {
-    let n = new Date();
-    $("#printDate").html("Udskrevet: " + getPrintDate());
-}
+    // Hent nuværende date, indsæt i printPB.html
+    function getPbDate() {
+        let n = new Date();
+        $("#printDate").html("Udskrevet: " + getPrintDate());
+    }
 
-// Hent nuværende date
-function getPrintDate() {
-    let n = new Date();
-    return n.getFullYear() + "-" + ((String)(n.getMonth() + 1)).padStart(2, '0') + "-" + (String)(n.getDate()).padStart(2, '0');
-}
+    // Return pbId, indsæt pbId på printPB.html
+    function getPbId(pbId) {
+        $("#printPbId").html("Produktbatch ID: " + pbId);
+    }
 
+    // Return receptId, indsæt receptId på printPB.html
+    function getReceptId(receptId) {
+        $("#printReceptId").html("Recept ID: " + receptId);
+    }
 
-// Return pbId, indsæt pbId på printPB.html
-function getPbId(pbId) {
-    $("#printPbId").html("Produktbatch ID: " + pbId);
-}
+    function getPbStatus(status, date, pbId, pStartDate, update, oldPb, _callback) {
+        console.log("Satus" + oldPb.status);
+        if (update == 0) {
+            if (oldPb.status == 0) {
+                $("#printStatus").html("Status: 'oprettet'");
+                $("#pbStart").html("Produktions Start: " + "-ikke begyndt-");
+            } else if (oldPb.status == 1) {
+                $("#printStatus").html("Status: 'under produktion'");
+                $("#pbStart").html("Produktions Start: " + oldPb.pStartDato);
+            } else if (oldPb.status == 2) {
+                $("#printStatus").html("Status: 'afsluttet'");
+                $("#pbStart").html("Produktions Start: " + pStartDate);
+            }
+            _callback(true);
+        } else {
+            $.ajax({
+                url: "api/pbService/" + pbId,
+                contentType: "application/JSON",
+                method: "GET",
+                success: function (pb) {
+                    console.log("pb: ", pb);
 
-// Return receptId, indsæt receptId på printPB.html
-function getReceptId(receptId) {
-    $("#printReceptId").html("Recept ID: " + receptId);
-}
+                    if (status == oldPb.status) {
+                        alert("FEJL: Du kan ikke opdatere status til den nuværende status.")
+                        _callback(false);
+                    } else if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
+                        if (status <= 0) {
+                            pb.pStartDato = null;
+                            pb.status = 0;
+                        } else if (status == 1) {
+                                pb.pStartDato = getPrintDate();
+                                pb.status = 1;
 
-function getPbStatus(status, date, pbId, pStartDate, update, oldPb, _callback) {
-    console.log("Satus" + oldPb.status);
-    if (update == 0) {
-        if (oldPb.status == 0) {
-            $("#printStatus").html("Status: 'oprettet'");
-            $("#pbStart").html("Produktions Start: " + "-ikke begyndt-");
-        } else if (oldPb.status == 1) {
-            $("#printStatus").html("Status: 'under produktion'");
-            $("#pbStart").html("Produktions Start: " + oldPb.pStartDato);
-        } else if (oldPb.status == 2) {
-            $("#printStatus").html("Status: 'afsluttet'");
-            $("#pbStart").html("Produktionsstart: " + pStartDate);
-        }
-        _callback(true);
-    } else {
-        $.ajax({
-            url: "api/pbService/getPB/",
-            data: {pbId: pbId},
-            contentType: "application/JSON",
-            method: "GET",
-            success: function (pb) {
-                console.log("pb: ", pb);
+                        } else if (status >= 2) {
+                            pb.status = 2;
+                        }
 
-                if (status == oldPb.status) {
-                    alert("FEJL: Du kan ikke opdatere status til den nuværende status.")
-                    _callback(false);
-                } else if (confirm('Vil du ændre status fra ' + pb.status + ' til ' + status + '?')) {
-                    if (status <= 0) {
-                        pb.pStartDato = null;
-                        pb.status = 0;
-                    } else if (status == 1) {
-                        pb.pStartDato = getPrintDate();
-                        pb.status = 1;
-                    } else if (status >= 2) {
-                        pb.status = 2;
+                        updatePb(pb, 1);
+                        _callback(true);
+                    } else {
+                        main.switchPage('HTML/login.html', "Login");
+                        _callback(false);
                     }
-                    updatePb(pb, 1);
-                    _callback(true);
+                },
+            });
+        }
+    }
+
+    function updatePb(pb, select) {
+        $.ajax({
+            url: "api/pbService",
+            data: JSON.stringify(pb),
+            contentType: "application/JSON",
+            method: "PUT",
+            success: function (pbUp) {
+                console.log("pbUpdate: ", pbUp);
+                if (select == 1) {
+                    alert(pbUp);
+                }
+                if (pb.status == 0) {
+                    document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
+                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
+                } else if (pb.status == 1) {
+                    document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
+                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + pb.pStartDato;
                 } else {
-                    main.switchPage('HTML/login.html', "Login");
-                    _callback(false);
+                    document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
+                    document.getElementById("pbStart").innerHTML = "Produktions Start: " + pStartDate;
                 }
             },
             error: function (XHR) {
                 console.log(XHR);
                 alert("Fejl: " + XHR.responseText);
+                main.switchPage('HTML/menu.html', "Menu")
             },
         });
     }
 }
-
-function updatePb(pb, select) {
-    $.ajax({
-        url: "api/pbService/updatePB",
-        data: JSON.stringify(pb),
-        contentType: "application/JSON",
-        method: "PUT",
-        success: function (pbUp) {
-            console.log("pbUpdate: ", pbUp);
-            if (select == 1) {
-                alert(pbUp );
-            }
-            if (pb.status == 0) {
-                document.getElementById("printStatus").innerHTML = "Status: 'oprettet'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + "-ikke begyndt-";
-            } else if (pb.status == 1) {
-                document.getElementById("printStatus").innerHTML = "Status: 'under produktion'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + pb.pStartDato;
-            } else {
-                document.getElementById("printStatus").innerHTML = "Status: 'afsluttet'";
-                document.getElementById("pbStart").innerHTML = "Produktions Start: " + pStartDate;
-            }
-        },
-        error: function (XHR) {
-            console.log(XHR);
-            alert("Fejl: " + XHR.responseText);
-            main.switchPage('HTML/menu.html', "Menu")
-        },
-    });
-}
-
 
 /**
  * ----------------------------------------------------------------------------------------
@@ -227,13 +219,11 @@ function printTablePBK(print, pbkList, pb, _callback) {
 // Henter tolerance til printTablePBK
 function getTolerance(pb, raavareId, _callback) {
     $.ajax({
-        url: "api/pbService/getPB",
-        data: {pbId: pb.pbId},
+        url: "api/pbService/" + pb.pbId,
         contentType: "application/JSON",
         success: function (data) {
             $.ajax({
-                url: "api/recept1/getRKomp",
-                data: {receptId: data.receptId, raavareId: raavareId},
+                url: "api/recept/komp/" + data.receptId + "/" + raavareId,
                 contentType: "application/JSON",
 
                 success: function (receptKomp) {

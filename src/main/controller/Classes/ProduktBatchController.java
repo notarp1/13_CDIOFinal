@@ -81,12 +81,12 @@ public class ProduktBatchController implements IProduktBatchController {
     }
 
     @Override
-    public void deleteProduktBatch(ProduktBatchDTO produktbatch) throws ControllerException {
+    public void deleteProduktBatch(int pbId) throws ControllerException {
 
         try {
 
-            this.getProduktBatch(produktbatch.getPbId());
-            pBatch.deleteProduktBatch(produktbatch);
+            this.getProduktBatch(pbId);
+            pBatch.deleteProduktBatch(pbId);
 
         } catch (DALException e) {
             e.printStackTrace();
@@ -170,13 +170,13 @@ public class ProduktBatchController implements IProduktBatchController {
     }
 
     @Override
-    public void deleteProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws ControllerException {
+    public void deleteProduktBatchKomp(int pbId, int rbId) throws ControllerException {
 
 
         try {
 
-            this.getProduktBatchKomp(produktbatchkomponent.getPbId(), produktbatchkomponent.getRbId());
-            pkBatch.deleteProduktBatchKomp(produktbatchkomponent);
+            this.getProduktBatchKomp(pbId, rbId);
+            pkBatch.deleteProduktBatchKomp(pbId, rbId);
         } catch (DALException e) {
             e.printStackTrace();
             throw  new ControllerException("Advarsel: Produktbatch-komponent kunne ikke slettes!");

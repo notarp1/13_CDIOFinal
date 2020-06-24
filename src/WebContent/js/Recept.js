@@ -9,7 +9,7 @@
 $("#createR").submit(function (event) {
     event.preventDefault();
     $.ajax({
-        url: "api/recept1/createR",
+        url: "api/recept",
         data: JSON.stringify($("#createR").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
@@ -29,7 +29,7 @@ $("#createR").submit(function (event) {
 $("#updateR").submit(function (event) {
     event.preventDefault()
     $.ajax({
-        url: "api/recept1/updateR",
+        url: "api/recept",
         data: JSON.stringify($("#updateR").serializeJSON()),
         contentType: "application/json",
         method: "PUT",
@@ -47,16 +47,14 @@ $("#updateR").submit(function (event) {
 
 function deleteRecept(receptId) {
     $.ajax({
-        url: "api/recept1/rId",
-        data: {receptId: receptId},
+        url: "api/recept/" + receptId,
         contentType: "application/JSON",
         method: "GET",
         success: function (recept) {
             console.log(recept);
             if (confirm('Vil du slette recept med ID : '+ recept.receptId+'?')) {
                 $.ajax({
-                    url: "api/recept1/deleteR",
-                    data: JSON.stringify({receptId: receptId}),
+                    url: "api/recept/" + receptId,
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
@@ -83,7 +81,7 @@ function recpetList() {
     var rList = $("#rList");
     $.ajax({
         type: "GET",
-        url: "api/recept1/rList",
+        url: "api/recept/list",
         contentType: "application/JSON",
         success: function (data) {
             console.log(data);
@@ -108,8 +106,7 @@ function getRecept(receptId, _callback){
 
     $.ajax({
         type: "GET",
-        url: "api/recept1/rId",
-        data: {receptId: receptId},
+        url: "api/recept/" + receptId,
         contentType: "application/JSON",
         success: function (data) {
             _callback(data);
@@ -126,8 +123,7 @@ function getSpecificReceptKomps(receptId, _callback){
 
     $.ajax({
         type: "GET",
-        url: "api/recept1/RKompList1",
-        data: {receptId: receptId},
+        url: "api/recept/komp/list/" + receptId,
         contentType: "application/JSON",
         success: function (data) {
             _callback(data);
@@ -147,7 +143,7 @@ function getSpecificReceptKomps(receptId, _callback){
 $("#createRKomp").submit(function (event) {
     event.preventDefault();
     $.ajax({
-        url: "api/recept1/createRKomp",
+        url: "api/recept/komp",
         data: JSON.stringify($("#createRKomp").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
@@ -166,8 +162,7 @@ $("#createRKomp").submit(function (event) {
 $("#updateRKomp").submit(function (event) {
     event.preventDefault()
     $.ajax({
-
-        url: "api/recept1/updateRKomp",
+        url: "api/recept/komp",
         data: JSON.stringify($("#updateRKomp").serializeJSON()),
         contentType: "application/json",
         method: "PUT",
@@ -186,16 +181,14 @@ $("#updateRKomp").submit(function (event) {
 
 function deleteRKomp(receptId, raavareId) {
     $.ajax({
-        url: "api/recept1/getRKomp",
-        data: {receptId : receptId, raavareId : raavareId},
+        url: "api/recept/komp/" + receptId + "/" + raavareId,
         contentType: "application/JSON",
         method: "GET",
         success: function (recept) {
             console.log(recept);
             if (confirm('Vil du slette ReceptKomp med ID : '+recept.receptId + '  og Raavare ID: ' + recept.raavareId+'?')) {
                 $.ajax({
-                    url: "api/recept1/deleteRkomp",
-                    data: JSON.stringify({receptId : receptId, raavareId : raavareId}),
+                    url: "api/recept/komp/" + receptId + "/" + raavareId,
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
@@ -222,7 +215,7 @@ function rKompList() {
     var rKompList = $("#rKompList");
     $.ajax({
         type: "GET",
-        url: "api/recept1/RKompList2",
+        url: "api/recept/komp/list",
         contentType: "application/JSON",
         success: function (data) {
             console.log(data);
@@ -256,7 +249,7 @@ function loadR(type) {
 
 
     $.ajax({
-        url: "api/recept1/rList",
+        url: "api/recept/list",
         contentType: "application/JSON",
         success: function (recept) {
             console.log(recept);
@@ -284,7 +277,7 @@ function loadRKomp(type) {
     }
 
     $.ajax({
-        url: "api/recept1/rList",
+        url: "api/recept/list",
         contentType: "application/JSON",
         success: function (recept) {
             console.log(recept);
@@ -311,7 +304,7 @@ function loadRKompR(type) {
 
 
     $.ajax({
-        url: "api/raaService/getRaaList",
+        url: "api/raaService/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);
@@ -339,7 +332,7 @@ function loadRKompUpdate(type) {
 
 
     $.ajax({
-        url: "api/recept1/RKompList2",
+        url: "api/recept/komp/list",
         contentType: "application/JSON",
         success: function (recept) {
             console.log(recept);
@@ -367,7 +360,7 @@ function loadRKompRUpdate(type) {
 
 
     $.ajax({
-        url: "api/recept1/RKompList2",
+        url: "api/recept/komp/list",
         contentType: "application/JSON",
         success: function (raavare) {
             console.log(raavare);

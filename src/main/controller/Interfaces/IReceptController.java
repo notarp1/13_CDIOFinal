@@ -11,13 +11,13 @@ public interface IReceptController {
     List<ReceptDTO> getReceptList() throws ControllerException;
     void createRecept(ReceptDTO recept) throws ControllerException;
     void updateRecept(ReceptDTO recept) throws ControllerException;
-    void deleteRecept(ReceptDTO recept) throws ControllerException;
+    void deleteRecept(int receptId) throws ControllerException;
 
     ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws ControllerException;
     List<ReceptKompDTO> getReceptKompList(int receptId) throws ControllerException;
     List<ReceptKompDTO> getReceptKompList() throws ControllerException;
     void createReceptKomp(ReceptKompDTO receptkomponent) throws ControllerException;
     void updateReceptKomp(ReceptKompDTO receptkomponent) throws ControllerException;
-    void deleteReceptKomp(ReceptKompDTO receptkomponent) throws ControllerException;
+    void deleteReceptKomp(int receptId, int raavaareId) throws ControllerException;
 
 }

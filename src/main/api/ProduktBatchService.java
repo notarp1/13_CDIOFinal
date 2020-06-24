@@ -1,7 +1,6 @@
 package api;
 
 
-import DAL.Classes.ProduktBatchKompDAO;
 import DTO.ProduktBatchDTO;
 import DTO.ProduktBatchKompDTO;
 import controller.Classes.ProduktBatchController;
@@ -25,9 +24,9 @@ public class ProduktBatchService {
     private IProduktBatchController pController = new ProduktBatchController();
 
 
-    @Path("getPB")
+    @Path("{id}")
     @GET
-    public Response getProduktBatch(@QueryParam("pbId") int pbId) {
+    public Response getProduktBatch(@PathParam("id") int pbId) {
 
         try {
 
@@ -40,7 +39,7 @@ public class ProduktBatchService {
 
     }
 
-    @Path("getPBList")
+    @Path("list")
     @GET
     public Response getProduktBatchList() {
 
@@ -53,7 +52,6 @@ public class ProduktBatchService {
 
     }
 
-    @Path("createPB")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createProduktBatch(ProduktBatchDTO pBatch) {
@@ -69,7 +67,6 @@ public class ProduktBatchService {
 
     }
 
-    @Path("updatePB")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateProduktBatch(ProduktBatchDTO pBatch) {
@@ -84,12 +81,12 @@ public class ProduktBatchService {
 
     }
 
-    @Path("deletePB")
+    @Path("{id}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteProduktBatch(ProduktBatchDTO pBatch) {
+    public Response deleteProduktBatch(@PathParam("id") int pbId) {
         try {
-            pController.deleteProduktBatch(pBatch);
+            pController.deleteProduktBatch(pbId);
 
             return Response.ok().entity("Produktbatch succesfuldt slettet!").build();
         } catch (ControllerException e) {
@@ -100,9 +97,9 @@ public class ProduktBatchService {
     }
 
 
-    @Path("getPBK")
+    @Path("PBK/{pbId}/{rbId}")
     @GET
-    public Response getProduktBatchKomponent(@QueryParam("pbId") int pbId, @QueryParam("rbId") int rbId) {
+    public Response getProduktBatchKomponent(@PathParam("pbId") int pbId, @PathParam("rbId") int rbId) {
 
         try {
             return Response.status(Response.Status.OK).entity(pController.getProduktBatchKomp(pbId, rbId)).build();
@@ -114,7 +111,7 @@ public class ProduktBatchService {
 
     }
 
-    @Path("getPBKList")
+    @Path("PBK/list")
     @GET
     public Response getProduktBatchKomponentList(){
 
@@ -127,7 +124,7 @@ public class ProduktBatchService {
 
     }
 
-    @Path("getPBKList/{pbId}")
+    @Path("PBK/list/{pbId}")
     @GET
     public Response getProduktBatchKomponentList(@PathParam("pbId") int pbId){
 
@@ -140,7 +137,7 @@ public class ProduktBatchService {
 
     }
 
-    @Path("createPBK")
+    @Path("PBK")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public Response createProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
@@ -156,7 +153,7 @@ public class ProduktBatchService {
 
     }
 
-    @Path("updatePBK")
+    @Path("PBK")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
@@ -171,12 +168,12 @@ public class ProduktBatchService {
 
     }
 
-    @Path("deletePBK")
+    @Path("PBK/{pbId}/{rbId}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteProduktBatchKomp(ProduktBatchKompDTO pkBatch) {
+    public Response deleteProduktBatchKomp(@PathParam("pbId") int pbId, @PathParam("rbId") int rbId) {
         try {
-            pController.deleteProduktBatchKomp(pkBatch);
+            pController.deleteProduktBatchKomp(pbId, rbId);
 
             return Response.ok().entity("Produktbatch-komponent succesfuldt slettet!").build();
         } catch (ControllerException e) {

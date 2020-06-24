@@ -85,10 +85,10 @@ public class RaavareBatchController implements IRaavareBatchController {
     }
 
     @Override
-    public void deleteRaavareBatch(RaavareBatchDTO raavarebatch) throws ControllerException {
+    public void deleteRaavareBatch(int rbId) throws ControllerException {
         try {
-            this.getRaavareBatch(raavarebatch.getRbId());
-            rBatch.deleteRaavareBatch(raavarebatch);
+            this.getRaavareBatch(rbId);
+            rBatch.deleteRaavareBatch(rbId);
         } catch (DALException e) {
             e.printStackTrace();
             throw new ControllerException("Kunne ikke slette Råvarebatch");

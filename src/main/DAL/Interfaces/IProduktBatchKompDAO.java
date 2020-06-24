@@ -16,6 +16,6 @@ public interface IProduktBatchKompDAO {
 
     void updateProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException;
 
-    void deleteProduktBatchKomp(ProduktBatchKompDTO produktbatchkomponent) throws DALException;
+    void deleteProduktBatchKomp(int pbId, int rbId) throws DALException;
 
 }

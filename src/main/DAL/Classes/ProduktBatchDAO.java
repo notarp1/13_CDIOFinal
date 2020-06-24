@@ -120,10 +120,10 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
     }
 
     @Override
-    public void deleteProduktBatch(ProduktBatchDTO pBatch) throws DALException {
+    public void deleteProduktBatch(int pbId) throws DALException {
 
         try {
-            String sqlManipulation = "DELETE FROM ProduktBatch WHERE pbId = " + pBatch.getPbId();
+            String sqlManipulation = "DELETE FROM ProduktBatch WHERE pbId = " + pbId;
             Statics.DB.update(sqlManipulation);
 
 

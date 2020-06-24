@@ -1,6 +1,5 @@
 package controller.Interfaces;
 
-import DAL.DALException;
 import DTO.RaavareBatchDTO;
 import controller.ControllerException;
 
@@ -15,6 +14,6 @@ public interface IRaavareBatchController {
 
     void createRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
     void updateRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
-    void deleteRaavareBatch(RaavareBatchDTO raavareBatchDTO) throws ControllerException;
+    void deleteRaavareBatch(int rbId) throws ControllerException;
 
 }

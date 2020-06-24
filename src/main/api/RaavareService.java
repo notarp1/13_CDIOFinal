@@ -17,14 +17,12 @@ import javax.ws.rs.core.Response;
 @Path("raaService")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-
 public class RaavareService {
-
     private IRaavareController raaController = new RaavareController();
 
-    @Path("getRaa")
+    @Path("{raavareId}")
     @GET
-    public Response getRaavare(@QueryParam("raavareId") int raavareId) {
+    public Response getRaavare(@PathParam("raavareId") int raavareId) {
 
         try{
             return Response.status(Response.Status.OK).entity(raaController.getRaavare(raavareId)).build();
@@ -35,7 +33,7 @@ public class RaavareService {
         }
     }
 
-    @Path("getRaaList")
+    @Path("list")
     @GET
     public Response getRaavareList(){
         try {
@@ -46,10 +44,8 @@ public class RaavareService {
         }
     }
 
-    @Path("createRaa")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-
     public Response createRaavare(RaavareDTO raavare){
         try {
             raaController.createRaavare(raavare);
@@ -60,10 +56,8 @@ public class RaavareService {
         }
     }
 
-    @Path("updateRaa")
     @PUT
     @Produces(MediaType.TEXT_PLAIN)
-
     public Response updateRaavare(RaavareDTO raavare){
         try {
             raaController.updateRaavare(raavare);
@@ -74,11 +68,10 @@ public class RaavareService {
         }
     }
 
-    @Path("deleteRaa")
+    @Path("{raavareId}")
     @DELETE
     @Produces(MediaType.TEXT_PLAIN)
-
-    public Response deleteRaavare(@QueryParam("raavareId")int raavareId){
+    public Response deleteRaavare(@PathParam("raavareId")int raavareId){
         try {
             raaController.deleteRaavare(raavareId);
             return Response.ok().entity("Raavaren er blevet slettet succesfuldt").build();

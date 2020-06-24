@@ -163,11 +163,11 @@ public class ReceptKompDAO implements IReceptKompDAO {
     }
 
     @Override
-    public void deleteReceptKomp(ReceptKompDTO receptKomponent) throws DALException {
+    public void deleteReceptKomp(int receptId, int raavaareId) throws DALException {
 
         try {
             Class.forName(this.driver);
-            String sqlManipulation = "DELETE FROM ReceptKomp where receptId ='" + receptKomponent.getReceptId() + "' AND raavareId=" + receptKomponent.getRaavareId();
+            String sqlManipulation = "DELETE FROM ReceptKomp where receptId ='" + receptId + "' AND raavareId=" + raavaareId;
             Connection connection = DriverManager.getConnection(this.url, this.username, this.password);
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlManipulation);
