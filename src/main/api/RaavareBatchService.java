@@ -31,9 +31,9 @@ public class RaavareBatchService {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
-    @Path("raavare/{id}")
+    @Path("raavare/{raavareId}")
     @GET
-    public Response getRaavareBatchId(@QueryParam("raavareId") int raavareId) {
+    public Response getRaavareBatchId(@PathParam("raavareId") int raavareId) {
 
         try {
             return Response.status(Response.Status.OK).entity(batchController.getRaavareBatchId(raavareId)).build();
