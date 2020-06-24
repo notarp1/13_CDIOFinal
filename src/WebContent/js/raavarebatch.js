@@ -26,7 +26,6 @@ $("#createRB").submit(function (event) {
 });
 
 //Load og se råvarebatches
-
 function loadRB() {
     var rbTable = $("#rb-table").find("tbody");
     rbTable.html("");
