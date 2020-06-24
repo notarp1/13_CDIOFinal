@@ -98,7 +98,7 @@ function loadSuggestionsRecepter() {
     output.html("");
 
     $.ajax({
-        url: "api/recept1/rList",
+        url: "api/recept/list",
         contentType: "application/JSON",
         success: function (recepter) {
             console.log(recepter);

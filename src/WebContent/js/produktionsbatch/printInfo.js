@@ -223,8 +223,7 @@ function getTolerance(pb, raavareId, _callback) {
         contentType: "application/JSON",
         success: function (data) {
             $.ajax({
-                url: "api/recept1/getRKomp",
-                data: {receptId: data.receptId, raavareId: raavareId},
+                url: "api/recept/komp/" + data.receptId + "/" + raavareId,
                 contentType: "application/JSON",
 
                 success: function (receptKomp) {

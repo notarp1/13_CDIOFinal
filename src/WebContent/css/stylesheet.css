@@ -55,3 +55,7 @@ main #menu{ text-align: center; font-family: sans-serif; }
 #bruger-tabel{  }
 footer{ max-width: 750px; margin: 1em auto 0; display: none; text-align: center; border-top: 1px solid var(--footer-border); padding-top: 0.5em; }
 footer .logout-button{ margin-left: 80%; width: 20%; }
+
+@media print {
+    footer{ display: none !important; }
+}
