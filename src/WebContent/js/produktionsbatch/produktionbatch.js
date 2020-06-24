@@ -246,6 +246,10 @@ function getSpecificPBKList(pbId, status, _callback) {
         },
         error: function (XHR) {
             console.log(XHR);
+            if (status == 1)
+                _callback(0)
+            else
+                _callback([])
         },
     });
 }
@@ -375,7 +379,7 @@ $("#findPB").submit(function(event) {
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
-                    }// else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
+                    } else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
             });
         },
