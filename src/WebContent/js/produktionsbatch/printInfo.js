@@ -184,6 +184,7 @@ function printEmptyTablePBK(print, i, _callback) {
 }
 
 // Append pbk information på printPB.html
+//https://stackoverflow.com/questions/18983138/callback-after-all-asynchronous-foreach-callbacks-are-completed
 function printTablePBK(print, pbkList, pb, _callback) {
     var a = 0;
     for (let i = 0; i < pbkList.length; i++) {

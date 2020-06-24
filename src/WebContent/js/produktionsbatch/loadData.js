@@ -4,6 +4,8 @@
  * ------------------------ Hent data fra database ind som forslag ------------------------
  * ----------------------------------------------------------------------------------------
  */
+
+//https://stackoverflow.com/questions/23837497/how-to-select-dynamically-created-ajax-element
 //Load pbID automatisk ind som forslag til  på de diverse sider
 function loadSuggestionsPB(type)     {
     if (type == 0) {

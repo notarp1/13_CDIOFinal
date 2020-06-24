@@ -14,6 +14,12 @@
  * ------------------------------------------------------------------------------------------
  */
 
+// Kildehenvisninger til dette afsnit
+//https://stackoverflow.com/questions/6441654/html-input-checkbox-return-on-instead-of-true-when-submitting-form
+//https://stackoverflow.com/questions/37073010/checkbox-value-true-false
+//https://stackoverflow.com/questions/49002642/how-do-i-make-a-text-input-non-editable-for-a-part-of-it
+//https://stackoverflow.com/questions/4556172/excluding-certain-inputs-on-serialize
+//https://stackoverflow.com/questions/3610540/how-to-define-a-default-value-for-input-type-text-without-using-attribute-val
 
 
 //Tilføj produktbatchkomponent (opretProduktbatchkKomp.html)
@@ -368,7 +374,6 @@ $("#updatePBK").submit(function (event) {
 });
 
 //Find specifik PB (specifikPB.html)
-
 $("#findPB").submit(function(event) {
     event.preventDefault();
     var upStatus = $("#findPB").find("#upStatus").is(":checked");
@@ -446,6 +451,7 @@ function loadPB() {
 
 
 //Load PBK's ind i tabel (listPBK.html / specificPB)
+//https://stackoverflow.com/questions/38819350/how-to-append-html-string-to-div-via-ajax
 function loadPBK(pb) {
 
     var table = $("#pbk-tabel").find("tbody");
