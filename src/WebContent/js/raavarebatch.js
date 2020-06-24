@@ -110,6 +110,62 @@ function deleteRB(rbId) {
 }
 
 //Hent data fra database
+
+
+//Hent data fra database
+function loadRaavareList(value) {
+
+    if(value == 0) {
+        var output = $("#createRB").find("#raavareId");
+        output.html("");
+    }
+    if(value == 1) {
+        var output = $("#updateRB").find("#raavareId");
+        output.html("");
+    }
+
+
+    $.ajax({
+        url: "api/raaService/getRaaList",
+        contentType: "application/JSON",
+        success: function (raavare) {
+            console.log(raavare);
+
+            for (let i = 0; i < raavare.length; i++) {
+                output.append(` <option value="${raavare[i].raavareId}">${raavare[i].raavareId}</option>`);
+            }
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+}
+
+function loadRaavarebatch() {
+
+    var output = $("#updateRB").find("#rbId");
+    output.html("");
+
+    $.ajax({
+        url: "api/rbService/getRBList",
+        contentType: "application/JSON",
+        success: function (raavarebatch) {
+            console.log(raavarebatch);
+
+            for (let i = 0; i < raavarebatch.length; i++) {
+                output.append(` <option value="${raavarebatch[i].rbId}">${raavarebatch[i].rbId}</option>`);
+            }
+
+        },
+        error: function (XHR) {
+            console.log(XHR);
+            alert("Fejl:" + XHR.responseText);
+        },
+    });
+
+}
 /**
 function loadRB(type) {
     if (type == 0) {
