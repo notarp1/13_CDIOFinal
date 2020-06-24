@@ -1,0 +1,605 @@
+{
+	"info": {
+		"_postman_id": "c317b06c-9b9e-4ac3-b007-b19706dc3035",
+		"name": "Unittest af API'er ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Råvare API tests",
+			"item": [
+				{
+					"name": "Test af getRaavare",
+					"item": [
+						{
+							"name": "getRaavareFailedRange",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4600232c-d131-4ac5-888e-7d5df54da2e8",
+										"exec": [
+											"pm.test(\"Range error test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"0"
+									]
+								},
+								"description": "Denne test tester at man får en fejl 400, hvis man prøver at hente et råvareid, der ikke inden for det gyldige område"
+							},
+							"response": []
+						},
+						{
+							"name": "getRaavareSuccessfulRange",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "16a3df03-58a7-4713-83b1-381744b14d81",
+										"exec": [
+											"pm.test(\"Successful test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"22"
+									]
+								},
+								"description": "Denne test tester at der hentes en råvare når man indtaster et gyldigt råvareid"
+							},
+							"response": []
+						},
+						{
+							"name": "getRaavareNonexistentRaavare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4de79458-3646-4655-8587-19409c13e8dd",
+										"exec": [
+											"pm.test(\"Nonexistent raavare test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/817",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"817"
+									]
+								},
+								"description": "Denne test tester at man får en fejl 400, hvis man prøver at hente et råvareid, der ikke eksisterer allerede"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Test af deleteRaavare",
+					"item": [
+						{
+							"name": "deleteRaavareFailedRange",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2ab3b5b8-e844-4297-9b07-c9d4cd92afed",
+										"exec": [
+											"pm.test(\"Range error test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"0"
+									]
+								},
+								"description": "Denne test tester at man får en fejl 400, hvis man prøver at slette en råvare med et råvareid, der ikke inden for det gyldige område"
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRaavareNonexistentRaavare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e986dd56-a357-4c12-8b92-d443bb09ce2a",
+										"exec": [
+											"pm.test(\"nonexistent raavare test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/543",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"543"
+									]
+								},
+								"description": "Denne test tester at man får en fejl 400, hvis man prøver at slette en råvare med et råvareid, der ikke eksisterer i forvejen"
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRaavareExistingRaavare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "60791d5a-67fc-4757-a661-538b92eebebb",
+										"exec": [
+											"pm.test(\"existing raavare test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/577",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"577"
+									]
+								},
+								"description": "Denne test tester at man kan slette en råvare der allerede eksisterer i systemet og som har et id, indenfor det tillande område. Dog kan man ikke slette en råvare som bliver brugt et andet sted f.eks. i råvarbatchen\n\nMan skal huske at, hvis man køre denne test 2 gange i træk, kommer den til at fejle, da den råvaren allerede er blevet slettet første gang man gjorde det"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Test af getRaavareList",
+					"item": [
+						{
+							"name": "getRaavareList",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ab10fd7e-6940-46f6-82a0-c514fff763f5",
+										"exec": [
+											"pm.test(\"Successful test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										"list"
+									]
+								},
+								"description": "Denne test tester at man kan hente råvarelisten uden fejl"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Test af updateRaavare",
+					"item": [
+						{
+							"name": "updateRaavareSuccesful",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b989e961-bba8-4d2e-ae49-c75fe7def906",
+										"exec": [
+											"pm.test(\"Successful test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"raavareId\": 102,\n    \"raavareNavn\": \"Hyaluronic acid\",\n    \"leverandoer\": \"Kemi A/S\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								},
+								"description": "Tester at man kan opdatere en råvare"
+							},
+							"response": []
+						},
+						{
+							"name": "updateRaavareNonexistentRaavareId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3a090b9b-3454-4729-9bfa-167662e13f12",
+										"exec": [
+											"pm.test(\"NonexistentRaavarId test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"raavareId\": 1000,\n    \"raavareNavn\": \"silikone\",\n    \"leverandoer\": \"Kemi A/S\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								},
+								"description": "Tester at man får en 400 fejl hvis man prøver at opdatere en råvare med et råvareid der ikke allerede findes"
+							},
+							"response": []
+						},
+						{
+							"name": "updateRaavareFailedRange",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e94b3485-a791-4a2c-a338-2143de93e1cc",
+										"exec": [
+											"pm.test(\"Range error test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"raavareId\": 101,\n    \"raavareNavn\": \"octamethylcyclotetrasiloxane\",\n    \"leverandoer\": \"Kemi A/S\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								},
+								"description": "Tester at man får en fejl 400 hvis man prøver at opdatere en råvare med en leverandør der ikke er inden for det gyldige område"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Test af createRaavare",
+					"item": [
+						{
+							"name": "createRaavareSuccesful",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3fa4019b-b1a8-49a6-9a8d-7486f4a89525",
+										"exec": [
+											"pm.test(\"Successful test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"raavareId\": 103,\n    \"raavareNavn\": \"Insulin\",\n    \"leverandoer\": \"Kemi A/S\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createRaavareFailedRange",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3c149d03-c752-48f9-8f43-308ec6ca5e60",
+										"exec": [
+											"pm.test(\"Range error test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"raavareId\": 104,\n    \"raavareNavn\": \"destilleret vand\",\n    \"leverandoer\": \"et alt for langt leverandoernavn\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createAlreadyExictingRaavare",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f187c550-9635-43dd-a010-8e45c760ba87",
+										"exec": [
+											"pm.test(\"existing raavare test\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n    \"raavareId\": 20,\n    \"raavareNavn\": \"paracetamol\",\n    \"leverandoer\": \"Kemi A/S\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/13_CDIOFinal_war_exploded/api/raaService/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"13_CDIOFinal_war_exploded",
+										"api",
+										"raaService",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "985aab4c-6da2-43e5-b418-f6eff52c887d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "89ee21fb-6281-471c-9748-be263c7fde6f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

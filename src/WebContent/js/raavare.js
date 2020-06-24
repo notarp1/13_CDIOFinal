@@ -93,6 +93,7 @@ function loadRaavare() {
 
 }
 
+
 function getRaavare(raavareId, _callback) {
     $.ajax({
         url: "api/raaService/" + raavareId,
@@ -117,8 +118,8 @@ function getRaavare(raavareId, _callback) {
 function loadRaavareSelection() {
 
 
-        var output = $("#updateRaa").find("#raavareId");
-        output.html("");
+    var output = $("#updateRaa").find("#raavareId");
+    output.html("");
 
 
 
