@@ -9,33 +9,33 @@ function loadSuggestionsPB(type)     {
     if (type == 0) {
         var output = $("#createPBK").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/list";
+        var url1 = "api/pbService/getPBList";
     }
 
     if (type == 1) {
         var output = $("#updatePBK").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/PBK/List";
+        var url1 = "api/pbService/getPBKList";
     }
     if (type == 2) {
         var output = $("#findPB").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/list";
+        var url1 = "api/pbService/getPBList";
     }
     if (type == 3) {
         var output = $("#createPBKfirstPage").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/list";
+        var url1 = "api/pbService/getPBList";
     }
     if (type == 4) {
         var output = $("#updatePBKfirstPage").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/list";
+        var url1 = "api/pbService/getPBList";
     }
     if (type == 5) {
         var output = $("#findPBKList").find("#pbId");
         output.html("");
-        var url1 = "api/pbService/list";
+        var url1 = "api/pbService/getPBList";
     }
 
 
@@ -98,13 +98,13 @@ function loadSuggestionsRecepter() {
     output.html("");
 
     $.ajax({
-        url: "api/recept/list",
+        url: "api/recept1/rList",
         contentType: "application/JSON",
         success: function (recepter) {
             console.log(recepter);
 
             for (let i = 0; i < recepter.length; i++) {
-                output.append(` <option value="${recepter[i].receptId}">${recepter[i].receptNavn}</option>`);
+                output.append(` <option value="${recepter[i].receptId}">${recepter[i].receptId}</option>`);
             }
 
         },

@@ -8,7 +8,8 @@
 // Henter hvad der skal printes, bruges af getPrintInfo()
 function loadPrintPB(pb, update, _callback) {
     $.ajax({
-        url: "api/pbService/" + pb.pbId,
+        url: "api/pbService/getPB",
+        data: {pbId: pb.pbId},
         contentType: "application/JSON",
         method: "GET",
         success: function (printPb) {
@@ -42,9 +43,9 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
     getPbId(pbId);
     getReceptId(receptId);
     getPbStatus(status, date, pbId, pStartDate, update, oldPb, (isSuccesful) => {
-
-        _callback(isSuccesful);
-
+        setTimeout(() => {
+            _callback(isSuccesful);
+        }, 10)
     });
 
     // Hent nuværende date
@@ -85,7 +86,8 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
             _callback(true);
         } else {
             $.ajax({
-                url: "api/pbService/" + pbId,
+                url: "api/pbService/getPB/",
+                data: {pbId: pbId},
                 contentType: "application/JSON",
                 method: "GET",
                 success: function (pb) {
@@ -99,9 +101,10 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
                             pb.pStartDato = null;
                             pb.status = 0;
                         } else if (status == 1) {
+                            if (pb.pStartDato == null) {
                                 pb.pStartDato = getPrintDate();
                                 pb.status = 1;
-
+                            }
                         } else if (status >= 2) {
                             pb.status = 2;
                         }
@@ -119,7 +122,7 @@ function getPrintInfo(pbId, receptId, date, status, pStartDate, update, oldPb, _
 
     function updatePb(pb, select) {
         $.ajax({
-            url: "api/pbService",
+            url: "api/pbService/updatePB",
             data: JSON.stringify(pb),
             contentType: "application/JSON",
             method: "PUT",
@@ -219,11 +222,13 @@ function printTablePBK(print, pbkList, pb, _callback) {
 // Henter tolerance til printTablePBK
 function getTolerance(pb, raavareId, _callback) {
     $.ajax({
-        url: "api/pbService/" + pb.pbId,
+        url: "api/pbService/getPB",
+        data: {pbId: pb.pbId},
         contentType: "application/JSON",
         success: function (data) {
             $.ajax({
-                url: "api/recept/komp/" + data.receptId + "/" + raavareId,
+                url: "api/recept1/getRKomp",
+                data: {receptId: data.receptId, raavareId: raavareId},
                 contentType: "application/JSON",
 
                 success: function (receptKomp) {

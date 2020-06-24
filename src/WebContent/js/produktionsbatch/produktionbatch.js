@@ -22,7 +22,8 @@ $("#createPBKfirstPage").submit(function(event) {
     var pb = $("#pbId").val();
     var pbkRdy = [];
     $.ajax({
-        url: "api/pbService/" + pb,
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
         contentType: "application/JSON",
         success: function (product) {
 
@@ -89,7 +90,8 @@ $("#updatePBKfirstPage").submit(function(event) {
     var pb = $("#pbId").val();
     var pbkRdy = [];
     $.ajax({
-        url: "api/pbService/" +pb,
+        url: "api/pbService/getPB",
+        data: {pbId: pb},
         contentType: "application/JSON",
         success: function (product) {
 
@@ -236,7 +238,7 @@ function getElementsBy(pbId, receptId, receptNavn){
 function getSpecificPBKList(pbId, status, _callback) {
     var notWeighted = 0;
     $.ajax({
-        url: "api/pbService/PBK/list/" + pbId,
+        url: "api/pbService/getPBKList/" + pbId,
         contentType: "application/JSON",
         success: function (products) {
             if(status == 1) {
@@ -252,7 +254,6 @@ function getSpecificPBKList(pbId, status, _callback) {
         },
         error: function (XHR) {
             console.log(XHR);
-            _callback(0);
         },
     });
 }
@@ -272,7 +273,7 @@ $("#createPB").submit(function(event) {
     var pb = $("#createPB").serializeJSON();
     $.ajax({
 
-        url: "api/pbService",
+        url: "api/pbService/createPB",
         data: JSON.stringify(pb),
         contentType: "application/JSON",
         method: "POST",
@@ -298,7 +299,7 @@ $("#createPBK").submit(function(event) {
     event.preventDefault();
     var print = $("#createPBK").find("#goPrint").is(":checked");
     $.ajax({
-        url: "api/pbService/PBK",
+        url: "api/pbService/createPBK",
         data: JSON.stringify($("#createPBK").serializeJSON()),
         contentType: "application/JSON",
         method: "POST",
@@ -307,7 +308,7 @@ $("#createPBK").submit(function(event) {
             if(print) {
                 var pb = $("#createPBK").serializeJSON();
                 $.ajax({
-                    url: "api/pbService/PBK/list/" + pb.pbId,
+                    url: "api/pbService/getPBKList/" + pb.pbId,
 
                     contentType: "application/JSON",
                     method: "GET",
@@ -343,7 +344,7 @@ $("#updatePBK").submit(function (event) {
     var test = JSON.stringify($("#updatePBK").serializeJSON());
     console.log(test);
     $.ajax({
-        url: "api/pbService/PBK",
+        url: "api/pbService/updatePBK",
         data: JSON.stringify($("#updatePBK").serializeJSON()),
         contentType: "application/JSON",
         method: "PUT",
@@ -371,10 +372,11 @@ $("#findPB").submit(function(event) {
     var update = (upStatus ? 1 : 0);
 
     $.ajax({
-        url: "api/pbService/PBK/list/" + pb.pbId,
+        url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
         method: "GET",
         success: function (pbkListe) {
+            console.log(pbkListe)
             loadPrintPB(pb, update, (isSuccesfull) => {
                 console.log(isSuccesfull)
                 $("#pbPrint-tabel").remove();
@@ -382,7 +384,7 @@ $("#findPB").submit(function(event) {
                 loadPrintPBK(pbkListe, pb, () => {
                     if(isSuccesfull){
                         window.print();
-                    } else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
+                    }// else {main.switchPage("HTML/produktBatch/updatePBstatus.html");}
                 })
             });
         },
@@ -406,7 +408,7 @@ function loadPB() {
     var table = $("#pb-tabel").find("tbody");
     table.html("");
     $.ajax({
-        url: "api/pbService/list",
+        url: "api/pbService/getPBList",
         contentType: "application/JSON",
         success: function (products) {
             products.forEach(function (products) {
@@ -445,7 +447,7 @@ function loadPBK(pb) {
     var table = $("#pbk-tabel").find("tbody");
     table.html("");
     $.ajax({
-        url: "api/pbService/PBK/list/" + pb.pbId,
+        url: "api/pbService/getPBKList/" + pb.pbId,
         contentType: "application/JSON",
         success: function (pbkList) {
             console.log(pbkList);
@@ -483,14 +485,16 @@ function loadPBK(pb) {
 // Slet PB (listPB.html)
 function confirmDeletePB(pbId) {
     $.ajax({
-        url: "api/pbService/" + pbId,
+        url: "api/pbService/getPB",
+        data: {pbId: pbId},
         contentType: "application/JSON",
         method: "GET",
         success: function (pb) {
             console.log(pb);
             if (confirm('Vil du slette produkbach med ID : ' + pb.pbId + '?')) {
                 $.ajax({
-                    url: "api/pbService/" + pbId,
+                    url: "api/pbService/deletePB",
+                    data: JSON.stringify({pbId: pbId}),
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
@@ -515,14 +519,16 @@ function confirmDeletePB(pbId) {
 // Slet PBK (listPBK.html)
 function confirmDeletePBK(pbId, rbId) {
     $.ajax({
-        url: "api/pbService/PBK/" + pbId + "/" + rbId,
+        url: "api/pbService/getPBK",
+        data: {pbId: pbId, rbId: rbId},
         contentType: "application/JSON",
         method: "GET",
         success: function (pbkList) {
             console.log(pbkList);
             if (confirm('Vil du slette produkbach-komponent med ID : ' + pbkList.pbId + '?')) {
                 $.ajax({
-                    url: "api/pbService/PBK/" + pbId + "/" + rbId,
+                    url: "api/pbService/deletePBK",
+                    data: JSON.stringify({pbId: pbId, rbId: rbId}),
                     contentType: "application/JSON",
                     method: "DELETE",
                     success: function (data) {
