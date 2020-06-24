@@ -263,6 +263,15 @@ function getSpecificPBKList(pbId, status, _callback) {
  * ---- createPB.html / createPBKsecond.html / updatePBKsecond.html / updatePBstatus.html ----
  * -------------------------------------------------------------------------------------------
  */
+// Kildehenvisninger til dette afsnit
+//https://stackoverflow.com/questions/6441654/html-input-checkbox-return-on-instead-of-true-when-submitting-form
+//https://stackoverflow.com/questions/37073010/checkbox-value-true-false
+//https://stackoverflow.com/questions/49002642/how-do-i-make-a-text-input-non-editable-for-a-part-of-it
+//https://stackoverflow.com/questions/4556172/excluding-certain-inputs-on-serialize
+//https://stackoverflow.com/questions/3610540/how-to-define-a-default-value-for-input-type-text-without-using-attribute-val
+
+
+
 //Tilføj produktbatch   (createPB.html)
 $("#createPB").submit(function(event) {
     event.preventDefault();
